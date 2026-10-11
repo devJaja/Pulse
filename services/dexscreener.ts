@@ -33,7 +33,7 @@ class DexScreenerService {
 
   async getTrendingTokens(): Promise<Token[]> {
     try {
-      const response = await fetch(`${this.baseUrl}/pairs/stellar`);
+      const response = await fetch(`${this.baseUrl}/pairs/monad`);
       const data = await response.json();
       
       if (!data.pairs || data.pairs.length === 0) {
@@ -52,14 +52,14 @@ class DexScreenerService {
     }
   }
 
-  async getXLMPrice(): Promise<number> {
+  async getMONPrice(): Promise<number> {
     try {
-      const xlmToken = await this.getTokenByAddress('XLM');
-      const price = xlmToken?.price || 0;
-      console.log('DexScreener XLM price:', price, 'Full data:', xlmToken);
+      const monToken = await this.getTokenByAddress('MON');
+      const price = monToken?.price || 0;
+      console.log('DexScreener MON price:', price, 'Full data:', monToken);
       return price;
     } catch (error) {
-      console.error('DexScreener XLM price error:', error);
+      console.error('DexScreener MON price error:', error);
       return 0;
     }
   }
@@ -81,11 +81,10 @@ class DexScreenerService {
 
   private async getPopularTokens(): Promise<Token[]> {
     const popularTokens = [
-      'XLM', // Stellar Lumens (native)
-      'USDC-GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN', // Stellar USDC
-      'USDT-GANGSGREXTQ3RGQJKFGN6TZX3XP3YV5TJMGLC3NKAD3QJKZJQTYFGZF', // Stellar USDT
-      'SEEKER-GAM7RKKARXIKMT5TUGQWEXZ6JSMQ4V4R5EN6ERLQYNRBN4JUDMFPORXC', // SEEKER
-    ];
+      'MON', // Monad (native)
+      process.env.EXPO_PUBLIC_MONAD_USDC_ADDRESS || '', // Monad USDC
+      process.env.EXPO_PUBLIC_MONAD_USDT_ADDRESS || '', // Monad USDT
+    ].filter(Boolean);
 
     const tokens: Token[] = [];
     for (const address of popularTokens) {
@@ -101,7 +100,7 @@ class DexScreenerService {
       address: token.address,
       symbol: token.symbol || '',
       name: token.name || '',
-      decimals: 9,
+      decimals: 18,
       logoURI: pair.info?.imageUrl,
       price: parseFloat(pair.priceUsd || '0'),
       priceChange24h: parseFloat(pair.priceChange?.h24 || '0'),

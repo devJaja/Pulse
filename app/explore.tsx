@@ -57,7 +57,7 @@ export default function ExploreScreen() {
           value={searchQuery}
           onChangeText={setSearchQuery}
           className="flex-1 text-base text-foreground"
-          placeholderTextColor="#8C8C98"
+          placeholderTextColor="#727285"
         />
       </View>
 
@@ -80,7 +80,7 @@ export default function ExploreScreen() {
         <View className="mt-4">
           {isLoadingFeed && posts.length === 0 ? (
             <View className="items-center py-20">
-              <ActivityIndicator size="large" color="#002E5D" />
+              <ActivityIndicator size="large" color="#6e54ff" />
             </View>
           ) : filteredPosts.length === 0 ? (
             <View className="items-center py-20">
@@ -145,7 +145,7 @@ export default function ExploreScreen() {
                   <View className="mb-3 flex-row items-center gap-2 rounded-lg bg-purple-50 p-3 dark:bg-purple-950">
                     <Icon as={Coins} size={16} className="text-purple-600" />
                     <Text className="text-sm font-medium text-purple-600">
-                      Tokenized Post · {post.tokenSupply} tokens @ {post.tokenPrice} XLM
+                      Tokenized Post · {post.tokenSupply} tokens @ {post.tokenPrice} MON
                     </Text>
                   </View>
                 )}
@@ -162,7 +162,7 @@ export default function ExploreScreen() {
                       as={Heart} 
                       size={20} 
                       className={post.isLiked ? "text-purple-600" : "text-muted-foreground"}
-                      fill={post.isLiked ? "#002E5D" : "none"}
+                      fill={post.isLiked ? "#6e54ff" : "none"}
                     />
                     <Text className={`${post.isLiked ? 'text-purple-600 font-semibold' : 'text-muted-foreground'}`}>
                       {post.likesCount || 0}
@@ -195,7 +195,7 @@ export default function ExploreScreen() {
 
           {isFetchingNextPage && (
             <View className="py-4">
-              <ActivityIndicator size="small" color="#002E5D" />
+              <ActivityIndicator size="small" color="#6e54ff" />
             </View>
           )}
         </View>

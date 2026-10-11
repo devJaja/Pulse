@@ -21,7 +21,7 @@ export default function TransactionsScreen() {
   return (
     <View className="flex-1 bg-background">
       {/* Header */}
-      <View className="bg-[#002E5D] px-4 pb-6 pt-12">
+      <View className="bg-[#0e100f] px-4 pb-6 pt-12">
         <View className="flex-row items-center gap-3">
           <TouchableOpacity onPress={() => router.back()}>
             <Icon as={ArrowLeft} size={24} className="text-white" />
@@ -45,7 +45,7 @@ export default function TransactionsScreen() {
         <View className="px-4 py-6">
           {isLoadingTransactions && transactions.length === 0 ? (
             <View className="items-center py-10">
-              <ActivityIndicator size="large" color="#002E5D" />
+              <ActivityIndicator size="large" color="#6e54ff" />
             </View>
           ) : transactions.length === 0 ? (
             <View className="items-center py-10">
@@ -78,7 +78,7 @@ export default function TransactionsScreen() {
                   </View>
                   <View className="items-end">
                     <Text className={`font-semibold ${tx.type === 'receive' ? 'text-success' : 'text-foreground'}`}>
-                      {tx.type === 'receive' ? '+' : '-'}{tx.amount.toFixed(4)} XLM
+                      {tx.type === 'receive' ? '+' : '-'}{tx.amount.toFixed(4)} MON
                     </Text>
                     <Text className="text-sm text-muted-foreground capitalize">{tx.status}</Text>
                   </View>
@@ -87,7 +87,7 @@ export default function TransactionsScreen() {
               
               {isFetchingNextPage && (
                 <View className="py-4">
-                  <ActivityIndicator size="small" color="#002E5D" />
+                  <ActivityIndicator size="small" color="#6e54ff" />
                 </View>
               )}
               

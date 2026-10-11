@@ -36,7 +36,7 @@ export function MessageBubble({
       }`}>
         {type === 'tip' && tipAmount && (
           <Text className="mb-1 text-xs font-semibold text-success dark:text-success">
-            💰 Tip: {tipAmount} XLM
+            💰 Tip: {tipAmount} MON
           </Text>
         )}
         <Text className={isOwn ? 'text-primary-foreground' : 'text-foreground'}>

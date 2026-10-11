@@ -145,7 +145,7 @@ export default function SettingsScreen() {
           name: 'default',
           importance: ExpoNotifications.AndroidImportance.MAX,
           vibrationPattern: [0, 250, 250, 250],
-          lightColor: '#002E5D',
+          lightColor: '#6e54ff',
         });
       }
 
@@ -255,7 +255,7 @@ export default function SettingsScreen() {
             <Switch
               value={notifications}
               onValueChange={handleNotificationToggle}
-              trackColor={{ false: '#D5CDF3', true: '#002E5D' }}
+              trackColor={{ false: '#E4DFFF', true: '#6e54ff' }}
               thumbColor="#ffffff"
             />
           </View>
@@ -273,7 +273,7 @@ export default function SettingsScreen() {
             <Switch
               value={theme === 'dark'}
               onValueChange={handleThemeToggle}
-              trackColor={{ false: '#D5CDF3', true: '#002E5D' }}
+              trackColor={{ false: '#E4DFFF', true: '#6e54ff' }}
               thumbColor="#ffffff"
             />
           </View>

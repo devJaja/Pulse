@@ -39,17 +39,17 @@ export function TipModal({
           <View className="mb-4 h-1.5 w-12 self-center rounded-full bg-border" />
           <Text className="text-xl font-bold">{t('common.tip')} {t('common.post')}</Text>
           <Text className="mt-2 text-sm text-muted-foreground">
-            {t('common.send')} XLM {t('common.to')} @{recipientUsername}
+            {t('common.send')} MON {t('common.to')} @{recipientUsername}
           </Text>
 
           <View className="mt-4">
-            <Text className="mb-2 text-sm font-medium">{t('wallet.amount')} (XLM)</Text>
+            <Text className="mb-2 text-sm font-medium">{t('wallet.amount')} (MON)</Text>
             <TextInput
               value={amount}
               onChangeText={setAmount}
               placeholder="0.1"
               keyboardType="decimal-pad"
-              placeholderTextColor="#8C8C98"
+              placeholderTextColor="#727285"
               className="rounded-xl border border-border bg-background px-4 py-3 text-foreground"
             />
           </View>

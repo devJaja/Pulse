@@ -19,11 +19,11 @@ const ONBOARDING_DATA = [
   {
     icon: Zap,
     title: 'Lightning Fast\nPayments',
-    description: 'Send and receive money in seconds\nwith Stellar\'s speed',
+    description: 'Send and receive money in seconds\nwith Monad\'s speed',
   },
   {
     icon: Sparkles,
-    title: 'Welcome to\nLinkora-Social',
+    title: 'Welcome to\nPulse',
     description: 'Your all-in-one super app for\npayments, social and more',
   },
   {
@@ -105,7 +105,7 @@ function OnboardingSlide({
   return (
     <View style={{ width: screenWidth }} className="items-center justify-center px-8 pt-20">
       <View className="mb-12 h-24 w-24 items-center justify-center rounded-full bg-card shadow-sm">
-        <Icon size={48} color="#002E5D" strokeWidth={2} />
+        <Icon size={48} color="#6e54ff" strokeWidth={2} />
       </View>
 
       <Text className="mb-4 text-center text-3xl font-bold leading-tight text-foreground">
@@ -137,7 +137,7 @@ function Dot({ index, scrollX, screenWidth }: { index: number; scrollX: SharedVa
   return (
     <Animated.View
       style={animatedStyle}
-      className="h-2 rounded-full bg-[#002E5D]"
+      className="h-2 rounded-full bg-[#0e100f]"
     />
   );
 }

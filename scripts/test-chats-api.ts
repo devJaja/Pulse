@@ -1,7 +1,7 @@
 // Test script to check chats API
 // Run with: npx ts-node scripts/test-chats-api.ts
 
-const API_URL = 'https://linkora-socials-backend.onrender.com/api';
+const API_URL = 'https://pulse-socials-backend.onrender.com/api';
 
 async function testChatsAPI() {
   console.log('Testing Chats API...\n');

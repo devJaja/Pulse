@@ -87,7 +87,7 @@ export default function SecurityPrivacyScreen() {
                 value={currentPassword}
                 onChangeText={setCurrentPassword}
                 placeholder="Enter current password"
-                placeholderTextColor="#8C8C98"
+                placeholderTextColor="#727285"
                 secureTextEntry={!showCurrentPassword}
                 className="flex-1 py-4 text-base text-foreground"
               />
@@ -111,7 +111,7 @@ export default function SecurityPrivacyScreen() {
                 value={newPassword}
                 onChangeText={setNewPassword}
                 placeholder="Enter new password"
-                placeholderTextColor="#8C8C98"
+                placeholderTextColor="#727285"
                 secureTextEntry={!showNewPassword}
                 className="flex-1 py-4 text-base text-foreground"
               />
@@ -135,7 +135,7 @@ export default function SecurityPrivacyScreen() {
                 value={confirmPassword}
                 onChangeText={setConfirmPassword}
                 placeholder="Confirm new password"
-                placeholderTextColor="#8C8C98"
+                placeholderTextColor="#727285"
                 secureTextEntry
                 className="text-base text-foreground"
               />

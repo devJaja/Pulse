@@ -22,8 +22,8 @@ export function CreatePostButton({ onPress }: CreatePostButtonProps) {
       className="active:opacity-90"
       style={[styles.button, { bottom }]}
     >
-      <Icon as={PenLine} size={18} className="text-[#002E5D]" strokeWidth={2.4} />
-      <Text className="text-[14.5px] font-bold text-[#002E5D]">New post</Text>
+      <Icon as={PenLine} size={18} className="text-[#6e54ff]" strokeWidth={2.4} />
+      <Text className="text-[14.5px] font-bold text-[#6e54ff]">New post</Text>
     </Pressable>
   );
 }
@@ -38,8 +38,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     height: 52,
     borderRadius: 999,
-    backgroundColor: '#FDDA24',
-    shadowColor: '#002E5D',
+    backgroundColor: '#6e54ff',
+    shadowColor: '#6e54ff',
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.28,
     shadowRadius: 14,

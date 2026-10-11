@@ -8,7 +8,7 @@ const liveApps = [
   {
     id: 'swap',
     name: 'Token Swap',
-    description: 'Swap XLM for tokens instantly',
+    description: 'Swap MON for tokens instantly',
     icon: Coins,
     color: 'bg-blue-500',
     route: '/mini-apps/swap',
@@ -16,7 +16,7 @@ const liveApps = [
   {
     id: 'food',
     name: 'Food Delivery',
-    description: 'Order food and pay with XLM',
+    description: 'Order food and pay with MON',
     icon: UtensilsCrossed,
     color: 'bg-orange-500',
     route: '/mini-apps/food',
@@ -24,7 +24,7 @@ const liveApps = [
   {
     id: 'dice',
     name: 'Dice Game',
-    description: 'Roll the dice and win XLM',
+    description: 'Roll the dice and win MON',
     icon: Gamepad2,
     color: 'bg-success/100',
     route: '/mini-apps/dice',
@@ -48,7 +48,7 @@ const liveApps = [
   {
     id: 'airdrop',
     name: 'Daily Airdrop',
-    description: 'Claim your daily XLM rewards',
+    description: 'Claim your daily MON rewards',
     icon: Gift,
     color: 'bg-purple-500',
     route: '/mini-apps/airdrop',
@@ -66,7 +66,7 @@ const upcomingApps = [
   {
     id: '5',
     name: 'Price Predictor',
-    description: 'Predict XLM price and win',
+    description: 'Predict MON price and win',
     icon: TrendingUp,
     color: 'bg-red-500',
   },
@@ -77,7 +77,7 @@ export default function MiniAppsScreen() {
     <View className="flex-1 bg-background">
       <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
         {/* Header */}
-        <View className="bg-[#002E5D] px-4 pb-8 pt-12">
+        <View className="bg-[#0e100f] px-4 pb-8 pt-12">
           <View className="flex-row items-center gap-3">
             <TouchableOpacity onPress={() => router.back()}>
               <Icon as={ArrowLeft} size={24} className="text-white" />
@@ -116,7 +116,7 @@ export default function MiniAppsScreen() {
                 onPress={() => router.push(app.route as any)}
                 className="overflow-hidden rounded-2xl bg-card active:opacity-80"
               >
-                <View className="bg-[#002E5D] p-4">
+                <View className="bg-[#0e100f] p-4">
                   <View className="flex-row items-center gap-3">
                     <View className="h-14 w-14 items-center justify-center rounded-2xl bg-white/20">
                       <Icon as={app.icon} size={28} className="text-white" />

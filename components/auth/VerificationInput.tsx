@@ -73,7 +73,7 @@ export function VerificationInput({
               focusedIndex === index ? 'border-purple-600' : 'border-transparent'
             }`}
             placeholder="0"
-            placeholderTextColor="#D5CDF3"
+            placeholderTextColor="#E4DFFF"
             autoFocus={index === 0}
           />
         ))}
@@ -86,7 +86,7 @@ export function VerificationInput({
           className="mb-4 h-14 rounded-2xl bg-primary active:bg-primary/90"
         >
           {isVerifying ? (
-            <ActivityIndicator color="#002E5D" />
+            <ActivityIndicator color="#6e54ff" />
           ) : (
             <Text className="text-base font-medium text-primary-foreground">{t('auth.verify')}</Text>
           )}

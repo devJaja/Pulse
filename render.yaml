@@ -1,10 +1,10 @@
 services:
   - type: web
-    name: linkora-socials-backend
+    name: pulse-socials-backend
     runtime: node
     region: oregon
     plan: free
-    rootDir: linkora-socials-backend
+    rootDir: pulse-socials-backend
     buildCommand: pnpm install --frozen-lockfile && cd apps/backend && pnpm run build
     startCommand: cd apps/backend && pnpm run start:prod
     healthCheckPath: /api/health
@@ -12,7 +12,7 @@ services:
       - key: NODE_ENV
         value: production
       - key: API_URL
-        value: https://linkora-socials.onrender.com
+        value: https://pulse-socials.onrender.com
       - key: PORT
         value: 3000
       - key: NODE_VERSION
@@ -27,12 +27,22 @@ services:
         sync: false
       - key: BACKEND_SECRET
         sync: false
-      - key: STELLAR_NETWORK
+      - key: MONAD_NETWORK
         value: testnet
-      - key: STELLAR_HORIZON_URL
-        value: https://horizon-testnet.stellar.org
-      - key: STELLAR_FRIENDBOT_URL
-        value: https://friendbot.stellar.org
+      - key: MONAD_RPC_URL
+        value: https://testnet-rpc.monad.xyz
+      - key: MONAD_CHAIN_ID
+        value: "10143"
+      - key: MONAD_EXPLORER_URL
+        value: https://testnet.monadexplorer.com
+      - key: MONAD_EXPLORER_API_URL
+        sync: false
+      - key: MONAD_USDC_ADDRESS
+        sync: false
+      - key: MONAD_USDT_ADDRESS
+        sync: false
+      - key: AIRDROP_AMOUNT
+        value: "1"
       - key: PUSHER_APP_ID
         sync: false
       - key: PUSHER_KEY
@@ -44,13 +54,13 @@ services:
       - key: BREVO_API_KEY
         sync: false
       - key: BREVO_SENDER_EMAIL
-        value: linkora56@gmail.com
+        value: pulse56@gmail.com
       - key: BREVO_SENDER_NAME
-        value: "Linkora"
+        value: "Pulse"
       - key: GMAIL_USER
-        value: linkora56@gmail.com
+        value: pulse56@gmail.com
       - key: GMAIL_FROM
-        value: "Linkora <linkora56@gmail.com>"
+        value: "Pulse <pulse56@gmail.com>"
       - key: GMAIL_APP_PASSWORD
         sync: false
       - key: FIREBASE_SERVICE_ACCOUNT

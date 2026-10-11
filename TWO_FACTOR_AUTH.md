@@ -264,7 +264,7 @@ const formatted = twoFactor.formatRecoveryCode('12345678'); // "1234-5678"
 ### Files Created/Modified
 
 #### Backend Services
-- `linkora-socials-app/apps/backend/src/modules/auth/two-factor.service.ts` - Complete 2FA service
+- `pulse-socials-app/apps/backend/src/modules/auth/two-factor.service.ts` - Complete 2FA service
   - TOTP secret generation using speakeasy
   - QR code generation
   - Token verification with time window
@@ -273,8 +273,8 @@ const formatted = twoFactor.formatRecoveryCode('12345678'); // "1234-5678"
   - Temporary login token generation
 
 #### Auth Module Updates
-- `linkora-socials-app/apps/backend/src/modules/auth/auth.module.ts` - Added TwoFactorService to providers
-- `linkora-socials-app/apps/backend/src/modules/auth/auth.service.ts` - Added 2FA methods:
+- `pulse-socials-app/apps/backend/src/modules/auth/auth.module.ts` - Added TwoFactorService to providers
+- `pulse-socials-app/apps/backend/src/modules/auth/auth.service.ts` - Added 2FA methods:
   - `setup2FA()` - Generate secret and QR code
   - `verify2FA()` - Verify code and enable 2FA
   - `disable2FA()` - Disable 2FA for account
@@ -283,7 +283,7 @@ const formatted = twoFactor.formatRecoveryCode('12345678'); // "1234-5678"
   - `resetPassword()` - Reset password with token
 
 #### Auth Controller
-- `linkora-socials-app/apps/backend/src/modules/auth/auth.controller.ts` - Added endpoints:
+- `pulse-socials-app/apps/backend/src/modules/auth/auth.controller.ts` - Added endpoints:
   - `POST /auth/2fa/setup` - Setup 2FA
   - `POST /auth/2fa/verify` - Verify and enable 2FA
   - `POST /auth/2fa/disable` - Disable 2FA
@@ -293,12 +293,12 @@ const formatted = twoFactor.formatRecoveryCode('12345678'); // "1234-5678"
   - `POST /auth/password/reset` - Reset password
 
 #### Email Service
-- `linkora-socials-app/apps/backend/src/modules/email/email.service.ts` - Added methods:
+- `pulse-socials-app/apps/backend/src/modules/email/email.service.ts` - Added methods:
   - `sendPasswordResetEmail()` - Send reset code email
   - `sendPasswordChangedEmail()` - Send password change confirmation
 
 #### User Schema
-- `linkora-socials-app/apps/backend/src/schemas/user.schema.ts` - Added fields:
+- `pulse-socials-app/apps/backend/src/schemas/user.schema.ts` - Added fields:
   - `twoFactorEnabled` - Boolean flag
   - `twoFactorSecret` - Encrypted TOTP secret
   - `recoveryCodes` - Array of hashed recovery codes
@@ -308,12 +308,12 @@ const formatted = twoFactor.formatRecoveryCode('12345678'); // "1234-5678"
   - `passwordResetExpires` - Token expiration
 
 #### DTOs
-- `linkora-socials-app/apps/backend/src/modules/auth/dto/two-factor.dto.ts` - 2FA request/response types
-- `linkora-socials-app/apps/backend/src/modules/auth/dto/password-reset.dto.ts` - Password reset types
+- `pulse-socials-app/apps/backend/src/modules/auth/dto/two-factor.dto.ts` - 2FA request/response types
+- `pulse-socials-app/apps/backend/src/modules/auth/dto/password-reset.dto.ts` - Password reset types
 
 ### Environment Configuration
 
-The following environment variable is configured in `linkora-socials-app/apps/backend/.env`:
+The following environment variable is configured in `pulse-socials-app/apps/backend/.env`:
 
 ```env
 ENCRYPTION_KEY=0000000000000000000000000000000000000000000000000000000000000000

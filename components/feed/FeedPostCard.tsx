@@ -114,11 +114,11 @@ export function FeedPostCard({
               className="h-10 w-10 rounded-full bg-secondary"
             />
           ) : (
-            <View className="h-10 w-10 items-center justify-center rounded-full bg-[#EAE6F8] dark:bg-[#262147]">
+            <View className="h-10 w-10 items-center justify-center rounded-full bg-[#E4DFFF] dark:bg-[#1D1554]">
               <Icon
                 as={User}
                 size={19}
-                className="text-[#4E448C] dark:text-[#B7ACE8]"
+                className="text-[#5A3FE0] dark:text-[#b8b4fe]"
               />
             </View>
           )}
@@ -134,9 +134,9 @@ export function FeedPostCard({
         </Pressable>
 
         {post.isTokenized && (
-          <View className="flex-row items-center gap-1 rounded-full bg-[#FFFCEB] px-2 py-1 dark:bg-[#423402]">
-            <Icon as={Coins} size={11} className="text-[#967907] dark:text-gold" />
-            <Text className="text-[10.5px] font-semibold text-[#967907] dark:text-gold">
+          <View className="flex-row items-center gap-1 rounded-full bg-[#F1EEFF] px-2 py-1 dark:bg-[#1D1554]">
+            <Icon as={Coins} size={11} className="text-[#6E54FF] dark:text-gold" />
+            <Text className="text-[10.5px] font-semibold text-[#6E54FF] dark:text-gold">
               Token
             </Text>
           </View>
@@ -174,7 +174,7 @@ export function FeedPostCard({
           <View className="flex-row items-center gap-2">
             <Icon as={Coins} size={15} className="text-foreground" />
             <Text className="text-[12.5px] font-medium text-foreground">
-              {post.tokenSupply} @ {post.tokenPrice} XLM
+              {post.tokenSupply} @ {post.tokenPrice} MON
             </Text>
           </View>
           <Pressable

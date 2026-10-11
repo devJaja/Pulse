@@ -4,7 +4,7 @@ import { Icon } from '@/components/ui/icon';
 import { ArrowLeft, Share } from 'lucide-react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
-import { usePost, usePosts } from '@/hooks/usePosts';
+import { usePost, usePosts, usePostTipRewards, useClaimTip } from '@/hooks/usePosts';
 import { useComments } from '@/hooks/useComments';
 import type { Comment } from '@/types';
 import { toast } from 'sonner-native';
@@ -26,6 +26,9 @@ export default function PostDetailsScreen() {
   const post = postData as any;
   const { comments, isLoading: isLoadingComments, createComment, isCreatingComment } = useComments(id || '');
   const { buyToken, isBuyingToken, likePost, unlikePost, tipPost, isTippingPost } = usePosts();
+  const { data: tipRewards } = usePostTipRewards(id || '');
+  const { mutate: claimTip, isPending: isClaiming } = useClaimTip(id || '');
+  const pendingMon = tipRewards?.pendingMon ?? 0;
   const [showTipModal, setShowTipModal] = useState(false);
   const [showBuyTokenModal, setShowBuyTokenModal] = useState(false);
   const [replyingTo, setReplyingTo] = useState<string | null>(null);
@@ -92,8 +95,8 @@ export default function PostDetailsScreen() {
     if (!post) return;
     
     try {
-      const shareUrl = `https://linkora.app/post/${post.id}`;
-      const message = `Check out this post by @${post.author.username} on Linkora-Social!\n\n"${post.content.slice(0, 100)}${post.content.length > 100 ? '...' : ''}"\n\n${shareUrl}`;
+      const shareUrl = `https://pulse.app/post/${post.id}`;
+      const message = `Check out this post by @${post.author.username} on Pulse!\n\n"${post.content.slice(0, 100)}${post.content.length > 100 ? '...' : ''}"\n\n${shareUrl}`;
       
       await RNShare.share({
         message: Platform.OS === 'ios' ? message : message,
@@ -154,6 +157,32 @@ export default function PostDetailsScreen() {
             onTip={() => setShowTipModal(true)}
             onBuyToken={post.isTokenized ? () => setShowBuyTokenModal(true) : undefined}
           />
+
+          {/* Claimable early-backer rewards */}
+          {pendingMon > 0 && (
+            <View className="mx-4 mt-3 flex-row items-center justify-between rounded-2xl border border-primary/30 bg-primary/10 p-4">
+              <View className="flex-1 pr-3">
+                <Text className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                  Early-backer rewards
+                </Text>
+                <Text className="mt-1 text-xl font-bold text-foreground">
+                  {pendingMon.toFixed(4)} MON
+                </Text>
+                <Text className="mt-1 text-xs text-muted-foreground">
+                  Your share of this post&apos;s tip pool
+                </Text>
+              </View>
+              <TouchableOpacity
+                onPress={() => claimTip()}
+                disabled={isClaiming}
+                className={`rounded-full bg-primary px-5 py-2.5 ${isClaiming ? 'opacity-60' : ''}`}
+              >
+                <Text className="font-semibold text-primary-foreground">
+                  {isClaiming ? 'Claiming...' : 'Claim'}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          )}
 
           {/* Comments Section Header */}
           <View className="mt-2 bg-card">

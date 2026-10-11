@@ -1,10 +1,10 @@
 class CoinGeckoService {
   private baseUrl = 'https://api.coingecko.com/api/v3';
 
-  async getXLMPrice(): Promise<number> {
+  async getMONPrice(): Promise<number> {
     try {
       const response = await fetch(
-        `${this.baseUrl}/simple/price?ids=stellar&vs_currencies=usd`,
+        `${this.baseUrl}/simple/price?ids=monad&vs_currencies=usd`,
         {
           method: 'GET',
           headers: {
@@ -19,9 +19,9 @@ class CoinGeckoService {
       }
       
       const data = await response.json();
-      const price = data.stellar?.usd || 0;
+      const price = data.monad?.usd || 0;
       
-      console.log('CoinGecko XLM price:', price);
+      console.log('CoinGecko MON price:', price);
       return price;
     } catch (error) {
       console.error('CoinGecko price error:', error);

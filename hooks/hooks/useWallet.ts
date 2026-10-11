@@ -38,10 +38,10 @@ export function useWallet() {
     initialPageParam: 1 as number,
   });
 
-  // Send XLM
-  const sendXlmMutation = useMutation({
+  // Send MON
+  const sendMonMutation = useMutation({
     mutationFn: async ({ toAddress, amount, memo }: { toAddress: string; amount: number; memo?: string }) => {
-      const response = await api.sendXlm(toAddress, amount, memo);
+      const response = await api.sendMon(toAddress, amount, memo);
       if (response.error) throw new Error(response.error);
       return response.data;
     },
@@ -67,8 +67,8 @@ export function useWallet() {
     hasNextPage,
     isFetchingNextPage,
     refetchTransactions,
-    sendXlm: sendXlmMutation.mutate,
-    isSending: sendXlmMutation.isPending,
+    sendMon: sendMonMutation.mutate,
+    isSending: sendMonMutation.isPending,
   };
 }
 

@@ -25,8 +25,8 @@ export default function ReceiveMoneyScreen() {
     
     try {
       await Share.share({
-        message: `Send XLM to my wallet:\n${walletAddress}`,
-        title: 'My Stellar Wallet Address',
+        message: `Send MON to my wallet:\n${walletAddress}`,
+        title: 'My Monad Wallet Address',
       });
     } catch (error) {
       console.error('Error sharing:', error);
@@ -41,13 +41,13 @@ export default function ReceiveMoneyScreen() {
           <TouchableOpacity onPress={() => router.back()}>
             <Icon as={ArrowLeft} size={24} className="text-foreground" />
           </TouchableOpacity>
-          <Text className="text-2xl font-bold">Receive XLM</Text>
+          <Text className="text-2xl font-bold">Receive MON</Text>
         </View>
 
         {/* Balance Display */}
         <View className="mx-4 mt-6 rounded-2xl bg-purple-50 p-4">
           <Text className="text-sm text-muted-foreground">Current Balance</Text>
-          <Text className="mt-1 text-2xl font-bold text-purple-600">{balance.toFixed(4)} XLM</Text>
+          <Text className="mt-1 text-2xl font-bold text-purple-600">{balance.toFixed(4)} MON</Text>
         </View>
 
         {/* QR Code Section */}
@@ -96,7 +96,7 @@ export default function ReceiveMoneyScreen() {
                 )}
               </View>
               <Text className="mt-6 text-center text-sm text-muted-foreground">
-                Scan this QR code to send XLM to this wallet
+                Scan this QR code to send MON to this wallet
               </Text>
               
               {/* Wallet Address Preview */}
@@ -145,7 +145,7 @@ export default function ReceiveMoneyScreen() {
         {/* How to Receive */}
         <View className="mt-6 px-4 pb-6">
           <View className="rounded-2xl border-2 border-purple-200 bg-purple-50 p-6">
-            <Text className="text-lg font-semibold text-purple-900">How to Receive XLM</Text>
+            <Text className="text-lg font-semibold text-purple-900">How to Receive MON</Text>
             <View className="mt-4 gap-3">
               <View className="flex-row gap-3">
                 <View className="h-6 w-6 items-center justify-center rounded-full bg-primary">
@@ -170,7 +170,7 @@ export default function ReceiveMoneyScreen() {
                   <Text className="text-xs font-bold text-primary-foreground">3</Text>
                 </View>
                 <Text className="flex-1 text-sm text-muted-foreground">
-                  Funds arrive in your wallet within seconds on Stellar
+                  Funds arrive in your wallet within seconds on Monad
                 </Text>
               </View>
             </View>
@@ -180,7 +180,7 @@ export default function ReceiveMoneyScreen() {
           <View className="mt-4 rounded-2xl bg-gray-50 p-4">
             <View className="flex-row items-center justify-between">
               <Text className="text-sm text-muted-foreground">Network</Text>
-              <Text className="text-sm font-medium">Stellar Testnet</Text>
+              <Text className="text-sm font-medium">Monad Testnet</Text>
             </View>
             <View className="mt-2 flex-row items-center justify-between">
               <Text className="text-sm text-muted-foreground">Transaction Speed</Text>
@@ -188,7 +188,7 @@ export default function ReceiveMoneyScreen() {
             </View>
             <View className="mt-2 flex-row items-center justify-between">
               <Text className="text-sm text-muted-foreground">Network Fee</Text>
-              <Text className="text-sm font-medium">~0.00001 XLM</Text>
+              <Text className="text-sm font-medium">~0.00001 MON</Text>
             </View>
           </View>
         </View>

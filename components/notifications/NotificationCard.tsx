@@ -64,7 +64,7 @@ export function NotificationCard({ notification, onPress }: NotificationCardProp
               <Text className="font-medium">{notification.message}</Text>
               {notification.amount && (
                 <Text className="mt-1 text-sm font-semibold text-success">
-                  {notification.amount} XLM
+                  {notification.amount} MON
                 </Text>
               )}
               {notification.post && (
@@ -74,7 +74,7 @@ export function NotificationCard({ notification, onPress }: NotificationCardProp
               )}
             </View>
             {!notification.isRead && (
-              <View className="ml-2 h-2 w-2 rounded-full bg-[#002E5D]" />
+              <View className="ml-2 h-2 w-2 rounded-full bg-[#0e100f]" />
             )}
           </View>
           <Text className="mt-1 text-xs text-muted-foreground">

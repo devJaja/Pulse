@@ -1,9 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const KEYS = {
-  TOKEN: '@linkora:token',
-  USER: '@linkora:user',
-  ONBOARDING_COMPLETED: '@linkora:onboarding_completed',
+  TOKEN: '@pulse:token',
+  USER: '@pulse:user',
+  ONBOARDING_COMPLETED: '@pulse:onboarding_completed',
 };
 
 export const storage = {

@@ -50,7 +50,7 @@ export default function TransactionDetailsScreen() {
   };
 
   const openInExplorer = () => {
-    const url = `https://stellar.expert/explorer/testnet/tx/${signature}`;
+    const url = `https://testnet.monadexplorer.com/tx/${signature}`;
     Linking.openURL(url);
   };
 
@@ -99,7 +99,7 @@ export default function TransactionDetailsScreen() {
   if (isLoading) {
     return (
       <View className="flex-1 items-center justify-center bg-background">
-        <ActivityIndicator size="large" color="#002E5D" />
+        <ActivityIndicator size="large" color="#6e54ff" />
       </View>
     );
   }
@@ -139,17 +139,17 @@ export default function TransactionDetailsScreen() {
         </View>
 
         {/* Amount Card */}
-        <View className="mx-4 mb-4 rounded-2xl bg-gradient-to-r from-[#002E5D] to-[#05A2C2] p-6">
+        <View className="mx-4 mb-4 rounded-2xl bg-gradient-to-r from-[#6e54ff] to-[#8270ff] p-6">
           <View className="flex-row items-center justify-center gap-2">
             {getTypeIcon(transaction.type)}
             <Text className="text-sm text-white/80 capitalize">{transaction.type}</Text>
           </View>
           <Text className="mt-2 text-center text-4xl font-bold text-white">
-            {transaction.type === 'send' ? '-' : '+'}{transaction.amount.toFixed(4)} XLM
+            {transaction.type === 'send' ? '-' : '+'}{transaction.amount.toFixed(4)} MON
           </Text>
           {transaction.fee && (
             <Text className="mt-2 text-center text-sm text-white/70">
-              Fee: {transaction.fee.toFixed(6)} XLM
+              Fee: {transaction.fee.toFixed(6)} MON
             </Text>
           )}
         </View>
@@ -235,7 +235,7 @@ export default function TransactionDetailsScreen() {
             className="flex-row items-center justify-center gap-2 rounded-xl bg-primary py-4"
           >
             <Icon as={ExternalLink} size={20} className="text-primary-foreground" />
-            <Text className="font-semibold text-primary-foreground">View on StellarExpert</Text>
+            <Text className="font-semibold text-primary-foreground">View on Monad Explorer</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -250,7 +250,7 @@ export default function TransactionDetailsScreen() {
         {/* Network Info */}
         <View className="mx-4 mb-6 rounded-2xl bg-purple-50 p-4">
           <Text className="text-center text-sm text-purple-700">
-            🌐 Stellar Testnet Transaction
+            🌐 Monad Testnet Transaction
           </Text>
         </View>
       </ScrollView>

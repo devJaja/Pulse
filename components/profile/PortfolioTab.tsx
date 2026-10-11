@@ -19,7 +19,7 @@ export function PortfolioTab({ portfolio, isLoading, isOwnProfile, onNavigateToP
   if (isLoading) {
     return (
       <View className="items-center py-20">
-        <ActivityIndicator size="large" color="#002E5D" />
+        <ActivityIndicator size="large" color="#6e54ff" />
       </View>
     );
   }
@@ -37,10 +37,10 @@ export function PortfolioTab({ portfolio, isLoading, isOwnProfile, onNavigateToP
   return (
     <View className="px-4 py-4">
       {/* Portfolio Summary */}
-      <View className="mb-4 rounded-2xl bg-[#002E5D] p-6">
+      <View className="mb-4 rounded-2xl bg-[#0e100f] p-6">
         <Text className="text-sm text-white/80">{t('profile.totalPortfolioValue')}</Text>
         <Text className="mt-1 text-3xl font-bold text-white">
-          {portfolio.totalValue.toFixed(4)} XLM
+          {portfolio.totalValue.toFixed(4)} MON
         </Text>
         <View className="mt-3 flex-row items-center gap-2">
           <Icon 
@@ -49,7 +49,7 @@ export function PortfolioTab({ portfolio, isLoading, isOwnProfile, onNavigateToP
             className={portfolio.totalProfitLoss >= 0 ? "text-success" : "text-red-300"}
           />
           <Text className={`font-semibold ${portfolio.totalProfitLoss >= 0 ? 'text-success' : 'text-red-300'}`}>
-            {portfolio.totalProfitLoss >= 0 ? '+' : ''}{portfolio.totalProfitLoss.toFixed(4)} XLM
+            {portfolio.totalProfitLoss >= 0 ? '+' : ''}{portfolio.totalProfitLoss.toFixed(4)} MON
           </Text>
           <Text className={`text-sm ${portfolio.totalProfitLoss >= 0 ? 'text-success' : 'text-red-300'}`}>
             ({portfolio.totalProfitLossPercentage >= 0 ? '+' : ''}{portfolio.totalProfitLossPercentage.toFixed(2)}%)
@@ -59,7 +59,7 @@ export function PortfolioTab({ portfolio, isLoading, isOwnProfile, onNavigateToP
           <View>
             <Text className="text-xs text-white/60">{t('profile.invested')}</Text>
             <Text className="text-sm font-semibold text-white">
-              {portfolio.totalInvested.toFixed(4)} XLM
+              {portfolio.totalInvested.toFixed(4)} MON
             </Text>
           </View>
           <View>
@@ -118,7 +118,7 @@ export function PortfolioTab({ portfolio, isLoading, isOwnProfile, onNavigateToP
             </View>
             <View>
               <Text className="text-xs text-muted-foreground">{t('profile.value')}</Text>
-              <Text className="font-semibold">{holding.currentValue.toFixed(4)} XLM</Text>
+              <Text className="font-semibold">{holding.currentValue.toFixed(4)} MON</Text>
             </View>
           </View>
         </TouchableOpacity>

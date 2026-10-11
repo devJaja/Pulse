@@ -10,12 +10,12 @@ import { api } from '@/lib/api';
 
 const multipliers = [
   { value: 0, color: '#FF3F00', label: '0x' },
-  { value: 1.5, color: '#FDDA24', label: '1.5x' },
-  { value: 2, color: '#05A2C2', label: '2x' },
-  { value: 0.5, color: '#6F6F7A', label: '0.5x' },
-  { value: 3, color: '#002E5D', label: '3x' },
-  { value: 1, color: '#B7ACE8', label: '1x' },
-  { value: 5, color: '#9A8CE0', label: '5x' },
+  { value: 1.5, color: '#6e54ff', label: '1.5x' },
+  { value: 2, color: '#8270ff', label: '2x' },
+  { value: 0.5, color: '#565666', label: '0.5x' },
+  { value: 3, color: '#6e54ff', label: '3x' },
+  { value: 1, color: '#b8b4fe', label: '1x' },
+  { value: 5, color: '#8270FF', label: '5x' },
   { value: 0, color: '#FF3F00', label: '0x' },
 ];
 
@@ -66,7 +66,7 @@ export default function SpinScreen() {
         setSpinCount(spinCount + 1);
 
         if (multiplier > 0) {
-          toast.success(`${multiplier}x! You won ${winAmount.toFixed(4)} XLM!`);
+          toast.success(`${multiplier}x! You won ${winAmount.toFixed(4)} MON!`);
           setTotalWon(totalWon + winAmount);
         } else {
           toast.error('Better luck next time!');
@@ -143,7 +143,7 @@ export default function SpinScreen() {
               <Text className="text-sm text-pink-700 dark:text-pink-300">Total Won</Text>
             </View>
             <Text className="mt-1 text-2xl font-bold text-pink-700 dark:text-pink-300">
-              {totalWon.toFixed(4)} XLM
+              {totalWon.toFixed(4)} MON
             </Text>
           </View>
           <View className="flex-1 rounded-xl bg-purple-50 dark:bg-purple-950 p-4">
@@ -174,17 +174,17 @@ export default function SpinScreen() {
         <View className="mx-4 mt-6">
           {/* Bet Amount */}
           <View className="rounded-2xl bg-card p-4">
-            <Text className="text-sm text-muted-foreground">Bet Amount (XLM)</Text>
+            <Text className="text-sm text-muted-foreground">Bet Amount (MON)</Text>
             <TextInput
               value={betAmount}
               onChangeText={setBetAmount}
               placeholder="0.1"
               keyboardType="decimal-pad"
               className="mt-2 text-2xl font-bold text-foreground"
-              placeholderTextColor="#8C8C98"
+              placeholderTextColor="#727285"
             />
             <Text className="mt-2 text-sm text-muted-foreground">
-              Balance: {balance.toFixed(4)} XLM
+              Balance: {balance.toFixed(4)} MON
             </Text>
           </View>
 

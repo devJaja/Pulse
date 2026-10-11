@@ -23,7 +23,7 @@ export default function SwapHistoryScreen() {
   return (
     <View className="flex-1 bg-background">
       {/* Header */}
-      <View className="bg-[#002E5D] px-4 pb-6 pt-12">
+      <View className="bg-[#0e100f] px-4 pb-6 pt-12">
         <View className="flex-row items-center gap-4">
           <TouchableOpacity onPress={() => router.back()}>
             <Icon as={ArrowLeft} size={24} className="text-white" />
@@ -47,7 +47,7 @@ export default function SwapHistoryScreen() {
         <View className="mt-6 pb-6">
           {isLoading ? (
             <View className="items-center py-10">
-              <ActivityIndicator size="large" color="#002E5D" />
+              <ActivityIndicator size="large" color="#6e54ff" />
             </View>
           ) : swaps.length === 0 ? (
             <View className="items-center py-10">
@@ -106,7 +106,7 @@ export default function SwapHistoryScreen() {
               ))}
               {isFetchingNextPage && (
                 <View className="py-4">
-                  <ActivityIndicator size="small" color="#002E5D" />
+                  <ActivityIndicator size="small" color="#6e54ff" />
                 </View>
               )}
               {!hasNextPage && swaps.length > 0 && (

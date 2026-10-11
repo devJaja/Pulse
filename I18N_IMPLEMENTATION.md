@@ -2,7 +2,7 @@
 
 ## Status: ✅ COMPLETE
 
-Multi-language support has been implemented for Linkora using i18next and react-i18next.
+Multi-language support has been implemented for Pulse using i18next and react-i18next.
 
 ## Features
 

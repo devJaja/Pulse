@@ -19,6 +19,7 @@ import {
   IBMPlexMono_500Medium,
   useFonts as useMonoFonts,
 } from '@expo-google-fonts/ibm-plex-mono';
+import { useFonts as useBrandFonts } from 'expo-font';
 import { Toaster } from 'sonner-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -181,7 +182,7 @@ function RootLayoutContent() {
     }
   };
 
-  // Screens with a full-bleed navy surface need light status bar content.
+  // Screens with a full-bleed off-black surface need light status bar content.
   const darkScreens = ['/(tabs)/wallet/history', '/wallet/transactions', '/mini-apps'];
   const usesNavySurface = darkScreens.some((route) => pathname.startsWith(route));
 
@@ -196,7 +197,7 @@ function RootLayoutContent() {
     <ThemeProvider value={theme === 'dark' ? NAV_THEME.dark : NAV_THEME.light}>
       <StatusBar
         style={getStatusBarStyle()}
-        backgroundColor={usesNavySurface ? '#002E5D' : undefined}
+        backgroundColor={usesNavySurface ? '#0e100f' : undefined}
       />
       <Stack screenOptions={{ headerShown: false }} />
       <PortalHost />
@@ -218,7 +219,16 @@ export default function RootLayout() {
     IBMPlexMono_500Medium,
   });
 
-  const isFontsLoaded = interLoaded && monoLoaded;
+  // Monad brand display font (Britti Sans) for headings, logo and emphasis.
+  const [brandLoaded] = useBrandFonts({
+    BrittiSans_400Regular: require('../assets/fonts/BrittiSans_400Regular.ttf'),
+    BrittiSans_500Medium: require('../assets/fonts/BrittiSans_500Medium.ttf'),
+    BrittiSans_600SemiBold: require('../assets/fonts/BrittiSans_600SemiBold.ttf'),
+    BrittiSans_700Bold: require('../assets/fonts/BrittiSans_700Bold.ttf'),
+    BrittiSans_800ExtraBold: require('../assets/fonts/BrittiSans_800ExtraBold.ttf'),
+  });
+
+  const isFontsLoaded = interLoaded && monoLoaded && brandLoaded;
 
   useEffect(() => {
     if (isFontsLoaded) {

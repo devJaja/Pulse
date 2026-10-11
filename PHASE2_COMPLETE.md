@@ -5,7 +5,7 @@
 ### Wallet Components (`components/wallet/`)
 1. **TokenCard.tsx** - Display token balance with price and 24h change
 2. **TransactionCard.tsx** - Transaction history item with status
-3. **SendForm.tsx** - Send XLM form with validation
+3. **SendForm.tsx** - Send MON form with validation
 
 ### Chat Components (`components/chat/`)
 1. **ChatCard.tsx** - Chat list item with unread badge
@@ -59,8 +59,8 @@
 import { TokenCard, TransactionCard, SendForm } from '@/components/wallet';
 
 <TokenCard
-  symbol="XLM"
-  name="Stellar"
+  symbol="MON"
+  name="Monad"
   balance={10.5}
   value={1050}
   change24h={5.2}

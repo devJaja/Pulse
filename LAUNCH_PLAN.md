@@ -1,8 +1,8 @@
-# Linkora Launch Plan - March 30, 2025
+# Pulse Launch Plan - March 30, 2025
 
 ## Executive Summary
 
-Comprehensive launch strategy for Linkora across iOS App Store, Google Play Store, and Stellar dApp stores on March 30, 2025.
+Comprehensive launch strategy for Pulse across iOS App Store, Google Play Store, and Monad dApp stores on March 30, 2025.
 
 ## Pre-Launch Checklist (Complete by March 25)
 
@@ -105,7 +105,7 @@ Comprehensive launch strategy for Linkora across iOS App Store, Google Play Stor
 
 ### iOS App Store
 - **Category**: Social Networking
-- **Keywords**: social media, blockchain, crypto, Stellar, creator economy
+- **Keywords**: social media, blockchain, crypto, Monad, creator economy
 - **Screenshots**: 6-8 optimized for iPhone and iPad
 - **Preview Video**: 30-second app demo
 - **Description**: Compelling copy highlighting key features
@@ -123,8 +123,8 @@ Comprehensive launch strategy for Linkora across iOS App Store, Google Play Stor
 ### Web Store
 - **Category**: Social & Communication
 - **Tags**: social-fi, creator-economy, mobile
-- **Integration**: Deep linking to Stellar wallets
-- **Verification**: Stellar Development Foundation (SDF) verification badge
+- **Integration**: Deep linking to Monad wallets
+- **Verification**: Monad Foundation verification badge
 - **Documentation**: Developer docs for integrations
 
 ## Marketing Channels
@@ -147,7 +147,7 @@ Comprehensive launch strategy for Linkora across iOS App Store, Google Play Stor
 ### PR & Media
 - Crypto news outlets (CoinDesk, The Block, Decrypt)
 - Tech publications (TechCrunch, VentureBeat)
-- Stellar ecosystem media
+- Monad ecosystem media
 - Podcast interviews
 - Twitter Spaces and AMAs
 
@@ -162,12 +162,12 @@ Comprehensive launch strategy for Linkora across iOS App Store, Google Play Stor
 ## Partnerships & Integrations
 
 ### Launch Partners
-- Stellar Development Foundation (SDF)
+- Monad Foundation
 - LOBSTR
 - LOBSTR Wallet
 - Freighter Wallet
-- Stellar NFT marketplaces
-- Key Stellar projects
+- Monad NFT marketplaces
+- Key Monad projects
 
 ### Integration Opportunities
 - Wallet providers

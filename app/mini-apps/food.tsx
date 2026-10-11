@@ -117,7 +117,7 @@ export default function FoodOrderingScreen() {
               <Icon as={UtensilsCrossed} size={40} className="text-white" />
             </View>
             <Text className="mt-3 text-center text-sm text-white/90">
-              Order delicious food and pay with XLM
+              Order delicious food and pay with MON
             </Text>
           </View>
 
@@ -129,7 +129,7 @@ export default function FoodOrderingScreen() {
               onChangeText={setSearchQuery}
               placeholder="Search for food..."
               className="flex-1 text-base text-foreground"
-              placeholderTextColor="#8C8C98"
+              placeholderTextColor="#727285"
             />
           </View>
         </View>
@@ -179,7 +179,7 @@ export default function FoodOrderingScreen() {
                     <Text className="mt-1 text-sm text-muted-foreground">{item.description}</Text>
                     <View className="mt-2 flex-row items-center justify-between">
                       <Text className="text-lg font-bold text-orange-600">
-                        {item.price.toFixed(3)} XLM
+                        {item.price.toFixed(3)} MON
                       </Text>
                       {cart[item.id] ? (
                         <View className="flex-row items-center gap-2">
@@ -241,11 +241,11 @@ export default function FoodOrderingScreen() {
                       <View className="flex-1">
                         <Text className="font-semibold">{item!.name}</Text>
                         <Text className="text-sm text-muted-foreground">
-                          {item!.quantity} x {item!.price.toFixed(3)} XLM
+                          {item!.quantity} x {item!.price.toFixed(3)} MON
                         </Text>
                       </View>
                       <Text className="font-bold">
-                        {(item!.price * item!.quantity).toFixed(3)} XLM
+                        {(item!.price * item!.quantity).toFixed(3)} MON
                       </Text>
                     </View>
                   ))}
@@ -262,7 +262,7 @@ export default function FoodOrderingScreen() {
                     onChangeText={setDeliveryAddress}
                     placeholder="Enter your address..."
                     className="flex-1 text-base text-foreground"
-                    placeholderTextColor="#8C8C98"
+                    placeholderTextColor="#727285"
                   />
                 </View>
               </View>
@@ -280,11 +280,11 @@ export default function FoodOrderingScreen() {
                 <View className="flex-row items-center justify-between">
                   <Text className="text-lg font-semibold">Total</Text>
                   <Text className="text-2xl font-bold text-orange-600">
-                    {totalPrice.toFixed(3)} XLM
+                    {totalPrice.toFixed(3)} MON
                   </Text>
                 </View>
                 <Text className="mt-1 text-sm text-muted-foreground">
-                  Balance: {balance.toFixed(4)} XLM
+                  Balance: {balance.toFixed(4)} MON
                 </Text>
               </View>
 

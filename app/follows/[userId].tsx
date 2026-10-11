@@ -168,7 +168,7 @@ export default function FollowsScreen() {
               value={searchQuery}
               onChangeText={setSearchQuery}
               placeholder={`Search ${activeTab}...`}
-              placeholderTextColor="#8C8C98"
+              placeholderTextColor="#727285"
               className="flex-1 text-foreground"
             />
             {searchQuery.length > 0 && (
@@ -183,7 +183,7 @@ export default function FollowsScreen() {
       {/* Users List */}
       {isLoading ? (
         <View className="flex-1 items-center justify-center">
-          <ActivityIndicator size="large" color="#002E5D" />
+          <ActivityIndicator size="large" color="#6e54ff" />
         </View>
       ) : filteredUsers.length === 0 ? (
         <View className="flex-1 items-center justify-center px-8">

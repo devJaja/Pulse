@@ -32,7 +32,7 @@ const Input = React.forwardRef<React.ElementRef<typeof TextInput>, InputProps>(
               isPassword && 'pr-12',
               className
             )}
-            placeholderTextColor={isDark ? '#6F6F7A' : '#8C8C98'}
+            placeholderTextColor={isDark ? '#565666' : '#727285'}
             secureTextEntry={isPassword && !isPasswordVisible}
             onFocus={(e) => {
               setIsFocused(true);
@@ -51,9 +51,9 @@ const Input = React.forwardRef<React.ElementRef<typeof TextInput>, InputProps>(
               className="absolute right-4 top-0 h-14 justify-center"
             >
               {isPasswordVisible ? (
-                <EyeOff size={20} color={isDark ? '#8C8C98' : '#6F6F7A'} />
+                <EyeOff size={20} color={isDark ? '#727285' : '#565666'} />
               ) : (
-                <Eye size={20} color={isDark ? '#8C8C98' : '#6F6F7A'} />
+                <Eye size={20} color={isDark ? '#727285' : '#565666'} />
               )}
             </Pressable>
           )}

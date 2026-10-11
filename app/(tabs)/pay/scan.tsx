@@ -35,7 +35,7 @@ export default function ScanQRScreen() {
           
           {/* Scanning line */}
           {isScanning && (
-            <View className="absolute h-1 w-full bg-[#002E5D]" />
+            <View className="absolute h-1 w-full bg-[#0e100f]" />
           )}
         </View>
       </View>

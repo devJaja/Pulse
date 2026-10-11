@@ -50,7 +50,7 @@ export default function ContactsScreen() {
             <Icon as={Search} size={20} className="text-muted-foreground" />
             <TextInput
               placeholder="Search contacts"
-              placeholderTextColor="#8C8C98"
+              placeholderTextColor="#727285"
               className="flex-1 text-base text-foreground"
             />
           </View>

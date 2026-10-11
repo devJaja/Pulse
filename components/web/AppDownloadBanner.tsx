@@ -4,7 +4,7 @@ import { Linking as RNLinking, Platform, Pressable, Text, View } from 'react-nat
 const APK_URL =
   process.env.EXPO_PUBLIC_APK_URL ||
   'https://expo.dev/artifacts/eas/0BBF4LyT28P_GDXwACOtHzN-hyeo8KPyfjIWAQniWWg.apk';
-const DISMISS_KEY = 'linkora:download_banner:dismissed';
+const DISMISS_KEY = 'pulse:download_banner:dismissed';
 
 function isAndroidWeb() {
   if (Platform.OS !== 'web' || typeof window === 'undefined') return false;
@@ -40,7 +40,7 @@ export default function AppDownloadBanner() {
         right: 0,
         bottom: 0,
         zIndex: 1000,
-        backgroundColor: '#002E5D',
+        backgroundColor: '#6e54ff',
         borderTopWidth: 1,
         borderTopColor: 'rgba(247, 201, 72, 0.35)',
         flexDirection: 'row',
@@ -60,18 +60,18 @@ export default function AppDownloadBanner() {
           width: 40,
           height: 40,
           borderRadius: 10,
-          backgroundColor: '#F7C948',
+          backgroundColor: '#6E54FF',
           alignItems: 'center',
           justifyContent: 'center',
         }}
       >
-        <Text style={{ color: '#002E5D', fontWeight: '800', fontSize: 20 }}>
+        <Text style={{ color: '#6e54ff', fontWeight: '800', fontSize: 20 }}>
           L
         </Text>
       </View>
       <View style={{ flex: 1 }}>
         <Text style={{ color: '#fff', fontWeight: '700', fontSize: 14 }}>
-          Get the Linkora app
+          Get the Pulse app
         </Text>
         <Text style={{ color: 'rgba(255,255,255,0.75)', fontSize: 12 }}>
           Faster, offline-ready, on any Android device
@@ -80,13 +80,13 @@ export default function AppDownloadBanner() {
       <Pressable
         onPress={() => RNLinking.openURL(APK_URL)}
         style={{
-          backgroundColor: '#F7C948',
+          backgroundColor: '#6E54FF',
           borderRadius: 8,
           paddingHorizontal: 14,
           paddingVertical: 9,
         }}
       >
-        <Text style={{ color: '#002E5D', fontWeight: '700', fontSize: 13 }}>
+        <Text style={{ color: '#6e54ff', fontWeight: '700', fontSize: 13 }}>
           Download
         </Text>
       </Pressable>

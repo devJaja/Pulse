@@ -115,7 +115,7 @@ export default function ProfileScreen() {
   if (isLoadingUser || isLoadingProfile) {
     return (
       <View className="flex-1 items-center justify-center bg-background">
-        <ActivityIndicator size="large" color="#FDDA24" />
+        <ActivityIndicator size="large" color="#6e54ff" />
       </View>
     );
   }
@@ -133,8 +133,8 @@ export default function ProfileScreen() {
           <RefreshControl
             refreshing={refreshing}
             onRefresh={handleRefresh}
-            tintColor="#FDDA24"
-            colors={['#FDDA24']}
+            tintColor="#6e54ff"
+            colors={['#6e54ff']}
           />
         }
       >

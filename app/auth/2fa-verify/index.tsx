@@ -129,7 +129,7 @@ export default function TwoFactorVerifyScreen() {
                     focusedIndex === index ? 'border-purple-600' : 'border-transparent'
                   }`}
                   placeholder="0"
-                  placeholderTextColor="#D5CDF3"
+                  placeholderTextColor="#E4DFFF"
                   autoFocus={index === 0}
                 />
               ))}
@@ -142,7 +142,7 @@ export default function TwoFactorVerifyScreen() {
               value={recoveryCode}
               onChangeText={setRecoveryCode}
               placeholder="XXXX-XXXX"
-              placeholderTextColor="#8C8C98"
+              placeholderTextColor="#727285"
               className="rounded-xl bg-card px-4 py-4 text-center text-lg font-mono text-foreground"
               autoCapitalize="characters"
               maxLength={9}

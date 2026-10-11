@@ -78,10 +78,10 @@ export default function DiceGameScreen() {
         setLastResult(won ? 'win' : 'lose');
 
         if (won) {
-          toast.success(`You won ${winAmount.toFixed(4)} XLM!`);
+          toast.success(`You won ${winAmount.toFixed(4)} MON!`);
           setTotalWins(totalWins + 1);
         } else {
-          toast.error(`You lost ${betAmount} XLM`);
+          toast.error(`You lost ${betAmount} MON`);
           setTotalLosses(totalLosses + 1);
         }
 
@@ -117,7 +117,7 @@ export default function DiceGameScreen() {
               </View>
             </Animated.View>
             <Text className="mt-3 text-center text-sm text-white/90">
-              Roll the dice and win XLM!
+              Roll the dice and win MON!
             </Text>
           </View>
         </View>
@@ -159,17 +159,17 @@ export default function DiceGameScreen() {
         <View className="mx-4 mt-6">
           {/* Bet Amount */}
           <View className="rounded-2xl bg-card p-4">
-            <Text className="text-sm text-muted-foreground">Bet Amount (XLM)</Text>
+            <Text className="text-sm text-muted-foreground">Bet Amount (MON)</Text>
             <TextInput
               value={betAmount}
               onChangeText={setBetAmount}
               placeholder="0.1"
               keyboardType="decimal-pad"
               className="mt-2 text-2xl font-bold text-foreground"
-              placeholderTextColor="#8C8C98"
+              placeholderTextColor="#727285"
             />
             <Text className="mt-2 text-sm text-muted-foreground">
-              Balance: {balance.toFixed(4)} XLM
+              Balance: {balance.toFixed(4)} MON
             </Text>
           </View>
 
@@ -209,7 +209,7 @@ export default function DiceGameScreen() {
               placeholder="50"
               keyboardType="numeric"
               className="mt-2 text-2xl font-bold text-foreground"
-              placeholderTextColor="#8C8C98"
+              placeholderTextColor="#727285"
             />
           </View>
 
@@ -222,7 +222,7 @@ export default function DiceGameScreen() {
               {calculateMultiplier()}x
             </Text>
             <Text className="text-center text-xs text-purple-600 dark:text-purple-400">
-              Potential win: {betAmount ? (parseFloat(betAmount) * parseFloat(calculateMultiplier())).toFixed(4) : '0'} XLM
+              Potential win: {betAmount ? (parseFloat(betAmount) * parseFloat(calculateMultiplier())).toFixed(4) : '0'} MON
             </Text>
           </View>
 

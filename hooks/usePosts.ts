@@ -241,6 +241,52 @@ export function usePost(postId: string) {
   });
 }
 
+export interface TipRewards {
+  postId?: string;
+  chatId?: string;
+  pendingWei: string;
+  pendingMon: number;
+}
+
+/**
+ * Claimable early-backer rewards for a post's tip pool.
+ */
+export function usePostTipRewards(postId: string) {
+  return useQuery<TipRewards>({
+    queryKey: ['posts', postId, 'tip-rewards'],
+    queryFn: async () => {
+      const response = await api.getPostTipRewards(postId);
+      if (response.error) throw new Error(response.error);
+      return response.data as TipRewards;
+    },
+    enabled: !!postId,
+    refetchInterval: 15000,
+  });
+}
+
+/**
+ * Claim accrued early-backer rewards for a post.
+ */
+export function useClaimTip(postId: string) {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async () => {
+      const response = await api.claimPostTip(postId);
+      if (response.error) throw new Error(response.error);
+      return response.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['posts', postId, 'tip-rewards'] });
+      queryClient.invalidateQueries({ queryKey: ['wallet'] });
+      toast.success('Rewards claimed!');
+    },
+    onError: (error: Error) => {
+      toast.error(error.message);
+    },
+  });
+}
+
 export function useUserPosts(username: string, enabled: boolean = true) {
   const {
     data,

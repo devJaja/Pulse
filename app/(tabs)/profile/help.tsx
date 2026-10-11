@@ -8,7 +8,7 @@ import { useState } from 'react';
 const faqs = [
   {
     id: '1',
-    question: 'How do I send XLM to someone?',
+    question: 'How do I send MON to someone?',
     answer: 'Go to the Pay tab, select Send, choose a recipient, enter the amount, and confirm the transaction.',
   },
   {
@@ -29,7 +29,7 @@ const faqs = [
   {
     id: '5',
     question: 'What are transaction fees?',
-    answer: 'Stellar transactions have minimal fees (usually a fraction of a cent) to process transactions on the network.',
+    answer: 'Monad transactions have minimal fees (usually a fraction of a cent) to process transactions on the network.',
   },
 ];
 
@@ -44,9 +44,9 @@ const contactOptions = [
   {
     id: '2',
     title: 'Email Support',
-    description: 'support@linkora.app',
+    description: 'support@pulse.app',
     icon: Mail,
-    action: () => Linking.openURL('mailto:support@linkora.app'),
+    action: () => Linking.openURL('mailto:support@pulse.app'),
   },
   {
     id: '3',
@@ -91,7 +91,7 @@ export default function HelpSupportScreen() {
               value={searchQuery}
               onChangeText={setSearchQuery}
               placeholder="Search for help..."
-              placeholderTextColor="#8C8C98"
+              placeholderTextColor="#727285"
               className="flex-1 text-base text-foreground"
             />
           </View>

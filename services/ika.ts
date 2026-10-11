@@ -1,11 +1,11 @@
 /**
- * Ika dWallet Service (Stellar) — MOBILE CLIENT MOCK
+ * Ika dWallet Service (Monad) — MOBILE CLIENT MOCK
  *
  * In production the mobile client never touches private key material;
- * wallet creation and signing are delegated to the Linkora backend via the
+ * wallet creation and signing are delegated to the Pulse backend via the
  * Ika dWallet (2PC-MPC) network.
  *
- * This module is a dependency-free, Stellar-native stub kept for API
+ * This module is a dependency-free, Monad-native stub kept for API
  * parity. It performs no network calls and holds no keys.
  */
 
@@ -46,8 +46,8 @@ export async function signTransfer(_params: {
 }
 
 /**
- * Validate a Stellar address.
+ * Validate a Monad address.
  */
 export function isDwalletAddress(address: string): boolean {
-  return /^G[A-Z2-7]{55}$/.test(address);
+  return /^0x[a-fA-F0-9]{40}$/.test(address);
 }

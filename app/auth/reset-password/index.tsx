@@ -113,7 +113,7 @@ export default function ResetPasswordScreen() {
             className="h-14 rounded-2xl bg-primary active:bg-primary/90"
           >
             {isResetting ? (
-              <ActivityIndicator color="#002E5D" />
+              <ActivityIndicator color="#6e54ff" />
             ) : (
               <Text className="text-base font-medium text-primary-foreground">{t('auth.resetPassword')}</Text>
             )}

@@ -42,10 +42,10 @@ export function BalanceCard({
     : '—';
 
   return (
-    <View className="mx-4 overflow-hidden rounded-3xl bg-[#002E5D]">
+    <View className="mx-4 overflow-hidden rounded-3xl bg-[#0e100f]">
       {/* Subtle brand texture */}
-      <View className="absolute -right-12 -top-16 h-44 w-44 rounded-full bg-[#0B4778]" />
-      <View className="absolute -right-4 top-10 h-24 w-24 rounded-full bg-[#00254D]" />
+      <View className="absolute -right-12 -top-16 h-44 w-44 rounded-full bg-[#5A3FE0]" />
+      <View className="absolute -right-4 top-10 h-24 w-24 rounded-full bg-[#1D1554]" />
       <View className="absolute bottom-0 right-10 h-1.5 w-1.5 rounded-full bg-gold" />
 
       <View className="p-5">
@@ -71,14 +71,14 @@ export function BalanceCard({
 
             {isLoading ? (
               <View className="mt-2.5 h-9 w-32 items-center justify-center">
-                <ActivityIndicator size="small" color="#FDDA24" />
+                <ActivityIndicator size="small" color="#6e54ff" />
               </View>
             ) : (
               <View className="mt-1.5 flex-row items-baseline gap-2">
                 <Text className="text-[34px] font-bold leading-[42px] text-white">
                   {showBalance ? balance.toFixed(2) : '••••••'}
                 </Text>
-                <Text className="text-base font-semibold text-gold">XLM</Text>
+                <Text className="text-base font-semibold text-gold">MON</Text>
               </View>
             )}
           </View>
@@ -127,8 +127,8 @@ export function BalanceCard({
             accessibilityRole="button"
             className="flex-1 flex-row items-center justify-center gap-2 rounded-2xl bg-white py-3.5 active:bg-white/85"
           >
-            <Icon as={ArrowUpRight} size={17} className="text-[#002E5D]" />
-            <Text className="text-[15px] font-semibold text-[#002E5D]">
+            <Icon as={ArrowUpRight} size={17} className="text-[#6e54ff]" />
+            <Text className="text-[15px] font-semibold text-[#6e54ff]">
               {t('common.send')}
             </Text>
           </Pressable>
@@ -149,7 +149,7 @@ export function BalanceCard({
         <View className="mt-4 flex-row items-center gap-2 self-start rounded-full bg-white/[0.07] px-2.5 py-1">
           <View className="h-1.5 w-1.5 rounded-full bg-[#30A46C]" />
           <Text className="text-[10.5px] font-medium text-white/70">
-            {t('wallet.stellarTestnet')}
+            {t('wallet.monadTestnet')}
           </Text>
         </View>
       </View>
@@ -159,7 +159,7 @@ export function BalanceCard({
 
 export function BalanceCardSkeleton() {
   return (
-    <View className="mx-4 overflow-hidden rounded-3xl bg-[#002E5D] p-5">
+    <View className="mx-4 overflow-hidden rounded-3xl bg-[#0e100f] p-5">
       <View className="h-3 w-28 rounded-full bg-white/15" />
       <View className="mt-3 h-9 w-40 rounded-full bg-white/15" />
       <View className="mt-4 h-7 w-32 rounded-full bg-white/10" />

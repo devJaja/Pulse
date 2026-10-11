@@ -165,7 +165,7 @@ export function TwoFactorSettings({ onToggle }: TwoFactorSettingsProps) {
           <Switch
             value={isEnabled}
             onValueChange={(value) => value ? handleEnable() : handleDisable()}
-            trackColor={{ false: '#D5CDF3', true: '#002E5D' }}
+            trackColor={{ false: '#E4DFFF', true: '#6e54ff' }}
             thumbColor="#ffffff"
           />
         </View>
@@ -228,7 +228,7 @@ export function TwoFactorSettings({ onToggle }: TwoFactorSettingsProps) {
                   value={verificationCode}
                   onChangeText={setVerificationCode}
                   placeholder="000000"
-                  placeholderTextColor="#8C8C98"
+                  placeholderTextColor="#727285"
                   maxLength={6}
                   keyboardType="number-pad"
                   className="text-center text-2xl font-mono text-foreground py-3"
@@ -243,7 +243,7 @@ export function TwoFactorSettings({ onToggle }: TwoFactorSettingsProps) {
                 }`}
               >
                 {isVerifying ? (
-                  <ActivityIndicator color="#002E5D" />
+                  <ActivityIndicator color="#6e54ff" />
                 ) : (
                   <Text className="text-center font-semibold text-primary-foreground">
                     Verify and Enable

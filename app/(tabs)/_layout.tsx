@@ -8,8 +8,8 @@ export default function TabsLayout() {
       tabBar={(props) => <TabBar {...props} />}
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: '#002E5D',
-        tabBarInactiveTintColor: '#8C8C98',
+        tabBarActiveTintColor: '#6e54ff',
+        tabBarInactiveTintColor: '#727285',
       }}
     >
       <Tabs.Screen

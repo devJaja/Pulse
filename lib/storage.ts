@@ -1,14 +1,14 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const KEYS = {
-  TOKEN: '@linkora:token',
-  USER: '@linkora:user',
-  ONBOARDING_COMPLETED: '@linkora:onboarding_completed',
-  FIRST_TIME_USER: '@linkora:first_time_user',
-  BIOMETRIC_ENABLED: '@linkora:biometric_enabled',
-  BIOMETRIC_CREDENTIALS: '@linkora:biometric_credentials',
-  TWO_FA_ENABLED: '@linkora:2fa_enabled',
-  RECOVERY_CODES: '@linkora:recovery_codes',
+  TOKEN: '@pulse:token',
+  USER: '@pulse:user',
+  ONBOARDING_COMPLETED: '@pulse:onboarding_completed',
+  FIRST_TIME_USER: '@pulse:first_time_user',
+  BIOMETRIC_ENABLED: '@pulse:biometric_enabled',
+  BIOMETRIC_CREDENTIALS: '@pulse:biometric_credentials',
+  TWO_FA_ENABLED: '@pulse:2fa_enabled',
+  RECOVERY_CODES: '@pulse:recovery_codes',
 };
 
 export const storage = {

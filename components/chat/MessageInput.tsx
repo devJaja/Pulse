@@ -33,7 +33,7 @@ export function MessageInput({ onSend, onTip, isSending }: MessageInputProps) {
         value={message}
         onChangeText={setMessage}
         placeholder="Type a message..."
-        placeholderTextColor="#8C8C98"
+        placeholderTextColor="#727285"
         multiline
         maxLength={500}
         className="flex-1 max-h-24 rounded-full border border-border bg-card px-4 py-2 text-foreground"

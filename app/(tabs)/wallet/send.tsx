@@ -11,7 +11,7 @@ import { useProfile } from '@/hooks/useProfile';
 import type { User } from '@/types';
 
 export default function SendMoneyScreen() {
-  const { balance, sendXlm, isSending } = useWallet();
+  const { balance, sendMon, isSending } = useWallet();
   const { searchUsers } = useProfile();
   const [amount, setAmount] = useState('');
   const [recipient, setRecipient] = useState('');
@@ -82,7 +82,7 @@ export default function SendMoneyScreen() {
       newErrors.amount = 'Amount must be greater than 0';
       isValid = false;
     } else if (amountNum > balance) {
-      newErrors.amount = `Insufficient balance. You have ${balance.toFixed(4)} XLM`;
+      newErrors.amount = `Insufficient balance. You have ${balance.toFixed(4)} MON`;
       isValid = false;
     }
 
@@ -90,11 +90,8 @@ export default function SendMoneyScreen() {
     if (!recipient.trim()) {
       newErrors.recipient = 'Please enter a recipient address';
       isValid = false;
-    } else if (recipient.length < 56) {
-      newErrors.recipient = 'Invalid Stellar address';
-      isValid = false;
-    } else if (!recipient.startsWith('G')) {
-      newErrors.recipient = 'Invalid Stellar address';
+    } else if (!/^0x[a-fA-F0-9]{40}$/.test(recipient.trim())) {
+      newErrors.recipient = 'Invalid Monad address';
       isValid = false;
     }
 
@@ -110,7 +107,7 @@ export default function SendMoneyScreen() {
 
   const confirmSend = () => {
     const amountNum = parseFloat(amount);
-    sendXlm({ 
+    sendMon({ 
       toAddress: recipient, 
       amount: amountNum, 
       memo: memo || undefined 
@@ -131,13 +128,13 @@ export default function SendMoneyScreen() {
           <TouchableOpacity onPress={() => router.back()}>
             <Icon as={ArrowLeft} size={24} className="text-foreground" />
           </TouchableOpacity>
-          <Text className="text-2xl font-bold">Send XLM</Text>
+          <Text className="text-2xl font-bold">Send MON</Text>
         </View>
 
         {/* Balance Display */}
         <View className="mx-4 mt-6 rounded-2xl bg-purple-50 dark:bg-purple-50/50 p-4">
           <Text className="text-sm text-muted-foreground">Available Balance</Text>
-          <Text className="mt-1 text-2xl font-bold text-purple-600">{balance.toFixed(4)} XLM</Text>
+          <Text className="mt-1 text-2xl font-bold text-purple-600">{balance.toFixed(4)} MON</Text>
         </View>
 
         {/* Recipient Address */}
@@ -150,8 +147,8 @@ export default function SendMoneyScreen() {
                 setRecipient(text);
                 setErrors({ ...errors, recipient: '' });
               }}
-              placeholder="Enter Stellar wallet address"
-              placeholderTextColor="#8C8C98"
+              placeholder="Enter Monad wallet address"
+              placeholderTextColor="#727285"
               className="text-base text-foreground"
               autoCapitalize="none"
               autoCorrect={false}
@@ -186,7 +183,7 @@ export default function SendMoneyScreen() {
 
         {/* Amount */}
         <View className="mt-6 px-4">
-          <Text className="mb-2 text-sm font-medium text-foreground">Amount (XLM)</Text>
+          <Text className="mb-2 text-sm font-medium text-foreground">Amount (MON)</Text>
           <View className={`rounded-2xl bg-card p-4 ${errors.amount ? 'border-2 border-red-500' : ''}`}>
             <TextInput
               value={amount}
@@ -197,7 +194,7 @@ export default function SendMoneyScreen() {
               keyboardType="decimal-pad"
               className="text-2xl font-semibold text-foreground"
               placeholder="0.00"
-              placeholderTextColor="#8C8C98"
+              placeholderTextColor="#727285"
             />
           </View>
           {errors.amount ? (
@@ -229,7 +226,7 @@ export default function SendMoneyScreen() {
               value={memo}
               onChangeText={setMemo}
               placeholder="Add a note..."
-              placeholderTextColor="#8C8C98"
+              placeholderTextColor="#727285"
               className="text-base text-foreground"
               maxLength={100}
             />
@@ -242,11 +239,11 @@ export default function SendMoneyScreen() {
           <View className="mt-3 gap-2">
             <View className="flex-row justify-between">
               <Text className="text-sm text-muted-foreground">Network</Text>
-              <Text className="text-sm font-medium">Stellar Testnet</Text>
+              <Text className="text-sm font-medium">Monad Testnet</Text>
             </View>
             <View className="flex-row justify-between">
               <Text className="text-sm text-muted-foreground">Network Fee</Text>
-              <Text className="text-sm font-medium">~0.00001 XLM</Text>
+              <Text className="text-sm font-medium">~0.00001 MON</Text>
             </View>
           </View>
         </View>
@@ -267,7 +264,7 @@ export default function SendMoneyScreen() {
             <>
               <Icon as={Send} size={20} className="text-primary-foreground" />
               <Text className="text-lg font-semibold text-primary-foreground">
-                Send {amount || '0'} XLM
+                Send {amount || '0'} MON
               </Text>
             </>
           )}
@@ -293,7 +290,7 @@ export default function SendMoneyScreen() {
             <View className="mt-6 gap-4">
               <View className="rounded-2xl bg-card p-4">
                 <Text className="text-sm text-muted-foreground">Amount</Text>
-                <Text className="mt-1 text-2xl font-bold text-purple-600">{amount} XLM</Text>
+                <Text className="mt-1 text-2xl font-bold text-purple-600">{amount} MON</Text>
               </View>
 
               <View className="rounded-2xl bg-card p-4">
@@ -331,7 +328,7 @@ export default function SendMoneyScreen() {
                 className="flex-1 items-center rounded-2xl bg-primary py-4"
               >
                 {isSending ? (
-                  <ActivityIndicator size="small" color="#002E5D" />
+                  <ActivityIndicator size="small" color="#6e54ff" />
                 ) : (
                   <Text className="text-lg font-semibold text-primary-foreground">Confirm</Text>
                 )}
@@ -399,7 +396,7 @@ export default function SendMoneyScreen() {
                 value={searchQuery}
                 onChangeText={handleSearch}
                 placeholder="Search by username or name..."
-                placeholderTextColor="#8C8C98"
+                placeholderTextColor="#727285"
                 className="flex-1 text-base text-foreground"
                 autoCapitalize="none"
               />
@@ -410,13 +407,13 @@ export default function SendMoneyScreen() {
           <View className="flex-1 px-4 pt-4">
             {isSearching ? (
               <View className="items-center py-20">
-                <ActivityIndicator size="large" color="#002E5D" />
+                <ActivityIndicator size="large" color="#6e54ff" />
               </View>
             ) : searchResults.length === 0 ? (
               <View className="items-center py-20">
                 <Icon as={Users} size={64} className="text-muted-foreground" />
                 <Text className="mt-4 text-muted-foreground">
-                  {searchQuery ? 'No users found' : 'Search for users to send XLM'}
+                  {searchQuery ? 'No users found' : 'Search for users to send MON'}
                 </Text>
               </View>
             ) : (

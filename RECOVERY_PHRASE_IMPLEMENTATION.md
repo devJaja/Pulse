@@ -7,9 +7,9 @@ The Recovery Phrase feature has been implemented to provide users with informati
 ## What Was Implemented
 
 ### 1. Recovery Phrase Screen
-**File:** `linkora-socials-app/app/(tabs)/profile/recovery-phrase.tsx`
+**File:** `pulse-socials-app/app/(tabs)/profile/recovery-phrase.tsx`
 
-A comprehensive screen that explains Linkora's custodial wallet model and provides:
+A comprehensive screen that explains Pulse's custodial wallet model and provides:
 - Wallet address display with copy functionality
 - Security information about custodial wallets
 - Benefits of custodial wallet management
@@ -17,7 +17,7 @@ A comprehensive screen that explains Linkora's custodial wallet model and provid
 - Option to contact support for wallet export
 
 ### 2. Navigation Fix
-**File:** `linkora-socials-app/app/(tabs)/profile/security.tsx`
+**File:** `pulse-socials-app/app/(tabs)/profile/security.tsx`
 
 Fixed the "Recovery Phrase" button to navigate to the new recovery phrase screen:
 ```typescript
@@ -25,7 +25,7 @@ onPress={() => router.push('/(tabs)/profile/recovery-phrase')}
 ```
 
 ### 3. Database Migration Script
-**File:** `linkora-socials-app/apps/backend/scripts/migrate-2fa-fields.ts`
+**File:** `pulse-socials-app/apps/backend/scripts/migrate-2fa-fields.ts`
 
 Created a migration script to add 2FA fields to existing user accounts:
 - `twoFactorEnabled` (default: false)
@@ -39,7 +39,7 @@ Created a migration script to add 2FA fields to existing user accounts:
 ## Key Features
 
 ### Custodial Wallet Explanation
-The screen clearly explains that Linkora uses a custodial wallet model where:
+The screen clearly explains that Pulse uses a custodial wallet model where:
 - Private keys are encrypted and stored securely on servers
 - Users can recover accounts using email/password
 - No need to manage seed phrases manually
@@ -65,7 +65,7 @@ To add 2FA fields to existing accounts:
 
 ```bash
 # Navigate to backend directory
-cd linkora-socials-app/apps/backend
+cd pulse-socials-app/apps/backend
 
 # Run the migration script
 npx ts-node scripts/migrate-2fa-fields.ts
@@ -116,13 +116,13 @@ The screen educates users about:
 ## Files Modified/Created
 
 ### Created
-- `linkora-socials-app/app/(tabs)/profile/recovery-phrase.tsx` - Recovery phrase screen
-- `linkora-socials-app/apps/backend/scripts/migrate-2fa-fields.ts` - Migration script
-- `linkora-socials-app/apps/backend/scripts/README.md` - Migration documentation
-- `linkora-socials-app/RECOVERY_PHRASE_IMPLEMENTATION.md` - This file
+- `pulse-socials-app/app/(tabs)/profile/recovery-phrase.tsx` - Recovery phrase screen
+- `pulse-socials-app/apps/backend/scripts/migrate-2fa-fields.ts` - Migration script
+- `pulse-socials-app/apps/backend/scripts/README.md` - Migration documentation
+- `pulse-socials-app/RECOVERY_PHRASE_IMPLEMENTATION.md` - This file
 
 ### Modified
-- `linkora-socials-app/app/(tabs)/profile/security.tsx` - Added navigation to recovery phrase
+- `pulse-socials-app/app/(tabs)/profile/security.tsx` - Added navigation to recovery phrase
 
 ## Testing
 

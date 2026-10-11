@@ -15,15 +15,15 @@ export function useTokenPrice(address: string) {
   });
 }
 
-export function useXLMPrice() {
+export function useMONPrice() {
   return useQuery({
-    queryKey: ['xlm-price'],
+    queryKey: ['mon-price'],
     queryFn: async () => {
       // Try CoinGecko first (free, no auth required)
       try {
-        const coinGeckoPrice = await coinGeckoService.getXLMPrice();
+        const coinGeckoPrice = await coinGeckoService.getMONPrice();
         if (coinGeckoPrice > 0) {
-          console.log('XLM price from CoinGecko:', coinGeckoPrice);
+          console.log('MON price from CoinGecko:', coinGeckoPrice);
           return coinGeckoPrice;
         }
       } catch (error) {
@@ -32,9 +32,9 @@ export function useXLMPrice() {
       
       // Fallback to DexScreener
       try {
-        const dexPrice = await dexScreenerService.getXLMPrice();
+        const dexPrice = await dexScreenerService.getMONPrice();
         if (dexPrice > 0) {
-          console.log('XLM price from DexScreener:', dexPrice);
+          console.log('MON price from DexScreener:', dexPrice);
           return dexPrice;
         }
       } catch (error) {

@@ -29,7 +29,7 @@ export default function TermsPrivacyScreen() {
             <View>
               <Text className="font-semibold">1. Acceptance of Terms</Text>
               <Text className="mt-2 text-sm text-muted-foreground">
-                By accessing and using this Stellar mobile application, you accept and agree to be bound by the terms and provision of this agreement.
+                By accessing and using this Monad mobile application, you accept and agree to be bound by the terms and provision of this agreement.
               </Text>
             </View>
 
@@ -50,7 +50,7 @@ export default function TermsPrivacyScreen() {
             <View>
               <Text className="font-semibold">4. Transaction Fees</Text>
               <Text className="mt-2 text-sm text-muted-foreground">
-                All transactions on the Stellar network incur network fees. These fees are paid to network validators and are not controlled by this application.
+                All transactions on the Monad network incur network fees. These fees are paid to network validators and are not controlled by this application.
               </Text>
             </View>
 
@@ -127,7 +127,7 @@ export default function TermsPrivacyScreen() {
               If you have any questions about these Terms or Privacy Policy, please contact us at:
             </Text>
             <Text className="mt-2 text-sm font-semibold text-purple-600">
-              legal@linkora.app
+              legal@pulse.app
             </Text>
           </View>
         </View>

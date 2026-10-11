@@ -54,8 +54,8 @@ export function SendForm({ balance, onSubmit, isSubmitting, onScanQR }: SendForm
           <TextInput
             value={toAddress}
             onChangeText={setToAddress}
-            placeholder="Enter Stellar address"
-            placeholderTextColor="#8C8C98"
+            placeholder="Enter Monad address"
+            placeholderTextColor="#727285"
             className="flex-1 rounded-lg border border-border bg-background px-4 py-3 text-foreground"
           />
           {onScanQR && (
@@ -72,7 +72,7 @@ export function SendForm({ balance, onSubmit, isSubmitting, onScanQR }: SendForm
       {/* Amount */}
       <View>
         <View className="mb-2 flex-row items-center justify-between">
-          <Text className="text-sm font-medium">Amount (XLM)</Text>
+          <Text className="text-sm font-medium">Amount (MON)</Text>
           <TouchableOpacity onPress={setMaxAmount}>
             <Text className="text-sm text-purple-600">Max: {balance.toFixed(4)}</Text>
           </TouchableOpacity>
@@ -82,7 +82,7 @@ export function SendForm({ balance, onSubmit, isSubmitting, onScanQR }: SendForm
           onChangeText={setAmount}
           placeholder="0.00"
           keyboardType="decimal-pad"
-          placeholderTextColor="#8C8C98"
+          placeholderTextColor="#727285"
           className="rounded-lg border border-border bg-background px-4 py-3 text-foreground"
         />
       </View>
@@ -94,7 +94,7 @@ export function SendForm({ balance, onSubmit, isSubmitting, onScanQR }: SendForm
           value={memo}
           onChangeText={setMemo}
           placeholder="Add a note"
-          placeholderTextColor="#8C8C98"
+          placeholderTextColor="#727285"
           className="rounded-lg border border-border bg-background px-4 py-3 text-foreground"
         />
       </View>
@@ -106,7 +106,7 @@ export function SendForm({ balance, onSubmit, isSubmitting, onScanQR }: SendForm
         className={`rounded-xl py-4 ${isSubmitting ? 'bg-gray-400' : 'bg-primary'}`}
       >
         <Text className="text-center font-semibold text-primary-foreground">
-          {isSubmitting ? 'Sending...' : 'Send XLM'}
+          {isSubmitting ? 'Sending...' : 'Send MON'}
         </Text>
       </TouchableOpacity>
     </View>

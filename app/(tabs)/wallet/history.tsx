@@ -13,7 +13,7 @@ export default function TransactionHistoryScreen() {
   return (
     <View className="flex-1 bg-background">
       {/* Header */}
-      <View className="bg-[#002E5D] px-4 pb-6 pt-12">
+      <View className="bg-[#0e100f] px-4 pb-6 pt-12">
         <View className="flex-row items-center gap-4">
           <TouchableOpacity onPress={() => router.back()}>
             <Icon as={ArrowLeft} size={24} className="text-white" />
@@ -37,7 +37,7 @@ export default function TransactionHistoryScreen() {
         <View className="mt-6 pb-6">
           {isLoadingTransactions && transactions.length === 0 ? (
             <View className="items-center py-10">
-              <ActivityIndicator size="large" color="#002E5D" />
+              <ActivityIndicator size="large" color="#6e54ff" />
             </View>
           ) : transactions.length === 0 ? (
             <View className="items-center py-10">
@@ -50,7 +50,7 @@ export default function TransactionHistoryScreen() {
                   key={tx.signature}
                   type={tx.type === 'airdrop' ? 'receive' : tx.type}
                   amount={tx.amount}
-                  token="XLM"
+                  token="MON"
                   timestamp={tx.blockTime || new Date().toISOString()}
                   status={tx.status}
                   from={tx.type === 'receive' ? tx.fromAddress : undefined}
@@ -60,7 +60,7 @@ export default function TransactionHistoryScreen() {
               ))}
               {isFetchingNextPage && (
                 <View className="py-4">
-                  <ActivityIndicator size="small" color="#002E5D" />
+                  <ActivityIndicator size="small" color="#6e54ff" />
                 </View>
               )}
               {!hasNextPage && transactions.length > 0 && (

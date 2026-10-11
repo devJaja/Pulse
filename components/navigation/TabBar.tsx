@@ -6,9 +6,9 @@ import { Appearance } from 'react-native';
 import { Text } from '@/components/ui/text';
 import { useThemeStore, resolveTheme } from '@/store/useThemeStore';
 
-const GOLD = '#FDDA24';
-const NAVY = '#002E5D';
-const MUTED = '#8C8C98';
+const GOLD = '#6e54ff';
+const NAVY = '#6e54ff';
+const MUTED = '#727285';
 
 const PILL_HEIGHT = 28;
 const ITEM_MIN_HEIGHT = 52;
@@ -60,7 +60,7 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
         styles.bar,
         {
           backgroundColor: isDark ? '#151518' : '#FFFFFF',
-          borderTopColor: isDark ? '#26262B' : '#EFEFF1',
+          borderTopColor: isDark ? '#26262B' : '#E6E6E6',
           paddingBottom: bottomInset,
           paddingTop: 8,
           paddingLeft: Math.max(insets.left, EDGE_PADDING),

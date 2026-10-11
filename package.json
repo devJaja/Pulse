@@ -1,8 +1,8 @@
 {
-  "name": "linkora-socials",
+  "name": "pulse-socials",
   "main": "expo-router/entry",
   "version": "1.0.0",
-  "description": "Linkora-Socials - Social Media on Stellar Mobile App",
+  "description": "Pulse - Social Media on Monad Mobile App",
   "license": "UNLICENSED",
   "scripts": {
     "start": "expo start",
@@ -19,7 +19,8 @@
     "submit:android": "eas submit --platform android",
     "submit:ios": "eas submit --platform ios",
     "validate:translations": "ts-node scripts/validate-translations.ts",
-    "generate:translations": "ts-node scripts/generate-translations.ts"
+    "generate:translations": "ts-node scripts/generate-translations.ts",
+    "bench:storm": "cd pulse-socials-backend/apps/backend && ts-node scripts/bench-storm.ts"
   },
   "dependencies": {
     "@expo-google-fonts/geist": "^0.4.1",

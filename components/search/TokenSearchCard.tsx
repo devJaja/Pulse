@@ -44,7 +44,7 @@ export function TokenSearchCard({ token, onPress }: TokenSearchCardProps) {
           <View className="mt-2 flex-row items-center gap-4">
             <View className="flex-row items-center gap-1">
               <Icon as={Coins} size={14} className="text-purple-600" />
-              <Text className="text-sm font-semibold text-purple-600">{token.tokenPrice} XLM</Text>
+              <Text className="text-sm font-semibold text-purple-600">{token.tokenPrice} MON</Text>
             </View>
             <View className="flex-row items-center gap-1">
               <Icon as={TrendingUp} size={14} className="text-muted-foreground" />

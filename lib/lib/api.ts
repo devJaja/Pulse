@@ -1,4 +1,4 @@
-const API_URL = process.env.EXPO_PUBLIC_API_URL || 'https://linkora-socials.onrender.com/api';
+const API_URL = process.env.EXPO_PUBLIC_API_URL || 'https://pulse-socials.onrender.com/api';
 
 interface ApiResponse<T = any> {
   data?: T;
@@ -212,7 +212,7 @@ class ApiClient {
     return this.request(`/wallet/transactions?page=${page}&limit=${limit}`);
   }
 
-  async sendXlm(toAddress: string, amount: number, memo?: string) {
+  async sendMon(toAddress: string, amount: number, memo?: string) {
     return this.request('/wallet/send', {
       method: 'POST',
       body: JSON.stringify({ toAddress, amount, memo }),
@@ -365,7 +365,7 @@ class ApiClient {
   }
 
   // ==================== Wallet ====================
-  async sendXlmToUser(username: string, amount: number, memo?: string) {
+  async sendMonToUser(username: string, amount: number, memo?: string) {
     return this.request('/wallet/send-to-user', {
       method: 'POST',
       body: JSON.stringify({ username, amount, memo }),

@@ -41,7 +41,7 @@ export function BuyTokenModal({
           <View className="mb-4 h-1.5 w-12 self-center rounded-full bg-border" />
           <Text className="text-xl font-bold">{t('feed.buy')} {t('common.post')} {t('wallet.tokens')}</Text>
           <Text className="mt-2 text-sm text-muted-foreground">
-            {t('wallet.price')}: {tokenPrice} XLM {t('wallet.perToken')}
+            {t('wallet.price')}: {tokenPrice} MON {t('wallet.perToken')}
           </Text>
 
           <View className="mt-4">
@@ -51,12 +51,12 @@ export function BuyTokenModal({
               onChangeText={setAmount}
               placeholder="10"
               keyboardType="numeric"
-              placeholderTextColor="#8C8C98"
+              placeholderTextColor="#727285"
               className="rounded-xl border border-border bg-background px-4 py-3 text-foreground"
             />
             {amount && (
               <Text className="mt-2 text-sm text-muted-foreground">
-                {t('wallet.total')}: {totalCost} XLM
+                {t('wallet.total')}: {totalCost} MON
               </Text>
             )}
           </View>

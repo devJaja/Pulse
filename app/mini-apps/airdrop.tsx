@@ -79,7 +79,7 @@ export default function AirdropScreen() {
 
       const { amount, nextClaimAt: newNextClaim } = response.data as any;
       
-      toast.success(`Claimed ${amount} XLM! 🎉`);
+      toast.success(`Claimed ${amount} MON! 🎉`);
       setTotalClaimed(totalClaimed + amount);
       setCanClaim(false);
       setNextClaimAt(new Date(newNextClaim));
@@ -95,7 +95,7 @@ export default function AirdropScreen() {
     <View className="flex-1 bg-background">
       <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
         {/* Header */}
-        <View className="bg-[#002E5D] px-4 pb-8 pt-12">
+        <View className="bg-[#0e100f] px-4 pb-8 pt-12">
           <View className="flex-row items-center gap-3">
             <TouchableOpacity onPress={() => router.back()}>
               <Icon as={ArrowLeft} size={24} className="text-white" />
@@ -108,7 +108,7 @@ export default function AirdropScreen() {
               <Icon as={Gift} size={40} className="text-white" />
             </View>
             <Text className="mt-3 text-center text-sm text-white/90">
-              Claim free XLM every 24 hours
+              Claim free MON every 24 hours
             </Text>
           </View>
         </View>
@@ -121,7 +121,7 @@ export default function AirdropScreen() {
               <Text className="text-sm text-purple-700 dark:text-purple-300">Total Claimed</Text>
             </View>
             <Text className="mt-1 text-2xl font-bold text-purple-700 dark:text-purple-300">
-              {totalClaimed.toFixed(2)} XLM
+              {totalClaimed.toFixed(2)} MON
             </Text>
           </View>
           <View className="flex-1 rounded-xl bg-blue-50 dark:bg-blue-950 p-4">
@@ -137,12 +137,12 @@ export default function AirdropScreen() {
 
         {/* Claim Card */}
         <View className="mx-4 mt-6">
-          <View className="overflow-hidden rounded-2xl bg-gradient-to-br from-[#002E5D] to-[#05A2C2]">
+          <View className="overflow-hidden rounded-2xl bg-gradient-to-br from-[#6e54ff] to-[#8270ff]">
             <View className="p-6">
               <View className="items-center">
                 <Text className="text-sm text-white/80">Available to Claim</Text>
                 <Text className="mt-2 text-5xl font-bold text-white">
-                  {canClaim ? AIRDROP_AMOUNT : '0'} XLM
+                  {canClaim ? AIRDROP_AMOUNT : '0'} MON
                 </Text>
                 
                 {!canClaim && timeUntilNext && (
@@ -168,7 +168,7 @@ export default function AirdropScreen() {
                 }`}
               >
                 {isClaiming ? (
-                  <ActivityIndicator color="#002E5D" />
+                  <ActivityIndicator color="#6e54ff" />
                 ) : (
                   <Text className={`font-semibold ${!canClaim ? 'text-white/60' : 'text-purple-600'}`}>
                     {canClaim ? '🎁 Claim Airdrop' : 'Come Back Later'}
@@ -190,7 +190,7 @@ export default function AirdropScreen() {
               <View className="flex-1">
                 <Text className="font-semibold">Claim Daily</Text>
                 <Text className="text-sm text-muted-foreground">
-                  Come back every 24 hours to claim your free XLM
+                  Come back every 24 hours to claim your free MON
                 </Text>
               </View>
             </View>
@@ -202,7 +202,7 @@ export default function AirdropScreen() {
               <View className="flex-1">
                 <Text className="font-semibold">Instant Credit</Text>
                 <Text className="text-sm text-muted-foreground">
-                  XLM is instantly added to your wallet
+                  MON is instantly added to your wallet
                 </Text>
               </View>
             </View>

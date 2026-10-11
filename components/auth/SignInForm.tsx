@@ -92,7 +92,7 @@ export function SignInForm({ onSubmit, onSignUp, onForgotPassword, isSubmitting 
           className="mb-6 h-14 rounded-2xl bg-primary active:bg-primary/90"
         >
           {isSubmitting ? (
-            <ActivityIndicator color="#002E5D" />
+            <ActivityIndicator color="#6e54ff" />
           ) : (
             <Text className="text-base font-medium text-primary-foreground">{t('auth.signIn')}</Text>
           )}

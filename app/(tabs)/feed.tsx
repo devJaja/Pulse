@@ -25,8 +25,8 @@ import {
 } from '@/components/feed';
 import { EmptyState, LoadingSpinner } from '@/components/common';
 
-const NAVY = '#002E5D';
-const GOLD = '#FDDA24';
+const NAVY = '#6e54ff';
+const GOLD = '#6e54ff';
 
 export default function FeedScreen() {
   const { t } = useTranslation();
@@ -58,7 +58,7 @@ export default function FeedScreen() {
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
   const [isUploadingImages, setIsUploadingImages] = useState(false);
 
-  const displayName = user?.name?.trim() || user?.username || 'Linkora';
+  const displayName = user?.name?.trim() || user?.username || 'Pulse';
   const initial = displayName.charAt(0).toUpperCase();
 
   const handleCreatePost = async (data: {
@@ -189,7 +189,7 @@ export default function FeedScreen() {
       {/* App bar */}
       <View className="flex-row items-center justify-between px-4 pb-3 pt-2">
         <View className="flex-row items-center gap-2.5">
-          <View className="h-8 w-8 items-center justify-center rounded-xl bg-[#002E5D]">
+          <View className="h-8 w-8 items-center justify-center rounded-xl bg-[#0e100f]">
             <Icon as={PenLine} size={15} className="text-gold" strokeWidth={2.4} />
           </View>
           <View>
@@ -220,8 +220,8 @@ export default function FeedScreen() {
             {user?.avatar ? (
               <Image source={{ uri: user.avatar }} className="h-9 w-9 rounded-full bg-secondary" />
             ) : (
-              <View className="h-9 w-9 items-center justify-center rounded-full bg-[#EAE6F8] dark:bg-[#262147]">
-                <Text className="text-[13px] font-bold text-[#4E448C] dark:text-[#B7ACE8]">
+              <View className="h-9 w-9 items-center justify-center rounded-full bg-[#E4DFFF] dark:bg-[#1D1554]">
+                <Text className="text-[13px] font-bold text-[#5A3FE0] dark:text-[#b8b4fe]">
                   {initial}
                 </Text>
               </View>

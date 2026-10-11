@@ -161,7 +161,7 @@ export default function EditProfileScreen() {
   if (isLoadingUser) {
     return (
       <View className="flex-1 items-center justify-center bg-background">
-        <ActivityIndicator size="large" color="#002E5D" />
+        <ActivityIndicator size="large" color="#6e54ff" />
       </View>
     );
   }
@@ -178,7 +178,7 @@ export default function EditProfileScreen() {
             <Text className="text-2xl font-bold">Edit Profile</Text>
           </View>
           {hasChanges && (
-            <View className="h-2 w-2 rounded-full bg-[#002E5D]" />
+            <View className="h-2 w-2 rounded-full bg-[#0e100f]" />
           )}
         </View>
 
@@ -242,7 +242,7 @@ export default function EditProfileScreen() {
                   setErrors({ ...errors, name: '' });
                 }}
                 placeholder="Enter your display name"
-                placeholderTextColor="#8C8C98"
+                placeholderTextColor="#727285"
                 className="text-base text-foreground"
                 maxLength={50}
               />
@@ -273,7 +273,7 @@ export default function EditProfileScreen() {
                   setErrors({ ...errors, bio: '' });
                 }}
                 placeholder="Tell us about yourself"
-                placeholderTextColor="#8C8C98"
+                placeholderTextColor="#727285"
                 multiline
                 numberOfLines={4}
                 textAlignVertical="top"
@@ -316,7 +316,7 @@ export default function EditProfileScreen() {
               </Text>
             </View>
             <Text className="mt-2 text-xs text-muted-foreground">
-              Your Stellar wallet address (cannot be changed)
+              Your Monad wallet address (cannot be changed)
             </Text>
           </View>
         </View>

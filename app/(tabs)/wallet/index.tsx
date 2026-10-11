@@ -24,13 +24,13 @@ export default function WalletScreen() {
   const { data: tokenPrices, isLoading: isLoadingPrices, refetch: refetchPrices } = useAllTokenPrices();
   const { data: seekerBalance, isLoading: isLoadingSeekerBalance, refetch: refetchSeekerBalance } = useSeekerBalance();
 
-  const xlmPrice = tokenPrices?.XLM || 0;
-  const usdValue = balance * xlmPrice;
+  const monPrice = tokenPrices?.MON || 0;
+  const usdValue = balance * monPrice;
   
   // Debug logging
   console.log('Wallet Debug:', {
     balance,
-    xlmPrice,
+    monPrice,
     usdValue,
     isLoadingPrices,
   });
@@ -69,7 +69,7 @@ export default function WalletScreen() {
                     ${usdValue.toFixed(2)}
                   </Text>
                   <Text className="mt-1 text-lg text-muted-foreground">
-                    {balance.toFixed(4)} XLM
+                    {balance.toFixed(4)} MON
                   </Text>
                   <Text className="mt-1 text-sm font-mono text-muted-foreground">
                     {walletAddress?.slice(0, 8)}...{walletAddress?.slice(-8)}
@@ -89,7 +89,7 @@ export default function WalletScreen() {
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => router.push('/wallet/receive')}
-                className="flex-1 flex-row items-center justify-center gap-2 rounded-2xl bg-[#002E5D] py-4"
+                className="flex-1 flex-row items-center justify-center gap-2 rounded-2xl bg-[#0e100f] py-4"
               >
                 <Icon as={ArrowDownLeft} size={20} className="text-white" />
                 <Text className="font-semibold text-white">{t('wallet.receive')}</Text>
@@ -106,7 +106,7 @@ export default function WalletScreen() {
 
           <View className="mt-4 gap-3">
             {TOKENS.map((token) => {
-              const tokenBalance = token.symbol === 'XLM' ? balance : token.symbol === 'SEEKER' ? (seekerBalance || 0) : 0;
+              const tokenBalance = token.symbol === 'MON' ? balance : token.symbol === 'SEEKER' ? (seekerBalance || 0) : 0;
               const tokenPrice = tokenPrices?.[token.symbol] || 0;
               const tokenValue = tokenBalance * tokenPrice;
 
@@ -119,7 +119,7 @@ export default function WalletScreen() {
                     <View>
                       <Text className="font-semibold">{token.name}</Text>
                       <Text className="text-sm text-muted-foreground">
-                        {isLoadingSeekerBalance && token.symbol === 'SEEKER' ? '...' : tokenBalance.toFixed(token.symbol === 'XLM' ? 4 : 2)} {token.symbol}
+                        {isLoadingSeekerBalance && token.symbol === 'SEEKER' ? '...' : tokenBalance.toFixed(token.symbol === 'MON' ? 4 : 2)} {token.symbol}
                       </Text>
                     </View>
                   </View>
@@ -127,7 +127,7 @@ export default function WalletScreen() {
                     <Text className="font-semibold">${tokenValue.toFixed(2)}</Text>
                     {tokenPrice > 0 && (
                       <Text className="text-sm text-muted-foreground">
-                        ${tokenPrice.toFixed(token.symbol === 'XLM' ? 2 : 4)}/{token.symbol}
+                        ${tokenPrice.toFixed(token.symbol === 'MON' ? 2 : 4)}/{token.symbol}
                       </Text>
                     )}
                   </View>
@@ -138,7 +138,7 @@ export default function WalletScreen() {
             {/* Token Holdings */}
             {isLoadingHoldings ? (
               <View className="items-center py-4">
-                <ActivityIndicator size="small" color="#002E5D" />
+                <ActivityIndicator size="small" color="#6e54ff" />
               </View>
             ) : holdings.length > 0 ? (
               <>
@@ -166,7 +166,7 @@ export default function WalletScreen() {
                     </View>
                     <View className="items-end">
                       <Text className="font-semibold">
-                        {holding.currentValue.toFixed(4)} XLM
+                        {holding.currentValue.toFixed(4)} MON
                       </Text>
                       <View className="flex-row items-center gap-1">
                         <Icon 
@@ -183,7 +183,7 @@ export default function WalletScreen() {
                 ))}
                 <View className="mt-2 rounded-2xl bg-purple-50 p-4">
                   <Text className="text-center text-sm text-purple-700">
-                    {t('profile.totalPortfolioValue')}: {totalValue.toFixed(4)} XLM
+                    {t('profile.totalPortfolioValue')}: {totalValue.toFixed(4)} MON
                   </Text>
                 </View>
               </>
@@ -205,7 +205,7 @@ export default function WalletScreen() {
           <View className="mt-4">
             {isLoadingTransactions && transactions.length === 0 ? (
               <View className="items-center py-10">
-                <ActivityIndicator size="large" color="#002E5D" />
+                <ActivityIndicator size="large" color="#6e54ff" />
               </View>
             ) : transactions.length === 0 ? (
               <View className="items-center py-10">
@@ -217,7 +217,7 @@ export default function WalletScreen() {
                   key={tx.signature}
                   type={tx.type === 'airdrop' ? 'receive' : tx.type}
                   amount={tx.amount}
-                  token="XLM"
+                  token="MON"
                   timestamp={tx.blockTime || new Date().toISOString()}
                   status={tx.status}
                   from={tx.type === 'receive' ? tx.fromAddress : undefined}

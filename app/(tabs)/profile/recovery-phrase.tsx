@@ -59,7 +59,7 @@ export default function RecoveryPhraseScreen() {
                 Important Security Information
               </Text>
               <Text className="mt-2 text-sm text-red-800 dark:text-red-200">
-                Your wallet is managed by Linkora-Social (custodial). We securely store your private keys encrypted on our servers.
+                Your wallet is managed by Pulse (custodial). We securely store your private keys encrypted on our servers.
               </Text>
             </View>
           </View>

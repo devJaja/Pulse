@@ -41,11 +41,11 @@ export default function PaymentSuccessScreen() {
         <View className="mt-8 w-full rounded-2xl bg-card p-6">
           <View className="flex-row items-center justify-between border-b border-border pb-4">
             <Text className="text-muted-foreground">Amount</Text>
-            <Text className="text-xl font-bold">10 XLM</Text>
+            <Text className="text-xl font-bold">10 MON</Text>
           </View>
           <View className="flex-row items-center justify-between pt-4">
             <Text className="text-muted-foreground">Recipient</Text>
-            <Text className="text-xl font-bold">@stellarfan</Text>
+            <Text className="text-xl font-bold">@monadfan</Text>
           </View>
         </View>
       </View>

@@ -1,8 +1,8 @@
-# Linkora Vision
+# Pulse Vision
 
 ## Our Mission
 
-Linkora is revolutionizing social media by merging authentic human connection with the power of blockchain technology. We're building the first truly decentralized social platform where creators own their content, communities control their value, and every interaction is transparent and rewarding.
+Pulse is revolutionizing social media by merging authentic human connection with the power of blockchain technology. We're building the first truly decentralized social platform where creators own their content, communities control their value, and every interaction is transparent and rewarding.
 
 ## The Problem We're Solving
 
@@ -15,7 +15,7 @@ Traditional social media platforms have created a broken ecosystem:
 
 ## Our Solution
 
-Linkora leverages Stellar's high-speed, low-cost blockchain to create a social platform where:
+Pulse leverages Monad's high-speed, low-cost blockchain to create a social platform where:
 
 ### For Creators
 - **True Ownership**: Your content, your audience, your data
@@ -30,30 +30,30 @@ Linkora leverages Stellar's high-speed, low-cost blockchain to create a social p
 - **Privacy First**: Control what you share and with whom
 
 ### For the Ecosystem
-- **Built on Stellar**: Lightning-fast transactions, minimal fees
+- **Built on Monad**: Lightning-fast transactions, minimal fees
 - **Interoperable**: Your social identity works across Web3
 - **Open Protocol**: Developers can build on our foundation
 - **Sustainable Economics**: Token mechanics that benefit all participants
 
-## How Linkora Benefits Stellar
+## How Pulse Benefits Monad
 
 ### Driving Adoption
-- **Mass Market Appeal**: Social media is universal - we're bringing millions to Stellar
+- **Mass Market Appeal**: Social media is universal - we're bringing millions to Monad
 - **Daily Active Users**: Social platforms create consistent, high-frequency transactions
 - **Onboarding Gateway**: Simplified wallet creation and crypto education
-- **Mobile-First**: Native iOS and Android apps make Stellar accessible to everyone
+- **Mobile-First**: Native iOS and Android apps make Monad accessible to everyone
 
 ### Showcasing Capabilities
-- **Speed Matters**: Social media requires instant interactions - Stellar delivers
-- **Cost Efficiency**: Micro-transactions for tips, likes, and shares are only viable on Stellar
-- **Scalability**: Handling millions of social interactions proves Stellar's infrastructure
+- **Speed Matters**: Social media requires instant interactions - Monad delivers
+- **Cost Efficiency**: Micro-transactions for tips, likes, and shares are only viable on Monad
+- **Scalability**: Handling millions of social interactions proves Monad's infrastructure
 - **Real-World Use Case**: Demonstrating blockchain beyond DeFi and NFTs
 
 ### Token Economy
-- **Creating demand for SKR**: Linkora's native token for all platform activities
-- **XLM Integration**: Primary blockchain currency for transactions
+- **Creating demand for SKR**: Pulse's native token for all platform activities
+- **MON Integration**: Primary blockchain currency for transactions
 - **Multi-Token Support**: USDC, USDT, and custom tokens
-- **Network Effects**: Each transaction strengthens Stellar's ecosystem
+- **Network Effects**: Each transaction strengthens Monad's ecosystem
 
 ## Benefits to the Blockchain Ecosystem
 
@@ -74,7 +74,7 @@ Linkora leverages Stellar's high-speed, low-cost blockchain to create a social p
 - **Attention Markets**: Monetizing engagement transparently with SKR rewards
 - **Social DeFi**: Combining social capital with financial instruments
 - **Sustainable Models**: SKR token economics support free-to-use applications
-- **Stellar Integration**: Leveraging XLM for fast, low-cost transactions
+- **Monad Integration**: Leveraging MON for fast, low-cost transactions
 
 ## Our Unique Approach
 
@@ -120,7 +120,7 @@ Linkora leverages Stellar's high-speed, low-cost blockchain to create a social p
 ## Why Now?
 
 The convergence of several trends makes this the perfect moment:
-- **Stellar Maturity**: Infrastructure is ready for consumer applications
+- **Monad Maturity**: Infrastructure is ready for consumer applications
 - **Creator Economy Boom**: Creators seeking alternatives to traditional platforms
 - **Web3 Awareness**: Growing understanding of blockchain benefits
 - **Mobile Crypto**: Smartphones powerful enough for seamless crypto experiences
@@ -128,13 +128,13 @@ The convergence of several trends makes this the perfect moment:
 
 ## Join the Revolution
 
-Linkora isn't just another social app - it's a movement to reclaim social media for the people who make it valuable. We're building the infrastructure for a creator-owned internet, powered by Stellar's technology and driven by community values.
+Pulse isn't just another social app - it's a movement to reclaim social media for the people who make it valuable. We're building the infrastructure for a creator-owned internet, powered by Monad's technology and driven by community values.
 
 **Launch Date**: March 30, 2025
-**Platforms**: iOS App Store, Google Play Store, Stellar dApp Store
+**Platforms**: iOS App Store, Google Play Store, Monad dApp Store
 
 Together, we're not just building a platform. We're building the future of human connection.
 
 ---
 
-*Linkora - Own Your Social*
+*Pulse - Own Your Social*

@@ -13,7 +13,7 @@ export function LikesTab({ posts, isLoading }: LikesTabProps) {
   if (isLoading) {
     return (
       <View className="items-center py-20">
-        <ActivityIndicator size="large" color="#002E5D" />
+        <ActivityIndicator size="large" color="#6e54ff" />
       </View>
     );
   }

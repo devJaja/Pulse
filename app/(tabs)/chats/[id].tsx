@@ -100,7 +100,7 @@ export default function ChatScreen() {
       >
         {isLoading && messages.length === 0 ? (
           <View className="items-center py-20">
-            <ActivityIndicator size="large" color="#002E5D" />
+            <ActivityIndicator size="large" color="#6e54ff" />
           </View>
         ) : messages.length === 0 ? (
           <View className="items-center py-20">
@@ -146,7 +146,7 @@ export default function ChatScreen() {
                       <View className="flex-row items-center gap-2">
                         <Icon as={DollarSign} size={16} className="text-success" />
                         <Text className="font-semibold text-success">
-                          {msg.isMine ? 'Sent' : 'Received'} {msg.paymentAmount} XLM
+                          {msg.isMine ? 'Sent' : 'Received'} {msg.paymentAmount} MON
                         </Text>
                       </View>
                       <Text className="mt-1 text-xs text-muted-foreground">{formatTime(msg.createdAt)}</Text>
@@ -199,7 +199,7 @@ export default function ChatScreen() {
             value={message}
             onChangeText={setMessage}
             placeholder="Type a message..."
-            placeholderTextColor="#8C8C98"
+            placeholderTextColor="#727285"
             className="flex-1 text-base text-foreground"
             onSubmitEditing={handleSendMessage}
           />
@@ -213,7 +213,7 @@ export default function ChatScreen() {
           className="h-14 w-14 items-center justify-center rounded-2xl bg-primary"
         >
           {isSendingMessage ? (
-            <ActivityIndicator size="small" color="#002E5D" />
+            <ActivityIndicator size="small" color="#6e54ff" />
           ) : (
             <Icon as={Send} size={20} className="text-primary-foreground" />
           )}
@@ -238,7 +238,7 @@ export default function ChatScreen() {
 
             {/* Amount */}
             <View className="mt-6">
-              <Text className="mb-2 text-sm text-muted-foreground">Amount (XLM)</Text>
+              <Text className="mb-2 text-sm text-muted-foreground">Amount (MON)</Text>
               <View className="rounded-2xl bg-card p-4">
                 <TextInput
                   value={tipAmount}
@@ -264,7 +264,7 @@ export default function ChatScreen() {
               <Switch
                 value={isPrivateTip}
                 onValueChange={setIsPrivateTip}
-                trackColor={{ true: '#002E5D' }}
+                trackColor={{ true: '#6e54ff' }}
               />
             </View>
 
@@ -295,7 +295,7 @@ export default function ChatScreen() {
                 }`}
               >
                 {(isSendingTip || isSendingPrivateTip) ? (
-                  <ActivityIndicator size="small" color="#002E5D" />
+                  <ActivityIndicator size="small" color="#6e54ff" />
                 ) : (
                   <Text className={`text-lg font-semibold ${tipAmount && parseFloat(tipAmount) > 0 ? 'text-primary-foreground' : 'text-gray-500'}`}>
                     {isPrivateTip ? 'Send Privately' : 'Send'}

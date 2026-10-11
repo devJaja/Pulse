@@ -10,7 +10,7 @@ export default function Screen() {
   if (isLoadingUser || isOnboardingLoading) {
     return (
       <View className="flex-1 items-center justify-center bg-gray-50">
-        <ActivityIndicator size="large" color="#002E5D" />
+        <ActivityIndicator size="large" color="#6e54ff" />
       </View>
     );
   }

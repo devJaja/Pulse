@@ -1,11 +1,11 @@
 /**
- * Encrypt FHE Service (Stellar) — MOBILE CLIENT MOCK
+ * Encrypt FHE Service (Monad) — MOBILE CLIENT MOCK
  *
  * Enables confidential tips in chat. The FHE/gRPC flow (Encrypt network)
- * runs fully on the Linkora backend; the mobile client simply submits the
+ * runs fully on the Pulse backend; the mobile client simply submits the
  * tip through the normal chat tip endpoint.
  *
- * This module is a dependency-free, Stellar-native stub kept for API
+ * This module is a dependency-free, Monad-native stub kept for API
  * parity. It performs no network calls and holds no keys.
  */
 
@@ -15,7 +15,7 @@ export interface CiphertextId {
 }
 
 /**
- * Request an encrypted input "ciphertext" for a given XLM amount.
+ * Request an encrypted input "ciphertext" for a given MON amount.
  *
  * Mobile client: returns a deterministic placeholder id. The real
  * ciphertext is produced server-side.

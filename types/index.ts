@@ -108,7 +108,7 @@ export interface Transaction {
 export interface WalletBalance {
   walletAddress: string;
   balance: number;
-  balanceStroops: number;
+  balanceWei: number;
 }
 
 // Payment types
