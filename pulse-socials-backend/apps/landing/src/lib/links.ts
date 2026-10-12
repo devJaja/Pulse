@@ -1,5 +1,5 @@
 export const WEB_URL =
-  process.env.NEXT_PUBLIC_WEB_URL || 'https://pulse-socials.vercel.app'
+  process.env.NEXT_PUBLIC_WEB_URL || 'https://pulse-web-pi-two.vercel.app'
 
 // Direct artifact link: EAS build pages sit behind the account console and
 // signed artifact URLs expire, so prefer a Vercel env var once one is set.

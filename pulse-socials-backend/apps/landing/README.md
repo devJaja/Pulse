@@ -102,7 +102,7 @@ Create a `.env.local` file:
 
 ```env
 # Where the web app lives — "Get Started" buttons navigate here
-NEXT_PUBLIC_WEB_URL=https://pulse-socials.vercel.app
+NEXT_PUBLIC_WEB_URL=https://pulse-web-pi-two.vercel.app
 
 # Android APK download URL (defaults to the current EAS build artifact)
 NEXT_PUBLIC_APK_URL=https://expo.dev/artifacts/eas/0BBF4LyT28P_GDXwACOtHzN-hyeo8KPyfjIWAQniWWg.apk
