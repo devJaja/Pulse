@@ -11,7 +11,7 @@
     "web": "expo start --web",
     "test": "jest --watch",
     "test:ci": "jest",
-    "lint": "eslint . --ext .ts,.tsx",
+    "lint": "eslint .",
     "type-check": "tsc --noEmit",
     "prebuild": "expo prebuild --clean",
     "build:android": "eas build --platform android",
@@ -85,8 +85,11 @@
   "devDependencies": {
     "@babel/core": "^7.26.0",
     "@types/react": "~19.1.10",
+    "eslint": "^9.39.5",
+    "eslint-config-expo": "^10.0.0",
     "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.6.14",
+    "ts-node": "^10.9.2",
     "typescript": "~5.9.2"
   },
   "private": true

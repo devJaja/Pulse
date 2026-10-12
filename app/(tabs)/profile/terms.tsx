@@ -111,7 +111,7 @@ export default function TermsPrivacyScreen() {
             </View>
 
             <View>
-              <Text className="font-semibold">7. Children's Privacy</Text>
+              <Text className="font-semibold">7. Children&apos;s Privacy</Text>
               <Text className="mt-2 text-sm text-muted-foreground">
                 Our service is not intended for children under 18. We do not knowingly collect personal information from children under 18.
               </Text>

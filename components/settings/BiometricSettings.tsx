@@ -71,7 +71,7 @@ export function BiometricSettings({ onToggle }: BiometricSettingsProps) {
               Biometric Not Available
             </Text>
             <Text className="mt-1 text-sm text-yellow-700 dark:text-yellow-200">
-              Your device doesn't support biometric authentication or you haven't set it up yet.
+              Your device doesn&apos;t support biometric authentication or you haven&apos;t set it up yet.
             </Text>
           </View>
         </View>

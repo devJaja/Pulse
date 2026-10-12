@@ -41,6 +41,10 @@ services:
         sync: false
       - key: MONAD_USDT_ADDRESS
         sync: false
+      - key: PULSE_TIPS_ADDRESS
+        sync: false
+      - key: POST_REGISTRY_ADDRESS
+        sync: false
       - key: AIRDROP_AMOUNT
         value: "1"
       - key: PUSHER_APP_ID

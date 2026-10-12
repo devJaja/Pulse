@@ -69,7 +69,7 @@ export function NotificationCard({ notification, onPress }: NotificationCardProp
               )}
               {notification.post && (
                 <Text className="mt-1 text-sm text-muted-foreground" numberOfLines={2}>
-                  "{notification.post.content}"
+                  {`"${notification.post.content}"`}
                 </Text>
               )}
             </View>

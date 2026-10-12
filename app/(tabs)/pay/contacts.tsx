@@ -119,7 +119,7 @@ export default function ContactsScreen() {
               <View className="flex-1">
                 <Text className="font-semibold text-purple-900">Note:</Text>
                 <Text className="mt-1 text-sm text-purple-700">
-                  You can send payments to anyone. They'll receive a notification to claim their
+                  You can send payments to anyone. They&apos;ll receive a notification to claim their
                   funds by creating an account.
                 </Text>
               </View>

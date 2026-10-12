@@ -80,7 +80,7 @@ export default function NotificationsScreen() {
           <View className="items-center py-20">
             <Text className="text-muted-foreground">No notifications yet</Text>
             <Text className="mt-2 text-sm text-muted-foreground">
-              We'll notify you when something happens
+              We&apos;ll notify you when something happens
             </Text>
           </View>
         ) : (
