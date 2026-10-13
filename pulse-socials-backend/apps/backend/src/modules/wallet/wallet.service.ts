@@ -221,7 +221,7 @@ export class WalletService {
     const privateKey = this.monadService.decryptPrivateKey(
       user.encryptedPrivateKey,
     );
-    user.encryptedPrivateKey = undefined;
+    user.set('encryptedPrivateKey', undefined);
     await user.save();
 
     this.logger.log(
