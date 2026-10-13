@@ -32,16 +32,23 @@ export function CommentInput({
     setContent('');
   };
 
+  const canSubmit = !!content.trim() && !isSubmitting;
+
   return (
     <View className="border-t border-border bg-background p-4">
       {/* Reply Indicator */}
       {replyingTo && (
-        <View className="mb-2 flex-row items-center justify-between rounded-lg bg-purple-50 px-3 py-2 dark:bg-purple-950/30">
-          <Text className="text-sm text-purple-600">
+        <View className="mb-2.5 flex-row items-center justify-between rounded-xl border border-primary/15 bg-accent px-3 py-2">
+          <Text className="text-sm font-medium text-primary dark:text-brand-300">
             Replying to @{replyingTo}
           </Text>
-          <TouchableOpacity onPress={onCancelReply}>
-            <Icon as={X} size={16} className="text-purple-600" />
+          <TouchableOpacity
+            onPress={onCancelReply}
+            accessibilityRole="button"
+            accessibilityLabel="Cancel reply"
+            className="h-7 w-7 items-center justify-center rounded-full active:bg-primary/10"
+          >
+            <Icon as={X} size={16} className="text-primary dark:text-brand-300" />
           </TouchableOpacity>
         </View>
       )}
@@ -49,22 +56,27 @@ export function CommentInput({
       <TextInput
         value={content}
         onChangeText={setContent}
-        placeholder={replyingTo ? `Reply to @${replyingTo}...` : placeholder}
+        placeholder={replyingTo ? `Reply to @${replyingTo}` : placeholder}
         placeholderTextColor="#727285"
         multiline
-        maxLength={500}
-        className="mb-3 min-h-[80px] rounded-lg border border-border bg-card px-4 py-3 text-foreground"
+        className="min-h-[48px] rounded-xl border border-border bg-card px-4 py-3 text-[15px] leading-5 text-foreground"
         style={{ textAlignVertical: 'top' }}
       />
 
       <TouchableOpacity
         onPress={handleSubmit}
-        disabled={!content.trim() || isSubmitting}
-        className={`rounded-xl py-3 ${
-          content.trim() && !isSubmitting ? 'bg-primary' : 'bg-gray-300'
+        disabled={!canSubmit}
+        accessibilityRole="button"
+        accessibilityLabel={replyingTo ? 'Post reply' : 'Post comment'}
+        className={`mt-3 h-12 items-center justify-center rounded-xl ${
+          canSubmit ? 'bg-primary shadow-soft active:opacity-90' : 'bg-muted'
         }`}
       >
-        <Text className="text-center font-semibold text-primary-foreground">
+        <Text
+          className={`text-[15px] font-semibold ${
+            canSubmit ? 'text-primary-foreground' : 'text-muted-foreground'
+          }`}
+        >
           {isSubmitting ? 'Posting...' : replyingTo ? 'Post Reply' : 'Post Comment'}
         </Text>
       </TouchableOpacity>

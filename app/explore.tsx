@@ -1,6 +1,7 @@
-import { View, ScrollView, TouchableOpacity, RefreshControl, ActivityIndicator, TextInput, Image } from 'react-native';
+import { View, ScrollView, TouchableOpacity, RefreshControl, TextInput, Image } from 'react-native';
 import { Text } from '@/components/ui/text';
 import { Icon } from '@/components/ui/icon';
+import { Avatar } from '@/components/ui/avatar';
 import { ArrowLeft, Search, Heart, MessageCircle, DollarSign, Coins } from 'lucide-react-native';
 import { usePosts } from '@/hooks/usePosts';
 import { router } from 'expo-router';
@@ -8,6 +9,7 @@ import { useState } from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import type { Post } from '@/types';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { EmptyState, LoadingSpinner } from '@/components/common';
 
 export default function ExploreScreen() {
   const { posts, isLoadingFeed, fetchNextPage, hasNextPage, isFetchingNextPage, refetchFeed, likePost, unlikePost } = usePosts();
@@ -33,30 +35,40 @@ export default function ExploreScreen() {
     router.push(`/(tabs)/profile?username=${username}`);
   };
 
-  const filteredPosts = posts.filter(post => 
+  const filteredPosts = posts.filter(post =>
     post.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
     post.author.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
     post.author.name?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
-    <SafeAreaView className="flex-1 bg-background">
+    <SafeAreaView className="flex-1 bg-background" edges={['top', 'left', 'right']}>
       {/* Header */}
       <View className="flex-row items-center gap-3 px-4 pt-4">
-        <TouchableOpacity onPress={() => router.back()}>
-          <Icon as={ArrowLeft} size={24} className="text-foreground" />
+        <TouchableOpacity
+          onPress={() => router.back()}
+          accessibilityRole="button"
+          accessibilityLabel="Go back"
+          className="h-10 w-10 items-center justify-center rounded-full border border-border bg-card shadow-soft active:bg-secondary"
+        >
+          <Icon as={ArrowLeft} size={20} className="text-foreground" />
         </TouchableOpacity>
-        <Text className="flex-1 text-2xl font-bold">Explore</Text>
+        <View className="flex-1">
+          <Text className="text-2xl font-bold tracking-tight text-foreground">Explore</Text>
+          <Text className="text-[12.5px] text-muted-foreground">
+            Discover posts and creators
+          </Text>
+        </View>
       </View>
 
       {/* Search Bar */}
-      <View className="mx-4 mt-4 flex-row items-center gap-2 rounded-xl border-2 border-border bg-background px-4 py-3">
-        <Icon as={Search} size={20} className="text-muted-foreground" />
+      <View className="mx-4 mt-4 flex-row items-center gap-2 rounded-2xl border border-border bg-card px-4 shadow-soft">
+        <Icon as={Search} size={18} className="text-muted-foreground" />
         <TextInput
           placeholder="Search posts, users..."
           value={searchQuery}
           onChangeText={setSearchQuery}
-          className="flex-1 text-base text-foreground"
+          className="h-12 flex-1 text-[15px] text-foreground"
           placeholderTextColor="#727285"
         />
       </View>
@@ -66,7 +78,12 @@ export default function ExploreScreen() {
         showsVerticalScrollIndicator={false}
         className="flex-1"
         refreshControl={
-          <RefreshControl refreshing={isLoadingFeed} onRefresh={refetchFeed} />
+          <RefreshControl
+            refreshing={isLoadingFeed}
+            onRefresh={refetchFeed}
+            tintColor="#6e54ff"
+            colors={['#6e54ff']}
+          />
         }
         onScroll={({ nativeEvent }) => {
           const { layoutMeasurement, contentOffset, contentSize } = nativeEvent;
@@ -79,60 +96,70 @@ export default function ExploreScreen() {
       >
         <View className="mt-4">
           {isLoadingFeed && posts.length === 0 ? (
-            <View className="items-center py-20">
-              <ActivityIndicator size="large" color="#6e54ff" />
-            </View>
+            <LoadingSpinner />
           ) : filteredPosts.length === 0 ? (
-            <View className="items-center py-20">
-              <Text className="text-muted-foreground">
-                {searchQuery ? 'No posts found' : 'No posts yet'}
-              </Text>
-            </View>
+            <EmptyState
+              icon={Search}
+              message={searchQuery ? 'No posts found' : 'No posts yet'}
+              subtitle={
+                searchQuery
+                  ? 'Try a different search term.'
+                  : 'Posts from creators you follow will show up here.'
+              }
+            />
           ) : (
             filteredPosts.map((post: Post) => (
               <TouchableOpacity
                 key={post.id}
                 onPress={() => router.push(`/post/${post.id}`)}
-                className="mb-4 border-b border-border bg-card p-4"
+                accessibilityRole="button"
+                accessibilityLabel={`Post by ${post.author.name || post.author.username}`}
+                className="mx-4 mb-4 overflow-hidden rounded-2xl border border-border bg-card p-4 shadow-soft active:bg-secondary/40 dark:active:bg-secondary/30"
               >
                 {/* Author Info */}
-                <TouchableOpacity 
+                <TouchableOpacity
                   onPress={() => navigateToProfile(post.author.username)}
-                  className="mb-3 flex-row items-center gap-3"
+                  accessibilityRole="button"
+                  className="mb-3 flex-row items-center gap-3 active:opacity-70"
                 >
-                  {post.author.avatar ? (
-                    <Image source={{ uri: post.author.avatar }} className="h-10 w-10 rounded-full" />
-                  ) : (
-                    <View className="h-10 w-10 items-center justify-center rounded-full bg-purple-200">
-                      <Text className="text-lg font-bold text-purple-600">
-                        {post.author.name?.charAt(0)?.toUpperCase() || post.author.username.charAt(0).toUpperCase()}
-                      </Text>
-                    </View>
-                  )}
+                  <Avatar
+                    uri={post.author.avatar}
+                    name={post.author.name}
+                    username={post.author.username}
+                    size="sm"
+                    className="h-10 w-10"
+                    ring
+                  />
                   <View className="flex-1">
-                    <Text className="font-semibold">{post.author.name || post.author.username}</Text>
-                    <Text className="text-sm text-muted-foreground">@{post.author.username} · {formatTime(post.createdAt)}</Text>
+                    <Text numberOfLines={1} className="text-[14.5px] font-semibold text-foreground">
+                      {post.author.name || post.author.username}
+                    </Text>
+                    <Text numberOfLines={1} className="mt-0.5 text-[12.5px] text-muted-foreground">
+                      @{post.author.username} · {formatTime(post.createdAt)}
+                    </Text>
                   </View>
                 </TouchableOpacity>
 
                 {/* Content */}
-                <Text className="mb-3">{post.content}</Text>
+                <Text className="mb-3 text-[15px] leading-[22px] text-foreground">
+                  {post.content}
+                </Text>
 
                 {/* Images */}
                 {post.images && post.images.length > 0 && (
-                  <View className={`mb-3 gap-2 ${post.images.length === 1 ? '' : 'flex-row flex-wrap'}`}>
+                  <View className={`mb-3 gap-1.5 ${post.images.length === 1 ? '' : 'flex-row flex-wrap'}`}>
                     {post.images.map((img, idx) => (
                       <Image
                         key={idx}
                         source={{ uri: img }}
-                        className={`rounded-xl ${
-                          post.images.length === 1 
-                            ? 'h-80 w-full' 
+                        className={`bg-muted ${
+                          post.images.length === 1
+                            ? 'h-80 w-full rounded-2xl'
                             : post.images.length === 2
-                            ? 'h-48 w-[49%]'
-                            : post.images.length === 3
-                            ? idx === 0 ? 'h-48 w-full' : 'h-32 w-[49%]'
-                            : 'h-32 w-[49%]'
+                              ? 'h-48 w-[49%] rounded-xl'
+                              : post.images.length === 3
+                                ? idx === 0 ? 'h-48 w-full rounded-xl' : 'h-32 w-[49%] rounded-xl'
+                                : 'h-32 w-[49%] rounded-xl'
                         }`}
                         resizeMode="cover"
                       />
@@ -142,50 +169,68 @@ export default function ExploreScreen() {
 
                 {/* Token Badge */}
                 {post.isTokenized && (
-                  <View className="mb-3 flex-row items-center gap-2 rounded-lg bg-purple-50 p-3 dark:bg-purple-950">
-                    <Icon as={Coins} size={16} className="text-purple-600" />
-                    <Text className="text-sm font-medium text-purple-600">
+                  <View className="mb-3 flex-row items-center gap-2 rounded-2xl border border-primary/15 bg-accent p-3">
+                    <Icon as={Coins} size={16} className="text-primary dark:text-brand-300" />
+                    <Text className="text-sm font-medium text-primary dark:text-brand-300">
                       Tokenized Post · {post.tokenSupply} tokens @ {post.tokenPrice} MON
                     </Text>
                   </View>
                 )}
 
                 {/* Actions */}
-                <View className="flex-row items-center gap-6">
-                  <TouchableOpacity 
+                <View className="flex-row items-center gap-1">
+                  <TouchableOpacity
                     onPress={() => handleLike(post.id, post.isLiked)}
-                    className={`flex-row items-center gap-1 rounded-full px-3 py-1.5 ${
-                      post.isLiked ? 'bg-purple-50 dark:bg-purple-950' : ''
+                    accessibilityRole="button"
+                    accessibilityLabel={post.isLiked ? 'Unlike post' : 'Like post'}
+                    className={`min-h-[36px] flex-row items-center gap-1.5 rounded-full px-2.5 active:bg-secondary ${
+                      post.isLiked ? 'bg-secondary' : ''
                     }`}
                   >
-                    <Icon 
-                      as={Heart} 
-                      size={20} 
-                      className={post.isLiked ? "text-purple-600" : "text-muted-foreground"}
-                      fill={post.isLiked ? "#6e54ff" : "none"}
+                    <Icon
+                      as={Heart}
+                      size={20}
+                      className={post.isLiked ? 'text-red-500' : 'text-muted-foreground'}
+                      fill={post.isLiked ? '#FF3F00' : 'none'}
                     />
-                    <Text className={`${post.isLiked ? 'text-purple-600 font-semibold' : 'text-muted-foreground'}`}>
+                    <Text
+                      className={`text-[13px] font-medium ${
+                        post.isLiked ? 'text-red-500' : 'text-muted-foreground'
+                      }`}
+                    >
                       {post.likesCount || 0}
                     </Text>
                   </TouchableOpacity>
 
-                  <TouchableOpacity 
+                  <TouchableOpacity
                     onPress={() => router.push(`/post/${post.id}`)}
-                    className="flex-row items-center gap-1"
+                    accessibilityRole="button"
+                    accessibilityLabel="View comments"
+                    className="min-h-[36px] flex-row items-center gap-1.5 rounded-full px-2.5 active:bg-secondary"
                   >
                     <Icon as={MessageCircle} size={20} className="text-muted-foreground" />
-                    <Text className="text-muted-foreground">{post.commentsCount || 0}</Text>
+                    <Text className="text-[13px] font-medium text-muted-foreground">
+                      {post.commentsCount || 0}
+                    </Text>
                   </TouchableOpacity>
 
-                  <TouchableOpacity className="flex-row items-center gap-1">
+                  <TouchableOpacity
+                    accessibilityRole="button"
+                    accessibilityLabel="Tip author"
+                    className="min-h-[36px] flex-row items-center gap-1.5 rounded-full px-2.5 active:bg-secondary"
+                  >
                     <Icon as={DollarSign} size={20} className="text-muted-foreground" />
-                    <Text className="text-muted-foreground">Tip</Text>
+                    <Text className="text-[13px] font-medium text-muted-foreground">Tip</Text>
                   </TouchableOpacity>
 
                   {post.isTokenized && (
-                    <TouchableOpacity className="ml-auto flex-row items-center gap-1 rounded-lg bg-primary px-3 py-1.5">
-                      <Icon as={Coins} size={16} className="text-primary-foreground" />
-                      <Text className="text-sm font-medium text-primary-foreground">Buy</Text>
+                    <TouchableOpacity
+                      accessibilityRole="button"
+                      accessibilityLabel="Buy tokens"
+                      className="ml-auto flex-row items-center gap-1.5 rounded-full bg-primary px-3.5 py-1.5 shadow-soft active:opacity-90"
+                    >
+                      <Icon as={Coins} size={15} className="text-primary-foreground" />
+                      <Text className="text-sm font-semibold text-primary-foreground">Buy</Text>
                     </TouchableOpacity>
                   )}
                 </View>
@@ -193,11 +238,7 @@ export default function ExploreScreen() {
             ))
           )}
 
-          {isFetchingNextPage && (
-            <View className="py-4">
-              <ActivityIndicator size="small" color="#6e54ff" />
-            </View>
-          )}
+          {isFetchingNextPage && <LoadingSpinner size="small" />}
         </View>
       </ScrollView>
     </SafeAreaView>

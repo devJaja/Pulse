@@ -76,45 +76,49 @@ export default function HelpSupportScreen() {
     <View className="flex-1 bg-background">
       <ScrollView showsVerticalScrollIndicator={false} className="flex-1">
         {/* Header */}
-        <View className="flex-row items-center gap-3 px-4 pt-12">
-          <TouchableOpacity onPress={() => router.back()}>
-            <Icon as={ArrowLeft} size={24} className="text-foreground" />
+        <View className="flex-row items-center gap-3 px-4 pt-14 pb-2">
+          <TouchableOpacity
+            onPress={() => router.back()}
+            hitSlop={12}
+            className="h-10 w-10 items-center justify-center rounded-full border border-border bg-card shadow-soft active:bg-secondary"
+          >
+            <Icon as={ArrowLeft} size={20} className="text-foreground" />
           </TouchableOpacity>
-          <Text className="text-2xl font-bold">Help & Support</Text>
+          <Text className="text-2xl font-bold tracking-tight text-foreground">Help & Support</Text>
         </View>
 
         {/* Search */}
-        <View className="mt-6 px-4">
-          <View className="flex-row items-center gap-3 rounded-2xl border-2 border-border bg-background px-4 py-3">
+        <View className="mt-4 px-4">
+          <View className="flex-row items-center gap-3 rounded-xl border border-border bg-card px-4 py-1.5 shadow-soft">
             <Icon as={Search} size={20} className="text-muted-foreground" />
             <TextInput
               value={searchQuery}
               onChangeText={setSearchQuery}
               placeholder="Search for help..."
               placeholderTextColor="#727285"
-              className="flex-1 text-base text-foreground"
+              className="flex-1 py-2.5 text-base text-foreground"
             />
           </View>
         </View>
 
         {/* Contact Options */}
         <View className="mt-6 px-4">
-          <Text className="mb-3 text-xs font-semibold uppercase text-muted-foreground">
-            CONTACT US
+          <Text className="mb-3 text-2xs font-semibold uppercase tracking-wider text-muted-foreground">
+            Contact Us
           </Text>
           <View className="gap-3">
             {contactOptions.map((option) => (
               <TouchableOpacity
                 key={option.id}
                 onPress={option.action}
-                className="flex-row items-center gap-4 rounded-2xl bg-card p-4"
+                className="flex-row items-center gap-4 rounded-2xl border border-border bg-card p-4 shadow-soft active:bg-secondary"
               >
-                <View className="h-12 w-12 items-center justify-center rounded-full bg-purple-100">
-                  <Icon as={option.icon} size={24} className="text-purple-600" />
+                <View className="h-11 w-11 items-center justify-center rounded-xl bg-primary/10">
+                  <Icon as={option.icon} size={20} className="text-primary" />
                 </View>
                 <View className="flex-1">
-                  <Text className="font-semibold">{option.title}</Text>
-                  <Text className="text-sm text-muted-foreground">{option.description}</Text>
+                  <Text className="text-sm font-semibold text-foreground">{option.title}</Text>
+                  <Text className="text-2xs text-muted-foreground">{option.description}</Text>
                 </View>
                 <Icon as={ChevronRight} size={20} className="text-muted-foreground" />
               </TouchableOpacity>
@@ -123,32 +127,35 @@ export default function HelpSupportScreen() {
         </View>
 
         {/* FAQs */}
-        <View className="mt-6 px-4 pb-6">
-          <Text className="mb-3 text-xs font-semibold uppercase text-muted-foreground">
-            FREQUENTLY ASKED QUESTIONS
+        <View className="mt-6 px-4 pb-8">
+          <Text className="mb-3 text-2xs font-semibold uppercase tracking-wider text-muted-foreground">
+            Frequently Asked Questions
           </Text>
           <View className="gap-3">
-            {filteredFaqs.map((faq) => (
-              <TouchableOpacity
-                key={faq.id}
-                onPress={() => setExpandedFaq(expandedFaq === faq.id ? null : faq.id)}
-                className="rounded-2xl bg-card p-4"
-              >
-                <View className="flex-row items-center justify-between">
-                  <Text className="flex-1 font-semibold">{faq.question}</Text>
-                  <Icon
-                    as={ChevronRight}
-                    size={20}
-                    className={`text-muted-foreground ${
-                      expandedFaq === faq.id ? 'rotate-90' : ''
-                    }`}
-                  />
-                </View>
-                {expandedFaq === faq.id && (
-                  <Text className="mt-3 text-sm text-muted-foreground">{faq.answer}</Text>
-                )}
-              </TouchableOpacity>
-            ))}
+            {filteredFaqs.map((faq) => {
+              const isExpanded = expandedFaq === faq.id;
+              return (
+                <TouchableOpacity
+                  key={faq.id}
+                  onPress={() => setExpandedFaq(isExpanded ? null : faq.id)}
+                  className="rounded-2xl border border-border bg-card p-4 shadow-soft active:bg-secondary"
+                >
+                  <View className="flex-row items-center justify-between gap-3">
+                    <Text className="flex-1 text-sm font-semibold text-foreground">
+                      {faq.question}
+                    </Text>
+                    <Icon
+                      as={ChevronRight}
+                      size={18}
+                      className={`text-muted-foreground ${isExpanded ? 'rotate-90' : ''}`}
+                    />
+                  </View>
+                  {isExpanded && (
+                    <Text className="mt-3 text-sm leading-5 text-muted-foreground">{faq.answer}</Text>
+                  )}
+                </TouchableOpacity>
+              );
+            })}
           </View>
         </View>
       </ScrollView>

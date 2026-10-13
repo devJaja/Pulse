@@ -34,15 +34,15 @@ export default function SignUpScreen() {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       className="flex-1 bg-background"
     >
-      <ScrollView className="flex-1 px-5 pt-16" showsVerticalScrollIndicator={false}>
-        <Text className="mb-2 text-3xl font-bold text-foreground">Create an Account</Text>
-        <Text className="mb-8 text-base text-muted-foreground">Fill in the details below to get started.</Text>
+      <ScrollView className="flex-1 px-6 pt-16" showsVerticalScrollIndicator={false}>
+        <Text className="mb-2 text-3xl font-bold tracking-tight text-foreground">Create an Account</Text>
+        <Text className="mb-8 text-base leading-6 text-muted-foreground">Fill in the details below to get started.</Text>
 
         <View className="gap-6">
           <Input label="Full Name (Optional)" placeholder="e.g John Doe" value={fullName} onChangeText={setFullName} />
 
-          <View>
-            <Text className="mb-2 text-sm font-medium text-foreground">Bio (Optional)</Text>
+          <View className="gap-2">
+            <Text className="text-sm font-medium text-foreground">Bio (Optional)</Text>
             <TextInput
               placeholder="Tell us about yourself..."
               value={bio}
@@ -50,18 +50,18 @@ export default function SignUpScreen() {
               multiline
               numberOfLines={4}
               textAlignVertical="top"
-              className="h-24 rounded-xl bg-card px-4 py-3 text-base text-foreground"
+              className="h-28 rounded-xl border-2 border-border bg-background px-4 py-3 text-base text-foreground"
               placeholderTextColor="#727285"
             />
           </View>
 
-          <View>
-            <Text className="mb-3 text-sm font-medium text-foreground">Profile Picture (optional)</Text>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} className="gap-3">
+          <View className="gap-3">
+            <Text className="text-sm font-medium text-foreground">Profile Picture (optional)</Text>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingRight: 8 }}>
               <Pressable
                 onPress={() => setSelectedAvatar(null)}
-                className={`mr-3 h-16 w-16 items-center justify-center rounded-2xl ${
-                  selectedAvatar === null ? 'bg-purple-100 dark:bg-purple-900' : 'bg-muted'
+                className={`mr-3 h-16 w-16 items-center justify-center rounded-2xl border-2 ${
+                  selectedAvatar === null ? 'border-primary bg-accent' : 'border-border bg-muted'
                 }`}
               >
                 <Image
@@ -74,8 +74,8 @@ export default function SignUpScreen() {
                 <Pressable
                   key={index}
                   onPress={() => setSelectedAvatar(index)}
-                  className={`mr-3 h-16 w-16 overflow-hidden rounded-2xl ${
-                    selectedAvatar === index ? 'border-2 border-purple-600' : ''
+                  className={`mr-3 h-16 w-16 overflow-hidden rounded-2xl border-2 ${
+                    selectedAvatar === index ? 'border-primary' : 'border-border'
                   }`}
                 >
                   <Image source={avatar} className="h-full w-full" />
@@ -86,16 +86,16 @@ export default function SignUpScreen() {
         </View>
       </ScrollView>
 
-      <View className="px-5 pb-12">
+      <View className="px-6 pb-12">
         <Button
           onPress={handleSetup}
-          className="mb-4 h-14 rounded-2xl bg-primary active:bg-primary/90"
+          className="mb-3 h-14 rounded-2xl bg-primary shadow-soft active:bg-primary/90"
         >
           <Text className="text-base font-medium text-primary-foreground">Setup and Continue</Text>
         </Button>
 
-        <Pressable onPress={handleBack}>
-          <Text className="text-center text-base font-medium text-purple-600">Back</Text>
+        <Pressable onPress={handleBack} className="h-12 items-center justify-center">
+          <Text className="text-center text-base font-medium text-primary">Back</Text>
         </Pressable>
       </View>
     </KeyboardAvoidingView>

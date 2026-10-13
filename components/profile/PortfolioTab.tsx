@@ -1,9 +1,9 @@
-import { View, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { Text } from '@/components/ui/text';
 import { Icon } from '@/components/ui/icon';
 import { Coins, TrendingUp, TrendingDown } from 'lucide-react-native';
 import { router } from 'expo-router';
-import { EmptyState } from '../common/EmptyState';
+import { EmptyState, LoadingSpinner } from '../common';
 import { useTranslation } from 'react-i18next';
 
 interface PortfolioTabProps {
@@ -15,114 +15,143 @@ interface PortfolioTabProps {
 
 export function PortfolioTab({ portfolio, isLoading, isOwnProfile, onNavigateToProfile }: PortfolioTabProps) {
   const { t } = useTranslation();
-  
+
   if (isLoading) {
-    return (
-      <View className="items-center py-20">
-        <ActivityIndicator size="large" color="#6e54ff" />
-      </View>
-    );
+    return <LoadingSpinner />;
   }
 
   if (!portfolio || !portfolio.holdings || portfolio.holdings.length === 0) {
     return (
-      <EmptyState 
-        icon={Coins} 
+      <EmptyState
+        icon={Coins}
         message={t('profile.noTokenHoldings')}
         subtitle={isOwnProfile ? t('profile.buyPostTokens') : undefined}
       />
     );
   }
 
+  const isProfitable = portfolio.totalProfitLoss >= 0;
+
   return (
     <View className="px-4 py-4">
-      {/* Portfolio Summary */}
-      <View className="mb-4 rounded-2xl bg-[#0e100f] p-6">
-        <Text className="text-sm text-white/80">{t('profile.totalPortfolioValue')}</Text>
-        <Text className="mt-1 text-3xl font-bold text-white">
+      <View className="mb-4 overflow-hidden rounded-2xl bg-primary p-5 shadow-glow">
+        <Text className="text-2xs font-semibold uppercase tracking-wider text-primary-foreground/80">
+          {t('profile.totalPortfolioValue')}
+        </Text>
+        <Text className="mt-1 text-3xl font-bold tracking-tight text-primary-foreground">
           {portfolio.totalValue.toFixed(4)} MON
         </Text>
+
         <View className="mt-3 flex-row items-center gap-2">
-          <Icon 
-            as={portfolio.totalProfitLoss >= 0 ? TrendingUp : TrendingDown} 
-            size={16} 
-            className={portfolio.totalProfitLoss >= 0 ? "text-success" : "text-red-300"}
+          <Icon
+            as={isProfitable ? TrendingUp : TrendingDown}
+            size={16}
+            className={isProfitable ? 'text-green-200' : 'text-red-200'}
           />
-          <Text className={`font-semibold ${portfolio.totalProfitLoss >= 0 ? 'text-success' : 'text-red-300'}`}>
-            {portfolio.totalProfitLoss >= 0 ? '+' : ''}{portfolio.totalProfitLoss.toFixed(4)} MON
+          <Text className={`font-semibold ${isProfitable ? 'text-green-200' : 'text-red-200'}`}>
+            {isProfitable ? '+' : ''}{portfolio.totalProfitLoss.toFixed(4)} MON
           </Text>
-          <Text className={`text-sm ${portfolio.totalProfitLoss >= 0 ? 'text-success' : 'text-red-300'}`}>
-            ({portfolio.totalProfitLossPercentage >= 0 ? '+' : ''}{portfolio.totalProfitLossPercentage.toFixed(2)}%)
+          <Text className={`text-sm ${isProfitable ? 'text-green-200' : 'text-red-200'}`}>
+            ({portfolio.totalProfitLossPercentage >= 0 ? '+' : ''}
+            {portfolio.totalProfitLossPercentage.toFixed(2)}%)
           </Text>
         </View>
-        <View className="mt-2 flex-row gap-4">
+
+        <View className="mt-4 flex-row gap-6">
           <View>
-            <Text className="text-xs text-white/60">{t('profile.invested')}</Text>
-            <Text className="text-sm font-semibold text-white">
+            <Text className="text-2xs font-semibold uppercase tracking-wider text-primary-foreground/70">
+              {t('profile.invested')}
+            </Text>
+            <Text className="mt-0.5 text-sm font-semibold text-primary-foreground">
               {portfolio.totalInvested.toFixed(4)} MON
             </Text>
           </View>
           <View>
-            <Text className="text-xs text-white/60">{t('profile.holdings')}</Text>
-            <Text className="text-sm font-semibold text-white">
+            <Text className="text-2xs font-semibold uppercase tracking-wider text-primary-foreground/70">
+              {t('profile.holdings')}
+            </Text>
+            <Text className="mt-0.5 text-sm font-semibold text-primary-foreground">
               {portfolio.holdings.length} {t('profile.postsCount')}
             </Text>
           </View>
         </View>
       </View>
 
-      {/* Holdings List */}
-      {portfolio.holdings.map((holding: any) => (
-        <TouchableOpacity 
-          key={holding.id} 
-          onPress={() => router.push(`/post/${holding.post.id}`)}
-          className="mb-3 rounded-2xl bg-card p-4"
-        >
-          <View className="flex-row items-start justify-between">
-            <View className="flex-1">
-              <Text className="font-semibold" numberOfLines={2}>
-                {holding.post.content}
-              </Text>
-              <TouchableOpacity onPress={() => onNavigateToProfile(holding.post.author.username)}>
-                <Text className="mt-1 text-sm text-muted-foreground">
-                  {t('profile.by')} @{holding.post.author.username}
+      {portfolio.holdings.map((holding: any) => {
+        const holdingProfitable = holding.profitLoss >= 0;
+        return (
+          <TouchableOpacity
+            key={holding.id}
+            onPress={() => router.push(`/post/${holding.post.id}`)}
+            className="mb-3 rounded-2xl border border-border bg-card p-4 shadow-soft"
+          >
+            <View className="flex-row items-start justify-between">
+              <View className="flex-1 pr-3">
+                <Text className="text-sm font-semibold leading-5 text-foreground" numberOfLines={2}>
+                  {holding.post.content}
                 </Text>
-              </TouchableOpacity>
-            </View>
-            <View className="ml-2 items-end">
-              <View className="flex-row items-center gap-1">
-                <Icon 
-                  as={holding.profitLoss >= 0 ? TrendingUp : TrendingDown} 
-                  size={14} 
-                  className={holding.profitLoss >= 0 ? "text-success" : "text-red-600"}
+                <TouchableOpacity onPress={() => onNavigateToProfile(holding.post.author.username)}>
+                  <Text className="mt-1 text-2xs text-muted-foreground">
+                    {t('profile.by')} @{holding.post.author.username}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View
+                className={`flex-row items-center gap-1 rounded-full px-2 py-1 ${
+                  holdingProfitable ? 'bg-success/10' : 'bg-destructive/10'
+                }`}
+              >
+                <Icon
+                  as={holdingProfitable ? TrendingUp : TrendingDown}
+                  size={14}
+                  className={holdingProfitable ? 'text-success' : 'text-destructive'}
                 />
-                <Text className={`text-sm font-semibold ${holding.profitLoss >= 0 ? 'text-success' : 'text-red-600'}`}>
-                  {holding.profitLossPercentage >= 0 ? '+' : ''}{holding.profitLossPercentage.toFixed(1)}%
+                <Text
+                  className={`text-2xs font-semibold ${
+                    holdingProfitable ? 'text-success' : 'text-destructive'
+                  }`}
+                >
+                  {holding.profitLossPercentage >= 0 ? '+' : ''}
+                  {holding.profitLossPercentage.toFixed(1)}%
                 </Text>
               </View>
             </View>
-          </View>
-          
-          <View className="mt-3 flex-row gap-4">
-            <View>
-              <Text className="text-xs text-muted-foreground">{t('wallet.tokens')}</Text>
-              <Text className="font-semibold">{holding.amount}</Text>
+
+            <View className="mt-4 flex-row flex-wrap gap-x-6 gap-y-3">
+              <View>
+                <Text className="text-3xs uppercase tracking-wide text-muted-foreground">
+                  {t('wallet.tokens')}
+                </Text>
+                <Text className="text-sm font-semibold text-foreground">{holding.amount}</Text>
+              </View>
+              <View>
+                <Text className="text-3xs uppercase tracking-wide text-muted-foreground">
+                  {t('profile.avgPrice')}
+                </Text>
+                <Text className="text-sm font-semibold text-foreground">
+                  {holding.purchasePrice.toFixed(4)}
+                </Text>
+              </View>
+              <View>
+                <Text className="text-3xs uppercase tracking-wide text-muted-foreground">
+                  {t('profile.current')}
+                </Text>
+                <Text className="text-sm font-semibold text-foreground">
+                  {holding.currentPrice.toFixed(4)}
+                </Text>
+              </View>
+              <View>
+                <Text className="text-3xs uppercase tracking-wide text-muted-foreground">
+                  {t('profile.value')}
+                </Text>
+                <Text className="text-sm font-semibold text-foreground">
+                  {holding.currentValue.toFixed(4)} MON
+                </Text>
+              </View>
             </View>
-            <View>
-              <Text className="text-xs text-muted-foreground">{t('profile.avgPrice')}</Text>
-              <Text className="font-semibold">{holding.purchasePrice.toFixed(4)}</Text>
-            </View>
-            <View>
-              <Text className="text-xs text-muted-foreground">{t('profile.current')}</Text>
-              <Text className="font-semibold">{holding.currentPrice.toFixed(4)}</Text>
-            </View>
-            <View>
-              <Text className="text-xs text-muted-foreground">{t('profile.value')}</Text>
-              <Text className="font-semibold">{holding.currentValue.toFixed(4)} MON</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-      ))}
+          </TouchableOpacity>
+        );
+      })}
     </View>
   );
 }

@@ -1,7 +1,7 @@
 import { View, ScrollView, TouchableOpacity, TextInput, RefreshControl, ActivityIndicator, Modal } from 'react-native';
 import { Text } from '@/components/ui/text';
 import { Icon } from '@/components/ui/icon';
-import { Search, Plus, X, User } from 'lucide-react-native';
+import { Search, Plus, X, MessageCircle } from 'lucide-react-native';
 import { router } from 'expo-router';
 import { useChats } from '@/hooks/useChats';
 import type { Chat } from '@/types';
@@ -10,7 +10,7 @@ import { useState } from 'react';
 import { api } from '@/lib/api';
 import { toast } from 'sonner-native';
 import { ChatCard } from '@/components/chat';
-import { Avatar } from '@/components/common';
+import { Avatar, EmptyState, LoadingSpinner } from '@/components/common';
 
 interface SearchUser {
   id: string;
@@ -74,20 +74,25 @@ export default function ChatsScreen() {
         showsVerticalScrollIndicator={false}
         className="flex-1"
         refreshControl={
-          <RefreshControl refreshing={isLoading} onRefresh={refetch} />
+          <RefreshControl refreshing={isLoading} onRefresh={refetch} tintColor="#6e54ff" colors={['#6e54ff']} />
         }
       >
         {/* Header */}
         <View className="px-4 pt-12">
           <View className="flex-row items-center justify-between">
-            <Text className="text-3xl font-bold">Messages</Text>
+            <View>
+              <Text className="text-3xl font-bold text-foreground">Messages</Text>
+              <Text className="mt-0.5 text-sm text-muted-foreground">
+                Stay in sync with your circle
+              </Text>
+            </View>
             <PusherStatus compact showDetails />
           </View>
         </View>
 
         {/* Search */}
-        <View className="mt-6 px-4">
-          <View className="flex-row items-center gap-3 rounded-2xl border-2 border-border bg-background px-4 py-3">
+        <View className="mt-5 px-4">
+          <View className="flex-row items-center gap-3 rounded-2xl border border-border bg-card px-4 py-3 shadow-soft">
             <Icon as={Search} size={20} className="text-muted-foreground" />
             <TextInput
               placeholder="Search messages"
@@ -98,16 +103,15 @@ export default function ChatsScreen() {
         </View>
 
         {/* Conversations */}
-        <View className="mt-6 px-4 pb-6">
+        <View className="mt-5 px-4 pb-28">
           {isLoading && chats.length === 0 ? (
-            <View className="items-center py-20">
-              <ActivityIndicator size="large" color="#6e54ff" />
-            </View>
+            <LoadingSpinner />
           ) : chats.length === 0 ? (
-            <View className="items-center py-20">
-              <Text className="text-muted-foreground">No conversations yet</Text>
-              <Text className="mt-2 text-sm text-muted-foreground">Start chatting with someone!</Text>
-            </View>
+            <EmptyState
+              icon={MessageCircle}
+              message="No conversations yet"
+              subtitle="Start chatting with someone to see your messages here."
+            />
           ) : (
             chats.map((chat: Chat) => (
               <ChatCard
@@ -134,7 +138,8 @@ export default function ChatsScreen() {
       {/* Floating New Message Button */}
       <TouchableOpacity 
         onPress={() => setShowNewMessageModal(true)}
-        className="absolute bottom-6 right-6 h-14 w-14 items-center justify-center rounded-full bg-primary shadow-lg"
+        activeOpacity={0.85}
+        className="absolute bottom-6 right-6 h-14 w-14 items-center justify-center rounded-full bg-primary shadow-glow"
       >
         <Icon as={Plus} size={24} className="text-primary-foreground" />
       </TouchableOpacity>
@@ -146,23 +151,32 @@ export default function ChatsScreen() {
         animationType="slide"
         onRequestClose={() => setShowNewMessageModal(false)}
       >
-        <View className="flex-1 bg-black/50">
-          <View className="mt-20 flex-1 rounded-t-3xl bg-background">
+        <View className="flex-1 justify-end bg-black/50">
+          <View className="h-[85%] rounded-t-3xl border-t border-border bg-card">
+            {/* Handle */}
+            <View className="items-center pt-3">
+              <View className="h-1 w-10 rounded-full bg-border" />
+            </View>
+
             {/* Header */}
-            <View className="flex-row items-center justify-between border-b border-border p-4">
-              <Text className="text-lg font-bold">New Message</Text>
-              <TouchableOpacity onPress={() => {
-                setShowNewMessageModal(false);
-                setSearchQuery('');
-                setSearchResults([]);
-              }}>
-                <Icon as={X} size={24} className="text-foreground" />
+            <View className="flex-row items-center justify-between px-4 pb-4 pt-3">
+              <Text className="text-lg font-bold text-foreground">New Message</Text>
+              <TouchableOpacity
+                onPress={() => {
+                  setShowNewMessageModal(false);
+                  setSearchQuery('');
+                  setSearchResults([]);
+                }}
+                activeOpacity={0.8}
+                className="h-9 w-9 items-center justify-center rounded-full bg-secondary active:bg-accent"
+              >
+                <Icon as={X} size={18} className="text-foreground" />
               </TouchableOpacity>
             </View>
 
             {/* Search */}
-            <View className="p-4">
-              <View className="flex-row items-center gap-3 rounded-2xl border-2 border-border bg-background px-4 py-3">
+            <View className="px-4 pb-2">
+              <View className="flex-row items-center gap-3 rounded-2xl border border-border bg-background px-4 py-3">
                 <Icon as={Search} size={20} className="text-muted-foreground" />
                 <TextInput
                   placeholder="Search users..."
@@ -176,7 +190,7 @@ export default function ChatsScreen() {
             </View>
 
             {/* Search Results */}
-            <ScrollView className="flex-1 px-4">
+            <ScrollView className="flex-1 px-4" keyboardShouldPersistTaps="handled">
               {isSearching ? (
                 <View className="items-center py-10">
                   <ActivityIndicator size="large" color="#6e54ff" />
@@ -187,7 +201,9 @@ export default function ChatsScreen() {
                 </View>
               ) : searchQuery.length < 2 ? (
                 <View className="items-center py-10">
-                  <Text className="text-muted-foreground">Search for users to start a conversation</Text>
+                  <Text className="text-center text-sm text-muted-foreground">
+                    Search for users to start a conversation
+                  </Text>
                 </View>
               ) : (
                 searchResults.map((user) => (
@@ -195,7 +211,8 @@ export default function ChatsScreen() {
                     key={user.id}
                     onPress={() => handleSelectUser(user)}
                     disabled={isCreatingChat}
-                    className="flex-row items-center gap-3 border-b border-border py-4"
+                    activeOpacity={0.8}
+                    className="mb-2 flex-row items-center gap-3 rounded-2xl border border-border bg-background p-3 active:bg-secondary"
                   >
                     <Avatar
                       uri={user.avatar}
@@ -204,9 +221,10 @@ export default function ChatsScreen() {
                       size="md"
                     />
                     <View className="flex-1">
-                      <Text className="font-semibold">{user.name || user.username}</Text>
+                      <Text className="font-semibold text-foreground">{user.name || user.username}</Text>
                       <Text className="text-sm text-muted-foreground">@{user.username}</Text>
                     </View>
+                    <Icon as={Plus} size={18} className="text-primary" />
                   </TouchableOpacity>
                 ))
               )}

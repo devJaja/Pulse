@@ -2,6 +2,7 @@ import { Redirect } from 'expo-router';
 import { useAuth } from '@/hooks/useAuth';
 import { useOnboarding } from '@/hooks/useOnboarding';
 import { View, ActivityIndicator } from 'react-native';
+import { Text } from '@/components/ui/text';
 
 export default function Screen() {
   const { isAuthenticated, isLoadingUser } = useAuth();
@@ -9,8 +10,11 @@ export default function Screen() {
 
   if (isLoadingUser || isOnboardingLoading) {
     return (
-      <View className="flex-1 items-center justify-center bg-gray-50">
-        <ActivityIndicator size="large" color="#6e54ff" />
+      <View className="flex-1 items-center justify-center gap-5 bg-background">
+        <View className="h-16 w-16 items-center justify-center rounded-2xl bg-accent">
+          <ActivityIndicator size="large" color="#6e54ff" />
+        </View>
+        <Text className="text-sm font-medium text-muted-foreground">Loading Pulse…</Text>
       </View>
     );
   }

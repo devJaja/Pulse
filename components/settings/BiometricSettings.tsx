@@ -1,4 +1,4 @@
-import { View, TouchableOpacity, Switch } from 'react-native';
+import { View, Switch } from 'react-native';
 import { Text } from '@/components/ui/text';
 import { Icon } from '@/components/ui/icon';
 import { Fingerprint, AlertCircle } from 'lucide-react-native';
@@ -63,43 +63,39 @@ export function BiometricSettings({ onToggle }: BiometricSettingsProps) {
 
   if (!canUse) {
     return (
-      <View className="rounded-2xl bg-yellow-50 p-4 dark:bg-yellow-950/30">
-        <View className="flex-row items-start gap-3">
-          <Icon as={AlertCircle} size={20} className="text-yellow-600 mt-0.5" />
-          <View className="flex-1">
-            <Text className="font-semibold text-yellow-900 dark:text-yellow-100">
-              Biometric Not Available
-            </Text>
-            <Text className="mt-1 text-sm text-yellow-700 dark:text-yellow-200">
-              Your device doesn&apos;t support biometric authentication or you haven&apos;t set it up yet.
-            </Text>
-          </View>
+      <View className="flex-row items-start gap-3 rounded-2xl border border-yellow-200 bg-yellow-50 p-4 dark:border-yellow-900/40 dark:bg-yellow-950/30">
+        <View className="h-11 w-11 items-center justify-center rounded-xl bg-yellow-100 dark:bg-yellow-500/15">
+          <Icon as={AlertCircle} size={20} className="text-yellow-600 dark:text-yellow-300" />
+        </View>
+        <View className="flex-1 pt-0.5">
+          <Text className="font-semibold text-yellow-900 dark:text-yellow-100">
+            Biometric Not Available
+          </Text>
+          <Text className="mt-1 text-sm leading-5 text-yellow-700 dark:text-yellow-200/80">
+            Your device doesn&apos;t support biometric authentication or you haven&apos;t set it up yet.
+          </Text>
         </View>
       </View>
     );
   }
 
   return (
-    <View className="rounded-2xl bg-card p-4">
-      <View className="flex-row items-center justify-between">
-        <View className="flex-row items-center gap-3 flex-1">
-          <View className="h-10 w-10 items-center justify-center rounded-full bg-purple-100 dark:bg-purple-900">
-            <Icon as={Fingerprint} size={20} className="text-purple-600 dark:text-purple-300" />
-          </View>
-          <View className="flex-1">
-            <Text className="font-semibold">{biometricName} Sign In</Text>
-            <Text className="text-sm text-muted-foreground">
-              Use {biometricName.toLowerCase()} to sign in quickly
-            </Text>
-          </View>
-        </View>
-        <Switch
-          value={isEnabled}
-          onValueChange={handleToggle}
-          trackColor={{ false: '#E4DFFF', true: '#6e54ff' }}
-          thumbColor="#ffffff"
-        />
+    <View className="flex-row items-center gap-3 rounded-2xl border border-border bg-card p-4 shadow-soft">
+      <View className="h-11 w-11 items-center justify-center rounded-xl bg-purple-100 dark:bg-purple-500/15">
+        <Icon as={Fingerprint} size={20} className="text-purple-600 dark:text-purple-300" />
       </View>
+      <View className="flex-1">
+        <Text className="font-semibold">{biometricName} Sign In</Text>
+        <Text className="mt-0.5 text-sm text-muted-foreground">
+          Use {biometricName.toLowerCase()} to sign in quickly
+        </Text>
+      </View>
+      <Switch
+        value={isEnabled}
+        onValueChange={handleToggle}
+        trackColor={{ false: '#E4DFFF', true: '#6e54ff' }}
+        thumbColor="#ffffff"
+      />
     </View>
   );
 }

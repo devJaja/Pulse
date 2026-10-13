@@ -46,24 +46,25 @@ export function SendForm({ balance, onSubmit, isSubmitting, onScanQR }: SendForm
   };
 
   return (
-    <View className="gap-4">
+    <View className="gap-5">
       {/* Recipient Address */}
       <View>
-        <Text className="mb-2 text-sm font-medium">Recipient Address</Text>
+        <Text className="mb-2 text-sm font-medium text-foreground">Recipient Address</Text>
         <View className="flex-row gap-2">
           <TextInput
             value={toAddress}
             onChangeText={setToAddress}
             placeholder="Enter Monad address"
             placeholderTextColor="#727285"
-            className="flex-1 rounded-lg border border-border bg-background px-4 py-3 text-foreground"
+            className="flex-1 rounded-xl border border-border bg-background px-4 py-3.5 font-mono text-sm text-foreground"
           />
           {onScanQR && (
             <TouchableOpacity
               onPress={onScanQR}
-              className="h-12 w-12 items-center justify-center rounded-lg border border-border"
+              activeOpacity={0.7}
+              className="h-[52px] w-[52px] items-center justify-center rounded-xl border border-border bg-card shadow-soft active:bg-accent"
             >
-              <Icon as={QrCode} size={20} className="text-foreground" />
+              <Icon as={QrCode} size={20} className="text-primary" />
             </TouchableOpacity>
           )}
         </View>
@@ -72,9 +73,11 @@ export function SendForm({ balance, onSubmit, isSubmitting, onScanQR }: SendForm
       {/* Amount */}
       <View>
         <View className="mb-2 flex-row items-center justify-between">
-          <Text className="text-sm font-medium">Amount (MON)</Text>
-          <TouchableOpacity onPress={setMaxAmount}>
-            <Text className="text-sm text-purple-600">Max: {balance.toFixed(4)}</Text>
+          <Text className="text-sm font-medium text-foreground">Amount (MON)</Text>
+          <TouchableOpacity onPress={setMaxAmount} hitSlop={8}>
+            <Text className="text-sm font-semibold tabular-nums text-primary">
+              Max: {balance.toFixed(4)}
+            </Text>
           </TouchableOpacity>
         </View>
         <TextInput
@@ -83,19 +86,19 @@ export function SendForm({ balance, onSubmit, isSubmitting, onScanQR }: SendForm
           placeholder="0.00"
           keyboardType="decimal-pad"
           placeholderTextColor="#727285"
-          className="rounded-lg border border-border bg-background px-4 py-3 text-foreground"
+          className="rounded-xl border border-border bg-background px-4 py-3.5 text-lg font-semibold tabular-nums text-foreground"
         />
       </View>
 
       {/* Memo (Optional) */}
       <View>
-        <Text className="mb-2 text-sm font-medium">Memo (Optional)</Text>
+        <Text className="mb-2 text-sm font-medium text-foreground">Memo (Optional)</Text>
         <TextInput
           value={memo}
           onChangeText={setMemo}
           placeholder="Add a note"
           placeholderTextColor="#727285"
-          className="rounded-lg border border-border bg-background px-4 py-3 text-foreground"
+          className="rounded-xl border border-border bg-background px-4 py-3.5 text-foreground"
         />
       </View>
 
@@ -103,9 +106,16 @@ export function SendForm({ balance, onSubmit, isSubmitting, onScanQR }: SendForm
       <TouchableOpacity
         onPress={handleSubmit}
         disabled={isSubmitting}
-        className={`rounded-xl py-4 ${isSubmitting ? 'bg-gray-400' : 'bg-primary'}`}
+        activeOpacity={0.8}
+        className={`flex-row items-center justify-center rounded-xl py-4 shadow-soft ${
+          isSubmitting ? 'bg-muted' : 'bg-primary active:bg-primary/90'
+        }`}
       >
-        <Text className="text-center font-semibold text-primary-foreground">
+        <Text
+          className={`text-center text-base font-semibold ${
+            isSubmitting ? 'text-muted-foreground' : 'text-primary-foreground'
+          }`}
+        >
           {isSubmitting ? 'Sending...' : 'Send MON'}
         </Text>
       </TouchableOpacity>

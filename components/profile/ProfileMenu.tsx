@@ -22,44 +22,51 @@ export function ProfileMenu({ visible, onClose }: ProfileMenuProps) {
         onPress={onClose}
         className="flex-1 justify-end bg-black/50"
       >
-        <View className="rounded-t-3xl bg-background pb-8">
-          {/* Handle */}
-          <View className="items-center py-4">
-            <View className="h-1 w-12 rounded-full bg-gray-300" />
+        <View className="rounded-t-3xl border-t border-border bg-card pb-8 shadow-elevated">
+          <View className="items-center py-3">
+            <View className="h-1 w-12 rounded-full bg-border" />
           </View>
 
-          {/* Menu Items */}
           <TouchableOpacity
             onPress={() => {
               onClose();
-              // Handle share
             }}
-            className="flex-row items-center gap-4 border-b border-border px-6 py-5"
+            className="flex-row items-center gap-4 px-6 py-4 active:bg-accent"
           >
-            <Icon as={Share} size={24} className="text-foreground" />
-            <Text className="text-lg font-semibold">Share Profile</Text>
+            <View className="h-10 w-10 items-center justify-center rounded-full bg-secondary">
+              <Icon as={Share} size={20} className="text-foreground" />
+            </View>
+            <Text className="text-base font-semibold text-foreground">Share Profile</Text>
           </TouchableOpacity>
+
+          <View className="mx-6 h-px bg-border" />
 
           <TouchableOpacity
             onPress={() => {
               onClose();
               router.push('/profile/edit');
             }}
-            className="flex-row items-center gap-4 border-b border-border px-6 py-5"
+            className="flex-row items-center gap-4 px-6 py-4 active:bg-accent"
           >
-            <Icon as={Edit} size={24} className="text-foreground" />
-            <Text className="text-lg font-semibold">Edit Profile</Text>
+            <View className="h-10 w-10 items-center justify-center rounded-full bg-secondary">
+              <Icon as={Edit} size={20} className="text-foreground" />
+            </View>
+            <Text className="text-base font-semibold text-foreground">Edit Profile</Text>
           </TouchableOpacity>
+
+          <View className="mx-6 h-px bg-border" />
 
           <TouchableOpacity
             onPress={() => {
               onClose();
               router.push('/settings');
             }}
-            className="flex-row items-center gap-4 px-6 py-5"
+            className="flex-row items-center gap-4 px-6 py-4 active:bg-accent"
           >
-            <Icon as={Settings} size={24} className="text-foreground" />
-            <Text className="text-lg font-semibold">Settings</Text>
+            <View className="h-10 w-10 items-center justify-center rounded-full bg-secondary">
+              <Icon as={Settings} size={20} className="text-foreground" />
+            </View>
+            <Text className="text-base font-semibold text-foreground">Settings</Text>
           </TouchableOpacity>
         </View>
       </TouchableOpacity>

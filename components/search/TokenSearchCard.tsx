@@ -21,10 +21,16 @@ interface TokenSearchCardProps {
 }
 
 export function TokenSearchCard({ token, onPress }: TokenSearchCardProps) {
+  const progress =
+    token.tokenSupply > 0
+      ? Math.min(100, Math.round((token.tokensSold / token.tokenSupply) * 100))
+      : 0;
+
   return (
     <TouchableOpacity
       onPress={onPress}
-      className="border-b border-border py-4"
+      activeOpacity={0.85}
+      className="mb-2.5 rounded-2xl border border-border bg-card p-4 shadow-soft active:bg-secondary"
     >
       <View className="flex-row items-start gap-3">
         <Avatar
@@ -35,23 +41,30 @@ export function TokenSearchCard({ token, onPress }: TokenSearchCardProps) {
         />
         <View className="flex-1">
           <View className="flex-row items-center gap-2">
-            <Text className="font-semibold">{token.author.name || token.author.username}</Text>
-            <View className="rounded-full bg-purple-100 px-2 py-0.5 dark:bg-purple-900">
-              <Text className="text-xs font-semibold text-purple-600 dark:text-purple-300">TOKEN</Text>
+            <Text numberOfLines={1} className="shrink text-[14px] font-semibold text-foreground">
+              {token.author.name || token.author.username}
+            </Text>
+            <View className="flex-row items-center gap-1 rounded-full bg-accent px-2 py-0.5">
+              <Icon as={Coins} size={11} className="text-primary" />
+              <Text className="text-3xs font-semibold tracking-wide text-primary">TOKEN</Text>
             </View>
           </View>
-          <Text className="mt-1" numberOfLines={2}>{token.content}</Text>
-          <View className="mt-2 flex-row items-center gap-4">
-            <View className="flex-row items-center gap-1">
-              <Icon as={Coins} size={14} className="text-purple-600" />
-              <Text className="text-sm font-semibold text-purple-600">{token.tokenPrice} MON</Text>
+          <Text className="mt-1 text-[15px] leading-5 text-foreground" numberOfLines={2}>
+            {token.content}
+          </Text>
+
+          <View className="mt-3 flex-row items-center justify-between">
+            <View className="flex-row items-center gap-1.5">
+              <Icon as={TrendingUp} size={14} className="text-primary" />
+              <Text className="text-sm font-semibold text-primary">{token.tokenPrice} MON</Text>
             </View>
-            <View className="flex-row items-center gap-1">
-              <Icon as={TrendingUp} size={14} className="text-muted-foreground" />
-              <Text className="text-sm text-muted-foreground">
-                {token.tokensSold}/{token.tokenSupply} sold
-              </Text>
-            </View>
+            <Text className="text-sm text-muted-foreground">
+              {token.tokensSold}/{token.tokenSupply} sold
+            </Text>
+          </View>
+
+          <View className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-secondary">
+            <View className="h-full rounded-full bg-primary" style={{ width: `${progress}%` }} />
           </View>
         </View>
       </View>

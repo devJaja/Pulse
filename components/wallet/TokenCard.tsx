@@ -27,32 +27,37 @@ export function TokenCard({
   return (
     <TouchableOpacity
       onPress={onPress}
-      className="mb-3 rounded-2xl bg-card p-4"
+      activeOpacity={0.7}
+      className="mb-3 rounded-2xl border border-border bg-card p-4 shadow-soft active:bg-accent/50"
     >
       <View className="flex-row items-center justify-between">
         <View className="flex-row items-center gap-3">
           {IconComponent && (
-            <View className="h-10 w-10 items-center justify-center rounded-full bg-purple-100 dark:bg-purple-900">
-              <Icon as={IconComponent} size={24} className="text-purple-600 dark:text-purple-300" />
+            <View className="h-11 w-11 items-center justify-center rounded-full bg-primary/10">
+              <Icon as={IconComponent} size={22} className="text-primary" strokeWidth={2} />
             </View>
           )}
           <View>
-            <Text className="font-semibold">{symbol}</Text>
+            <Text className="text-base font-semibold text-card-foreground">{symbol}</Text>
             <Text className="text-sm text-muted-foreground">{name}</Text>
           </View>
         </View>
 
         <View className="items-end">
-          <Text className="font-semibold">{balance.toFixed(4)}</Text>
-          <Text className="text-sm text-muted-foreground">${value.toFixed(2)}</Text>
+          <Text className="text-base font-semibold tabular-nums text-card-foreground">
+            {balance.toFixed(4)}
+          </Text>
+          <Text className="text-sm tabular-nums text-muted-foreground">${value.toFixed(2)}</Text>
           {change24h !== 0 && (
-            <View className="flex-row items-center gap-1">
+            <View className="mt-0.5 flex-row items-center gap-1">
               <Icon
                 as={isPositive ? TrendingUp : TrendingDown}
                 size={12}
-                className={isPositive ? 'text-success' : 'text-red-600'}
+                className={isPositive ? 'text-success' : 'text-destructive'}
               />
-              <Text className={`text-xs ${isPositive ? 'text-success' : 'text-red-600'}`}>
+              <Text
+                className={`text-xs font-medium tabular-nums ${isPositive ? 'text-success' : 'text-destructive'}`}
+              >
                 {isPositive ? '+' : ''}{change24h.toFixed(2)}%
               </Text>
             </View>

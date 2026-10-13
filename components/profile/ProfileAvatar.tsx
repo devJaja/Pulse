@@ -1,5 +1,4 @@
-import { View, Image } from 'react-native';
-import { Text } from '@/components/ui/text';
+import { Avatar } from '@/components/ui/avatar';
 
 interface ProfileAvatarProps {
   avatar?: string;
@@ -8,35 +7,26 @@ interface ProfileAvatarProps {
   size?: 'small' | 'medium' | 'large';
 }
 
+const sizeMap = {
+  small: 'sm',
+  medium: 'lg',
+  large: 'xl',
+} as const;
+
+const sizeClass = {
+  small: 'h-10 w-10 text-sm',
+  medium: 'h-16 w-16 text-xl',
+  large: 'h-24 w-24 text-3xl',
+} as const;
+
 export function ProfileAvatar({ avatar, name, username, size = 'large' }: ProfileAvatarProps) {
-  const sizeClasses = {
-    small: 'h-10 w-10',
-    medium: 'h-16 w-16',
-    large: 'h-24 w-24',
-  };
-
-  const textSizeClasses = {
-    small: 'text-sm',
-    medium: 'text-xl',
-    large: 'text-3xl',
-  };
-
-  const initial = name?.charAt(0)?.toUpperCase() || username?.charAt(0)?.toUpperCase() || '?';
-
-  if (avatar) {
-    return (
-      <Image 
-        source={{ uri: avatar }} 
-        className={`${sizeClasses[size]} rounded-full`}
-      />
-    );
-  }
-
   return (
-    <View className={`${sizeClasses[size]} items-center justify-center rounded-full bg-purple-200 dark:bg-purple-900`}>
-      <Text className={`${textSizeClasses[size]} font-bold text-purple-600 dark:text-purple-300`}>
-        {initial}
-      </Text>
-    </View>
+    <Avatar
+      uri={avatar}
+      name={name}
+      username={username}
+      size={sizeMap[size]}
+      className={`border border-border shadow-soft ${sizeClass[size]}`}
+    />
   );
 }

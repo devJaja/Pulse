@@ -1,7 +1,7 @@
 import { View, ScrollView, TouchableOpacity } from 'react-native';
 import { Text } from '@/components/ui/text';
 import { Icon } from '@/components/ui/icon';
-import { ArrowLeft, Sparkles, Gamepad2, Coins, Zap, Gift, TrendingUp, UtensilsCrossed } from 'lucide-react-native';
+import { ArrowLeft, Sparkles, Gamepad2, Coins, Zap, Gift, TrendingUp, UtensilsCrossed, ChevronRight } from 'lucide-react-native';
 import { router } from 'expo-router';
 
 const liveApps = [
@@ -75,25 +75,35 @@ const upcomingApps = [
 export default function MiniAppsScreen() {
   return (
     <View className="flex-1 bg-background">
-      <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
-        {/* Header */}
-        <View className="bg-[#0e100f] px-4 pb-8 pt-12">
-          <View className="flex-row items-center gap-3">
-            <TouchableOpacity onPress={() => router.back()}>
-              <Icon as={ArrowLeft} size={24} className="text-white" />
-            </TouchableOpacity>
-            <Text className="text-2xl font-bold text-white">Mini Apps</Text>
+      {/* Header */}
+      <View className="border-b border-border bg-card px-4 pb-5 pt-12">
+        <View className="flex-row items-center gap-3">
+          <TouchableOpacity
+            onPress={() => router.back()}
+            className="h-10 w-10 items-center justify-center rounded-full bg-secondary active:opacity-70"
+          >
+            <Icon as={ArrowLeft} size={20} className="text-foreground" />
+          </TouchableOpacity>
+          <View className="flex-1">
+            <Text className="text-2xl font-bold">Mini Apps</Text>
+            <Text className="mt-0.5 text-sm text-muted-foreground">
+              Swap, play, earn and more
+            </Text>
           </View>
+        </View>
+      </View>
 
-          {/* Hero Section */}
-          <View className="mt-6 items-center">
-            <View className="h-24 w-24 items-center justify-center rounded-full bg-white/20">
-              <Icon as={Sparkles} size={48} className="text-white" />
+      <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
+        {/* Hero Section */}
+        <View className="mx-4 mt-5 overflow-hidden rounded-2xl bg-primary p-6 shadow-glow">
+          <View className="items-center">
+            <View className="h-16 w-16 items-center justify-center rounded-2xl bg-white/20">
+              <Icon as={Sparkles} size={32} className="text-white" />
             </View>
-            <Text className="mt-4 text-center text-2xl font-bold text-white">
+            <Text className="mt-4 text-center text-xl font-bold text-white">
               Explore Mini Apps
             </Text>
-            <Text className="mt-2 text-center text-sm text-white/90">
+            <Text className="mt-1.5 text-center text-sm text-white/80">
               Swap, play, earn and more!
             </Text>
           </View>
@@ -102,10 +112,10 @@ export default function MiniAppsScreen() {
         {/* Live Apps */}
         <View className="mt-6 px-4">
           <View className="flex-row items-center gap-2">
-            <View className="h-2 w-2 rounded-full bg-success/100" />
-            <Text className="text-xl font-bold">Live Now</Text>
+            <View className="h-2 w-2 rounded-full bg-success" />
+            <Text className="text-lg font-bold">Live Now</Text>
           </View>
-          <Text className="mt-1 text-sm text-muted-foreground">
+          <Text className="mt-0.5 text-sm text-muted-foreground">
             Try these apps right now
           </Text>
 
@@ -114,20 +124,16 @@ export default function MiniAppsScreen() {
               <TouchableOpacity
                 key={app.id}
                 onPress={() => router.push(app.route as any)}
-                className="overflow-hidden rounded-2xl bg-card active:opacity-80"
+                className="flex-row items-center gap-3 rounded-2xl border border-border bg-card p-4 shadow-soft active:opacity-80"
               >
-                <View className="bg-[#0e100f] p-4">
-                  <View className="flex-row items-center gap-3">
-                    <View className="h-14 w-14 items-center justify-center rounded-2xl bg-white/20">
-                      <Icon as={app.icon} size={28} className="text-white" />
-                    </View>
-                    <View className="flex-1">
-                      <Text className="text-lg font-bold text-white">{app.name}</Text>
-                      <Text className="mt-1 text-sm text-white/90">{app.description}</Text>
-                    </View>
-                    <Icon as={ArrowLeft} size={20} className="text-white rotate-180" />
-                  </View>
+                <View className={`h-12 w-12 items-center justify-center rounded-2xl ${app.color}`}>
+                  <Icon as={app.icon} size={24} className="text-white" />
                 </View>
+                <View className="flex-1">
+                  <Text className="font-semibold">{app.name}</Text>
+                  <Text className="mt-0.5 text-sm text-muted-foreground">{app.description}</Text>
+                </View>
+                <Icon as={ChevronRight} size={18} className="text-muted-foreground" />
               </TouchableOpacity>
             ))}
           </View>
@@ -135,8 +141,8 @@ export default function MiniAppsScreen() {
 
         {/* Coming Soon */}
         <View className="mt-6 px-4">
-          <Text className="text-xl font-bold">Coming Soon</Text>
-          <Text className="mt-1 text-sm text-muted-foreground">
+          <Text className="text-lg font-bold">Coming Soon</Text>
+          <Text className="mt-0.5 text-sm text-muted-foreground">
             More apps in development
           </Text>
 
@@ -144,24 +150,19 @@ export default function MiniAppsScreen() {
             {upcomingApps.map((app) => (
               <View
                 key={app.id}
-                className="overflow-hidden rounded-2xl bg-card opacity-60"
+                className="flex-row items-center gap-3 rounded-2xl border border-border bg-card p-4 opacity-70"
               >
-                <View className="bg-gray-400 dark:bg-gray-700 p-4">
-                  <View className="flex-row items-center gap-3">
-                    <View className="h-14 w-14 items-center justify-center rounded-2xl bg-white/20">
-                      <Icon as={app.icon} size={28} className="text-white" />
-                    </View>
-                    <View className="flex-1">
-                      <Text className="text-lg font-bold text-white">{app.name}</Text>
-                      <Text className="mt-1 text-sm text-white/90">{app.description}</Text>
-                    </View>
-                  </View>
+                <View className={`h-12 w-12 items-center justify-center rounded-2xl ${app.color}`}>
+                  <Icon as={app.icon} size={24} className="text-white" />
                 </View>
-                <View className="flex-row items-center justify-between bg-card p-4">
-                  <Text className="text-sm text-muted-foreground">Status</Text>
-                  <View className="rounded-full bg-yellow-100 dark:bg-yellow-900 px-3 py-1">
-                    <Text className="text-xs font-medium text-yellow-700 dark:text-yellow-300">In Development</Text>
-                  </View>
+                <View className="flex-1">
+                  <Text className="font-semibold">{app.name}</Text>
+                  <Text className="mt-0.5 text-sm text-muted-foreground">{app.description}</Text>
+                </View>
+                <View className="rounded-full bg-yellow-100 px-3 py-1 dark:bg-yellow-500/15">
+                  <Text className="text-2xs font-medium text-yellow-700 dark:text-yellow-300">
+                    In Development
+                  </Text>
                 </View>
               </View>
             ))}

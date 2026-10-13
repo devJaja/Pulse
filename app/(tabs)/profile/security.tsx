@@ -1,6 +1,7 @@
 import { View, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { Text } from '@/components/ui/text';
 import { Icon } from '@/components/ui/icon';
+import { Button } from '@/components/ui/button';
 import { ArrowLeft, Lock, Shield, Eye, EyeOff, ChevronRight } from 'lucide-react-native';
 import { router } from 'expo-router';
 import { useState } from 'react';
@@ -51,47 +52,53 @@ export default function SecurityPrivacyScreen() {
     <View className="flex-1 bg-background">
       <ScrollView showsVerticalScrollIndicator={false} className="flex-1">
         {/* Header */}
-        <View className="flex-row items-center gap-3 px-4 pt-12">
-          <TouchableOpacity onPress={() => router.back()}>
-            <Icon as={ArrowLeft} size={24} className="text-foreground" />
+        <View className="flex-row items-center gap-3 px-4 pt-14 pb-2">
+          <TouchableOpacity
+            onPress={() => router.back()}
+            hitSlop={12}
+            className="h-10 w-10 items-center justify-center rounded-full border border-border bg-card shadow-soft active:bg-secondary"
+          >
+            <Icon as={ArrowLeft} size={20} className="text-foreground" />
           </TouchableOpacity>
-          <Text className="text-2xl font-bold">Security & Privacy</Text>
+          <Text className="text-2xl font-bold tracking-tight text-foreground">
+            Security & Privacy
+          </Text>
         </View>
 
         {/* Security Settings */}
         <View className="mt-6 px-4">
-          <Text className="mb-3 text-xs font-semibold uppercase text-muted-foreground">
-            AUTHENTICATION
+          <Text className="mb-3 text-2xs font-semibold uppercase tracking-wider text-muted-foreground">
+            Authentication
           </Text>
 
-          <View className="mb-3 gap-3">
+          <View className="gap-3">
             <TwoFactorSettings />
-
             <BiometricSettings />
           </View>
         </View>
 
         {/* Change Password */}
         <View className="mt-6 px-4">
-          <Text className="mb-3 text-xs font-semibold uppercase text-muted-foreground">
-            CHANGE PASSWORD
+          <Text className="mb-3 text-2xs font-semibold uppercase tracking-wider text-muted-foreground">
+            Change Password
           </Text>
 
           {/* Current Password */}
           <View className="mb-3">
-            <Text className="mb-2 text-sm font-semibold text-muted-foreground">
-              Current Password
-            </Text>
-            <View className="flex-row items-center rounded-2xl bg-card px-4">
+            <Text className="mb-2 text-sm font-semibold text-foreground">Current Password</Text>
+            <View className="flex-row items-center rounded-xl border border-border bg-card px-4">
               <TextInput
                 value={currentPassword}
                 onChangeText={setCurrentPassword}
                 placeholder="Enter current password"
                 placeholderTextColor="#727285"
                 secureTextEntry={!showCurrentPassword}
-                className="flex-1 py-4 text-base text-foreground"
+                className="flex-1 py-3.5 text-base text-foreground"
               />
-              <TouchableOpacity onPress={() => setShowCurrentPassword(!showCurrentPassword)}>
+              <TouchableOpacity
+                onPress={() => setShowCurrentPassword(!showCurrentPassword)}
+                hitSlop={12}
+              >
                 <Icon
                   as={showCurrentPassword ? EyeOff : Eye}
                   size={20}
@@ -103,19 +110,20 @@ export default function SecurityPrivacyScreen() {
 
           {/* New Password */}
           <View className="mb-3">
-            <Text className="mb-2 text-sm font-semibold text-muted-foreground">
-              New Password
-            </Text>
-            <View className="flex-row items-center rounded-2xl bg-card px-4">
+            <Text className="mb-2 text-sm font-semibold text-foreground">New Password</Text>
+            <View className="flex-row items-center rounded-xl border border-border bg-card px-4">
               <TextInput
                 value={newPassword}
                 onChangeText={setNewPassword}
                 placeholder="Enter new password"
                 placeholderTextColor="#727285"
                 secureTextEntry={!showNewPassword}
-                className="flex-1 py-4 text-base text-foreground"
+                className="flex-1 py-3.5 text-base text-foreground"
               />
-              <TouchableOpacity onPress={() => setShowNewPassword(!showNewPassword)}>
+              <TouchableOpacity
+                onPress={() => setShowNewPassword(!showNewPassword)}
+                hitSlop={12}
+              >
                 <Icon
                   as={showNewPassword ? EyeOff : Eye}
                   size={20}
@@ -126,64 +134,56 @@ export default function SecurityPrivacyScreen() {
           </View>
 
           {/* Confirm Password */}
-          <View className="mb-3">
-            <Text className="mb-2 text-sm font-semibold text-muted-foreground">
+          <View className="mb-4">
+            <Text className="mb-2 text-sm font-semibold text-foreground">
               Confirm New Password
             </Text>
-            <View className="rounded-2xl bg-card p-4">
+            <View className="rounded-xl border border-border bg-card px-4">
               <TextInput
                 value={confirmPassword}
                 onChangeText={setConfirmPassword}
                 placeholder="Confirm new password"
                 placeholderTextColor="#727285"
                 secureTextEntry
-                className="text-base text-foreground"
+                className="py-3.5 text-base text-foreground"
               />
             </View>
           </View>
 
-          <TouchableOpacity
-            onPress={handleChangePassword}
-            disabled={isUpdatingPassword}
-            className={`items-center rounded-2xl py-4 ${
-              isUpdatingPassword ? 'bg-gray-300' : 'bg-primary active:bg-primary/90'
-            }`}
-          >
-            <Text className="text-lg font-semibold text-primary-foreground">
-              {isUpdatingPassword ? 'Updating...' : 'Update Password'}
-            </Text>
-          </TouchableOpacity>
+          <Button onPress={handleChangePassword} disabled={isUpdatingPassword} className="rounded-xl">
+            {isUpdatingPassword ? <Text>Updating...</Text> : <Text>Update Password</Text>}
+          </Button>
         </View>
 
         {/* Wallet Security */}
-        <View className="mt-6 px-4 pb-6">
-          <Text className="mb-3 text-xs font-semibold uppercase text-muted-foreground">
-            WALLET SECURITY
+        <View className="mt-6 px-4 pb-8">
+          <Text className="mb-3 text-2xs font-semibold uppercase tracking-wider text-muted-foreground">
+            Wallet Security
           </Text>
 
-          <TouchableOpacity 
+          <TouchableOpacity
             onPress={() => router.push('/(tabs)/profile/recovery-phrase')}
-            className="mb-3 flex-row items-center gap-4 rounded-2xl bg-card p-4"
+            className="mb-3 flex-row items-center gap-4 rounded-2xl border border-border bg-card p-4 shadow-soft active:bg-secondary"
           >
-            <View className="h-12 w-12 items-center justify-center rounded-full bg-purple-100">
-              <Icon as={Lock} size={24} className="text-purple-600" />
+            <View className="h-11 w-11 items-center justify-center rounded-xl bg-primary/10">
+              <Icon as={Lock} size={20} className="text-primary" />
             </View>
             <View className="flex-1">
-              <Text className="font-semibold">Recovery Phrase</Text>
-              <Text className="text-sm text-muted-foreground">
+              <Text className="text-sm font-semibold text-foreground">Recovery Phrase</Text>
+              <Text className="text-2xs text-muted-foreground">
                 View wallet information and security
               </Text>
             </View>
             <Icon as={ChevronRight} size={20} className="text-muted-foreground" />
           </TouchableOpacity>
 
-          <TouchableOpacity className="flex-row items-center gap-4 rounded-2xl bg-card p-4">
-            <View className="h-12 w-12 items-center justify-center rounded-full bg-purple-100">
-              <Icon as={Shield} size={24} className="text-purple-600" />
+          <TouchableOpacity className="flex-row items-center gap-4 rounded-2xl border border-border bg-card p-4 shadow-soft active:bg-secondary">
+            <View className="h-11 w-11 items-center justify-center rounded-xl bg-primary/10">
+              <Icon as={Shield} size={20} className="text-primary" />
             </View>
             <View className="flex-1">
-              <Text className="font-semibold">Connected Apps</Text>
-              <Text className="text-sm text-muted-foreground">
+              <Text className="text-sm font-semibold text-foreground">Connected Apps</Text>
+              <Text className="text-2xs text-muted-foreground">
                 Manage apps with wallet access
               </Text>
             </View>

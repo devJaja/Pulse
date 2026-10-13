@@ -1,6 +1,7 @@
 import { Modal, View, TouchableOpacity, ScrollView, TextInput, Image, Switch } from 'react-native';
 import { Text } from '@/components/ui/text';
 import { Icon } from '@/components/ui/icon';
+import { Input } from '@/components/ui/input';
 import { X, ImagePlus, Coins } from 'lucide-react-native';
 import { useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
@@ -64,54 +65,81 @@ export function CreatePostModal({
     }
   };
 
-
   const removeImage = (index: number) => {
     setImages(images.filter((_, i) => i !== index));
   };
 
+  const canSubmit = !!content.trim() && !isSubmitting && !isUploadingImages;
+
   return (
     <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose}>
       <View className="flex-1 bg-black/50">
-        <View className="mt-20 flex-1 rounded-t-3xl bg-background">
-          {/* Header */}
+        <View className="mt-20 flex-1 rounded-t-2xl border-t border-border bg-background shadow-elevated">
+          <View className="items-center pt-3">
+            <View className="h-1.5 w-12 rounded-full bg-border" />
+          </View>
           <View className="flex-row items-center justify-between border-b border-border p-4">
-            <TouchableOpacity onPress={onClose}>
-              <Icon as={X} size={24} className="text-foreground" />
+            <TouchableOpacity
+              onPress={onClose}
+              accessibilityRole="button"
+              accessibilityLabel={t('common.cancel')}
+              className="h-9 w-9 items-center justify-center rounded-full active:bg-secondary"
+            >
+              <Icon as={X} size={20} className="text-foreground" />
             </TouchableOpacity>
-            <Text className="text-lg font-bold">{t('feed.createPost')}</Text>
+            <Text className="text-lg font-bold text-foreground">{t('feed.createPost')}</Text>
             <TouchableOpacity
               onPress={handleSubmit}
-              disabled={!content.trim() || isSubmitting || isUploadingImages}
-              className={`rounded-full px-4 py-2 ${content.trim() && !isUploadingImages ? 'bg-primary' : 'bg-gray-300'}`}
+              disabled={!canSubmit}
+              accessibilityRole="button"
+              className={`rounded-xl px-4 py-2 ${
+                canSubmit ? 'bg-primary shadow-soft active:opacity-90' : 'bg-muted'
+              }`}
             >
-              <Text className={`font-semibold ${content.trim() && !isUploadingImages ? 'text-primary-foreground' : 'text-gray-500'}`}>
-                {isUploadingImages ? t('feed.uploading') : isSubmitting ? t('feed.posting') : t('common.post')}
+              <Text
+                className={`text-sm font-semibold ${
+                  canSubmit ? 'text-primary-foreground' : 'text-muted-foreground'
+                }`}
+              >
+                {isUploadingImages
+                  ? t('feed.uploading')
+                  : isSubmitting
+                    ? t('feed.posting')
+                    : t('common.post')}
               </Text>
             </TouchableOpacity>
           </View>
 
-          <ScrollView showsVerticalScrollIndicator={false} className="flex-1 p-4">
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            className="flex-1 p-4"
+            keyboardShouldPersistTaps="handled"
+          >
             {/* Content Input */}
-            <TextInput
-              value={content}
-              onChangeText={setContent}
-              placeholder={t('feed.whatsHappening')}
-              placeholderTextColor="#727285"
-              multiline
-              autoFocus
-              className="min-h-[100px] text-base text-foreground"
-              style={{ textAlignVertical: 'top' }}
-            />
+            <View className="mb-4 rounded-2xl border border-border bg-card p-4 shadow-soft">
+              <TextInput
+                value={content}
+                onChangeText={setContent}
+                placeholder={t('feed.whatsHappening')}
+                placeholderTextColor="#727285"
+                multiline
+                autoFocus
+                className="min-h-[100px] text-[15px] leading-[22px] text-foreground"
+                style={{ textAlignVertical: 'top' }}
+              />
+            </View>
 
             {/* Image Preview Grid */}
             {images.length > 0 && (
-              <View className="mt-4 flex-row flex-wrap gap-2">
+              <View className="mb-4 flex-row flex-wrap gap-2">
                 {images.map((uri, index) => (
                   <View key={index} className="relative">
-                    <Image source={{ uri }} className="h-24 w-24 rounded-lg" />
+                    <Image source={{ uri }} className="h-24 w-24 rounded-xl bg-muted" />
                     <TouchableOpacity
                       onPress={() => removeImage(index)}
-                      className="absolute right-1 top-1 h-6 w-6 items-center justify-center rounded-full bg-black/60"
+                      accessibilityRole="button"
+                      accessibilityLabel="Remove image"
+                      className="absolute right-1 top-1 h-6 w-6 items-center justify-center rounded-full bg-black/60 active:opacity-70"
                     >
                       <Icon as={X} size={14} className="text-white" />
                     </TouchableOpacity>
@@ -121,45 +149,43 @@ export function CreatePostModal({
             )}
 
             {/* Tokenization Section */}
-            <View className="mt-6 rounded-xl border border-border p-4">
+            <View className="rounded-2xl border border-border bg-card p-4 shadow-soft">
               <View className="flex-row items-center justify-between">
-                <View className="flex-row items-center gap-2">
-                  <Icon as={Coins} size={20} className="text-purple-600" />
-                  <Text className="font-semibold">{t('feed.tokenizePost')}</Text>
+                <View className="flex-row items-center gap-2.5">
+                  <View className="h-8 w-8 items-center justify-center rounded-lg bg-accent">
+                    <Icon as={Coins} size={16} className="text-primary dark:text-brand-300" />
+                  </View>
+                  <Text className="font-semibold text-foreground">{t('feed.tokenizePost')}</Text>
                 </View>
                 <Switch
                   value={isTokenized}
                   onValueChange={setIsTokenized}
-                  trackColor={{ false: '#E4DFFF', true: '#6e54ff' }}
-                  thumbColor="#ffffff"
+                  trackColor={{ false: 'hsl(var(--muted))', true: 'hsl(var(--primary))' }}
+                  thumbColor="hsl(var(--background))"
                 />
               </View>
 
               {isTokenized && (
                 <View className="mt-4 gap-3">
-                  <View>
-                    <Text className="mb-1 text-sm text-muted-foreground">{t('feed.tokenSupply')}</Text>
-                    <TextInput
-                      value={tokenSupply}
-                      onChangeText={setTokenSupply}
-                      placeholder="1000"
-                      keyboardType="numeric"
-                      className="rounded-lg border border-border bg-background px-3 py-2 text-foreground"
-                    />
-                  </View>
-                  <View>
-                    <Text className="mb-1 text-sm text-muted-foreground">{t('feed.pricePerToken')}</Text>
-                    <TextInput
-                      value={tokenPrice}
-                      onChangeText={setTokenPrice}
-                      placeholder="0.01"
-                      keyboardType="decimal-pad"
-                      className="rounded-lg border border-border bg-background px-3 py-2 text-foreground"
-                    />
-                  </View>
-                  <View className="rounded-lg bg-purple-50 dark:bg-purple-950 p-3">
-                    <Text className="text-xs text-purple-700 dark:text-purple-300">
-                      💡 {t('feed.tokenTip')}
+                  <Input
+                    label={t('feed.tokenSupply')}
+                    value={tokenSupply}
+                    onChangeText={setTokenSupply}
+                    placeholder="1000"
+                    keyboardType="numeric"
+                    className="text-foreground"
+                  />
+                  <Input
+                    label={t('feed.pricePerToken')}
+                    value={tokenPrice}
+                    onChangeText={setTokenPrice}
+                    placeholder="0.01"
+                    keyboardType="decimal-pad"
+                    className="text-foreground"
+                  />
+                  <View className="rounded-xl border border-primary/15 bg-accent p-3">
+                    <Text className="text-xs text-primary dark:text-brand-300">
+                      {t('feed.tokenTip')}
                     </Text>
                   </View>
                 </View>
@@ -170,9 +196,9 @@ export function CreatePostModal({
             <TouchableOpacity
               onPress={pickImages}
               disabled={images.length >= 4}
-              className="mt-4 flex-row items-center justify-center gap-2 rounded-xl border-2 border-dashed border-border py-4"
+              className="mt-4 flex-row items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-border bg-card/60 py-4 active:bg-secondary dark:active:bg-secondary/80"
             >
-              <Icon as={ImagePlus} size={24} className="text-muted-foreground" />
+              <Icon as={ImagePlus} size={22} className="text-muted-foreground" />
               <Text className="text-muted-foreground">
                 {images.length >= 4 ? t('feed.maxImages') : t('feed.addImages')}
               </Text>

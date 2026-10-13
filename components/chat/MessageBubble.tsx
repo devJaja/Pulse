@@ -25,26 +25,38 @@ export function MessageBubble({
     }
   };
 
+  const isTip = type === 'tip';
+
   return (
     <View className={`mb-3 flex-row ${isOwn ? 'justify-end' : 'justify-start'}`}>
-      <View className={`max-w-[75%] rounded-2xl px-4 py-2 ${
-        type === 'tip'
-          ? 'bg-success/10'
-          : isOwn
-          ? 'bg-primary'
-          : 'bg-card'
-      }`}>
-        {type === 'tip' && tipAmount && (
-          <Text className="mb-1 text-xs font-semibold text-success dark:text-success">
+      <View
+        className={`max-w-[78%] rounded-2xl px-4 py-2.5 shadow-soft ${
+          isTip
+            ? 'rounded-bl-md border border-success/20 bg-success/10'
+            : isOwn
+            ? 'rounded-br-md bg-primary'
+            : 'rounded-bl-md border border-border bg-secondary'
+        }`}
+      >
+        {isTip && tipAmount !== undefined && (
+          <Text className="mb-1 text-2xs font-semibold text-success">
             💰 Tip: {tipAmount} MON
           </Text>
         )}
-        <Text className={isOwn ? 'text-primary-foreground' : 'text-foreground'}>
+        <Text
+          className={`text-[15px] leading-5 ${
+            isOwn && !isTip ? 'text-primary-foreground' : 'text-foreground'
+          }`}
+        >
           {content}
         </Text>
-        <Text className={`mt-1 text-xs ${
-          isOwn ? 'text-primary-foreground/60' : 'text-muted-foreground'
-        }`}>
+        <Text
+          className={`mt-1 text-2xs ${
+            isOwn && !isTip
+              ? 'text-primary-foreground/70'
+              : 'text-muted-foreground'
+          }`}
+        >
           {formatTime(timestamp)}
         </Text>
       </View>

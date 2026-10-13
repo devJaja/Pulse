@@ -1,4 +1,4 @@
-import { Platform, Pressable, StyleSheet } from 'react-native';
+import { Platform, Pressable } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Text } from '@/components/ui/text';
 import { Icon } from '@/components/ui/icon';
@@ -19,30 +19,11 @@ export function CreatePostButton({ onPress }: CreatePostButtonProps) {
       onPress={onPress}
       accessibilityRole="button"
       accessibilityLabel="Create a new post"
-      className="active:opacity-90"
-      style={[styles.button, { bottom }]}
+      className="absolute right-4 flex-row items-center gap-2 rounded-full bg-primary px-5 shadow-glow active:opacity-90"
+      style={{ bottom, height: 52 }}
     >
-      <Icon as={PenLine} size={18} className="text-[#6e54ff]" strokeWidth={2.4} />
-      <Text className="text-[14.5px] font-bold text-[#6e54ff]">New post</Text>
+      <Icon as={PenLine} size={18} className="text-primary-foreground" strokeWidth={2.4} />
+      <Text className="text-[14.5px] font-bold text-primary-foreground">New post</Text>
     </Pressable>
   );
 }
-
-const styles = StyleSheet.create({
-  button: {
-    position: 'absolute',
-    right: 16,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    paddingHorizontal: 20,
-    height: 52,
-    borderRadius: 999,
-    backgroundColor: '#6e54ff',
-    shadowColor: '#6e54ff',
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.28,
-    shadowRadius: 14,
-    elevation: 10,
-  },
-});

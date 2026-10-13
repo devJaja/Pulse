@@ -34,10 +34,13 @@ export function ChatCard({
     }
   };
 
+  const hasUnread = unreadCount > 0;
+
   return (
     <TouchableOpacity
       onPress={onPress}
-      className="flex-row items-center gap-3 border-b border-border bg-card p-4"
+      activeOpacity={0.85}
+      className="mb-2.5 flex-row items-center gap-3 rounded-2xl border border-border bg-card p-4 shadow-soft active:bg-secondary"
     >
       <Avatar
         uri={participant.avatar}
@@ -47,26 +50,35 @@ export function ChatCard({
       />
 
       <View className="flex-1">
-        <View className="flex-row items-center justify-between">
-          <Text className="font-semibold">{participant.name || participant.username}</Text>
+        <View className="flex-row items-center justify-between gap-2">
+          <Text
+            numberOfLines={1}
+            className="flex-1 text-[15px] font-semibold text-foreground"
+          >
+            {participant.name || participant.username}
+          </Text>
           {lastMessage && (
-            <Text className="text-xs text-muted-foreground">
+            <Text
+              className={`text-2xs ${
+                hasUnread ? 'font-semibold text-primary' : 'text-muted-foreground'
+              }`}
+            >
               {formatTime(lastMessage.timestamp)}
             </Text>
           )}
         </View>
 
-        <View className="mt-1 flex-row items-center justify-between">
+        <View className="mt-1 flex-row items-center justify-between gap-2">
           <Text
             className={`flex-1 text-sm ${
-              unreadCount > 0 ? 'font-semibold text-foreground' : 'text-muted-foreground'
+              hasUnread ? 'font-medium text-foreground' : 'text-muted-foreground'
             }`}
             numberOfLines={1}
           >
             {lastMessage?.content || 'No messages yet'}
           </Text>
-          {unreadCount > 0 && (
-            <View className="ml-2">
+          {hasUnread && (
+            <View className="ml-1">
               <Badge count={unreadCount} variant="primary" size="sm" />
             </View>
           )}

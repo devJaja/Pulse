@@ -1,11 +1,12 @@
 import { View, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { Text } from '@/components/ui/text';
 import { Icon } from '@/components/ui/icon';
-import { ArrowLeft } from 'lucide-react-native';
+import { ArrowLeft, Receipt } from 'lucide-react-native';
 import { router } from 'expo-router';
 import { useWallet } from '@/hooks/useWallet';
 import type { Transaction } from '@/types';
 import { TransactionCard } from '@/components/wallet';
+import { EmptyState } from '@/components/common';
 
 export default function TransactionHistoryScreen() {
   const { transactions, isLoadingTransactions, fetchNextPage, hasNextPage, isFetchingNextPage } = useWallet();
@@ -15,8 +16,12 @@ export default function TransactionHistoryScreen() {
       {/* Header */}
       <View className="bg-[#0e100f] px-4 pb-6 pt-12">
         <View className="flex-row items-center gap-4">
-          <TouchableOpacity onPress={() => router.back()}>
-            <Icon as={ArrowLeft} size={24} className="text-white" />
+          <TouchableOpacity
+            onPress={() => router.back()}
+            activeOpacity={0.7}
+            className="h-9 w-9 items-center justify-center rounded-full bg-white/10"
+          >
+            <Icon as={ArrowLeft} size={20} className="text-white" />
           </TouchableOpacity>
           <Text className="text-2xl font-bold text-white">Transaction History</Text>
         </View>
@@ -40,9 +45,7 @@ export default function TransactionHistoryScreen() {
               <ActivityIndicator size="large" color="#6e54ff" />
             </View>
           ) : transactions.length === 0 ? (
-            <View className="items-center py-10">
-              <Text className="text-muted-foreground">No transactions yet</Text>
-            </View>
+            <EmptyState icon={Receipt} message="No transactions yet" />
           ) : (
             <>
               {transactions.map((tx: Transaction) => (

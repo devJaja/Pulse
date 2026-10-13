@@ -39,11 +39,22 @@ export function TransactionCard({
   const getColor = () => {
     switch (type) {
       case 'send':
-        return 'text-red-600';
+        return 'text-foreground';
       case 'receive':
         return 'text-success';
       case 'swap':
-        return 'text-purple-600';
+        return 'text-primary';
+    }
+  };
+
+  const getIconColor = () => {
+    switch (type) {
+      case 'send':
+        return 'text-destructive';
+      case 'receive':
+        return 'text-success';
+      case 'swap':
+        return 'text-primary';
     }
   };
 
@@ -52,9 +63,9 @@ export function TransactionCard({
       case 'confirmed':
         return 'text-success';
       case 'pending':
-        return 'text-yellow-600';
+        return 'text-yellow-600 dark:text-yellow-400';
       case 'failed':
-        return 'text-red-600';
+        return 'text-destructive';
     }
   };
 
@@ -69,42 +80,43 @@ export function TransactionCard({
   return (
     <TouchableOpacity
       onPress={onPress}
-      className="mb-3 rounded-2xl bg-card p-4"
+      activeOpacity={0.7}
+      className="mb-3 rounded-2xl border border-border bg-card p-4 shadow-soft active:bg-accent/50"
     >
       <View className="flex-row items-center justify-between">
         <View className="flex-row items-center gap-3">
-          <View className={`h-10 w-10 items-center justify-center rounded-full ${
-            type === 'send' ? 'bg-red-100 dark:bg-red-950' :
+          <View className={`h-11 w-11 items-center justify-center rounded-full ${
+            type === 'send' ? 'bg-destructive/10' :
             type === 'receive' ? 'bg-success/10' :
-            'bg-purple-100 dark:bg-purple-950'
+            'bg-primary/10'
           }`}>
-            <Icon as={getIcon()} size={20} className={getColor()} />
+            <Icon as={getIcon()} size={20} className={getIconColor()} strokeWidth={2} />
           </View>
           <View>
-            <Text className="font-semibold capitalize">{type}</Text>
+            <Text className="text-base font-semibold capitalize text-card-foreground">{type}</Text>
             <Text className="text-sm text-muted-foreground">{formatTime(timestamp)}</Text>
           </View>
         </View>
 
         <View className="items-end">
-          <Text className={`font-semibold ${getColor()}`}>
+          <Text className={`text-base font-semibold tabular-nums ${getColor()}`}>
             {type === 'send' ? '-' : '+'}{amount.toFixed(4)} {token}
           </Text>
-          <Text className={`text-xs ${getStatusColor()}`}>
+          <Text className={`text-2xs font-semibold uppercase tracking-wide ${getStatusColor()}`}>
             {status}
           </Text>
         </View>
       </View>
 
       {(from || to) && (
-        <View className="mt-2 rounded-lg bg-gray-50 dark:bg-gray-900 p-2">
+        <View className="mt-3 rounded-xl bg-muted/60 px-3 py-2">
           {from && (
-            <Text className="text-xs text-muted-foreground">
+            <Text className="text-2xs font-mono text-muted-foreground">
               From: {from.slice(0, 8)}...{from.slice(-6)}
             </Text>
           )}
           {to && (
-            <Text className="text-xs text-muted-foreground">
+            <Text className="text-2xs font-mono text-muted-foreground">
               To: {to.slice(0, 8)}...{to.slice(-6)}
             </Text>
           )}

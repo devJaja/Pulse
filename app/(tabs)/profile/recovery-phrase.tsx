@@ -149,22 +149,24 @@ export default function RecoveryPhraseScreen() {
     <View className="flex-1 bg-background">
       <ScrollView showsVerticalScrollIndicator={false} className="flex-1">
         {/* Header */}
-        <View className="flex-row items-center gap-3 px-4 pt-12">
-          <TouchableOpacity onPress={() => router.back()}>
-            <Icon as={ArrowLeft} size={24} className="text-foreground" />
+        <View className="flex-row items-center gap-3 px-4 pt-14 pb-2">
+          <TouchableOpacity
+            onPress={() => router.back()}
+            hitSlop={12}
+            className="h-10 w-10 items-center justify-center rounded-full border border-border bg-card shadow-soft active:bg-secondary"
+          >
+            <Icon as={ArrowLeft} size={20} className="text-foreground" />
           </TouchableOpacity>
-          <Text className="text-2xl font-bold">Recovery & Keys</Text>
+          <Text className="text-2xl font-bold tracking-tight text-foreground">Recovery & Keys</Text>
         </View>
 
         {/* Warning Banner */}
-        <View className="mx-4 mt-6 rounded-2xl bg-red-50 p-4 dark:bg-red-950/30">
+        <View className="mx-4 mt-4 rounded-2xl border border-destructive/20 bg-destructive/10 p-4">
           <View className="flex-row items-start gap-3">
-            <Icon as={AlertTriangle} size={24} className="mt-0.5 text-red-600" />
+            <Icon as={AlertTriangle} size={22} className="mt-0.5 text-destructive" />
             <View className="flex-1">
-              <Text className="font-semibold text-red-900 dark:text-red-100">
-                You control your keys
-              </Text>
-              <Text className="mt-2 text-sm text-red-800 dark:text-red-200">
+              <Text className="text-sm font-semibold text-destructive">You control your keys</Text>
+              <Text className="mt-2 text-sm leading-5 text-destructive/80">
                 Your recovery phrase and private key live only on this device. Pulse cannot restore them if lost. Write the phrase down and keep it safe.
               </Text>
             </View>
@@ -173,31 +175,37 @@ export default function RecoveryPhraseScreen() {
 
         {/* Wallet Info */}
         <View className="mx-4 mt-6">
-          <Text className="mb-3 text-xs font-semibold uppercase text-muted-foreground">
-            YOUR WALLET
+          <Text className="mb-3 text-2xs font-semibold uppercase tracking-wider text-muted-foreground">
+            Your Wallet
           </Text>
 
-          <View className="rounded-2xl bg-card p-4">
+          <View className="rounded-2xl border border-border bg-card p-4 shadow-soft">
             <View className="mb-3 flex-row items-center justify-between">
-              <Text className="text-sm font-semibold text-muted-foreground">Wallet Address</Text>
-              <TouchableOpacity onPress={() => handleCopy(walletAddress, 'Wallet address')}>
-                <Icon as={Copy} size={18} className="text-purple-600" />
+              <Text className="text-2xs font-semibold uppercase tracking-wider text-muted-foreground">
+                Wallet Address
+              </Text>
+              <TouchableOpacity
+                onPress={() => handleCopy(walletAddress, 'Wallet address')}
+                hitSlop={12}
+                className="h-8 w-8 items-center justify-center rounded-full bg-secondary active:bg-accent"
+              >
+                <Icon as={Copy} size={16} className="text-primary" />
               </TouchableOpacity>
             </View>
-            <Text className="font-mono text-sm">{walletAddress}</Text>
+            <Text className="font-mono text-sm text-foreground">{walletAddress}</Text>
 
             <View
-              className={`mt-4 flex-row items-center gap-2 rounded-xl px-3 py-2 ${
-                isSelfCustodial ? 'bg-success/10' : 'bg-yellow-50 dark:bg-yellow-950/30'
+              className={`mt-4 flex-row items-center gap-2 rounded-xl px-3 py-2.5 ${
+                isSelfCustodial ? 'bg-success/10' : 'bg-yellow-100 dark:bg-yellow-950/30'
               }`}
             >
               <Icon
                 as={isSelfCustodial ? CheckCircle2 : RefreshCcw}
                 size={16}
-                className={isSelfCustodial ? 'text-success' : 'text-yellow-600'}
+                className={isSelfCustodial ? 'text-success' : 'text-yellow-600 dark:text-yellow-300'}
               />
               <Text
-                className={`text-xs font-semibold ${
+                className={`text-2xs font-semibold ${
                   isSelfCustodial
                     ? 'text-success'
                     : 'text-yellow-800 dark:text-yellow-200'
@@ -214,17 +222,17 @@ export default function RecoveryPhraseScreen() {
         {/* Import legacy server wallet */}
         {!isSelfCustodial && currentUser?.walletAddress && (
           <View className="mx-4 mt-6">
-            <View className="rounded-2xl bg-yellow-50 p-4 dark:bg-yellow-950/30">
-              <Text className="font-semibold text-yellow-900 dark:text-yellow-100">
+            <View className="rounded-2xl border border-yellow-200 bg-yellow-50 p-4 dark:border-yellow-900/40 dark:bg-yellow-950/30">
+              <Text className="text-sm font-semibold text-yellow-900 dark:text-yellow-100">
                 Take control of your keys
               </Text>
-              <Text className="mt-2 text-sm text-yellow-800 dark:text-yellow-200">
+              <Text className="mt-2 text-sm leading-5 text-yellow-800 dark:text-yellow-200">
                 This account was created while Pulse stored your private key on our servers. Import it once to this device and Pulse deletes its copy.
               </Text>
               <TouchableOpacity
                 onPress={handleImportFromServer}
                 disabled={importing}
-                className="mt-3 rounded-xl bg-yellow-600 py-3"
+                className="mt-3 rounded-xl bg-yellow-600 py-3 active:bg-yellow-700"
               >
                 <TextClassContext.Provider value="text-white">
                   <Text className="text-center font-semibold">
@@ -238,40 +246,44 @@ export default function RecoveryPhraseScreen() {
 
         {/* Reveal recovery phrase */}
         <View className="mx-4 mt-6">
-          <Text className="mb-3 text-xs font-semibold uppercase text-muted-foreground">
-            RECOVERY PHRASE
+          <Text className="mb-3 text-2xs font-semibold uppercase tracking-wider text-muted-foreground">
+            Recovery Phrase
           </Text>
 
-          <View className="rounded-2xl bg-card p-4">
+          <View className="rounded-2xl border border-border bg-card p-4 shadow-soft">
             {!phrase ? (
               <TouchableOpacity
                 onPress={handleRevealPhrase}
                 disabled={revealing}
-                className="flex-row items-center justify-center gap-2 rounded-xl bg-purple-600 py-3"
+                className="flex-row items-center justify-center gap-2 rounded-xl bg-primary py-3.5 active:bg-primary/90"
               >
-                <Icon as={Eye} size={18} className="text-white" />
-                <Text className="font-semibold text-white">
+                <Icon as={Eye} size={18} className="text-primary-foreground" />
+                <Text className="font-semibold text-primary-foreground">
                   {revealing ? 'Unlocking...' : 'Show my 12-word phrase'}
                 </Text>
               </TouchableOpacity>
             ) : (
               <>
                 <View className="flex-row items-center justify-between">
-                  <Text className="text-sm font-semibold text-muted-foreground">
+                  <Text className="text-2xs font-semibold uppercase tracking-wider text-muted-foreground">
                     Your recovery phrase
                   </Text>
-                  <TouchableOpacity onPress={() => handleCopy(phrase, 'Recovery phrase')}>
-                    <Icon as={Copy} size={18} className="text-purple-600" />
+                  <TouchableOpacity
+                    onPress={() => handleCopy(phrase, 'Recovery phrase')}
+                    hitSlop={12}
+                    className="h-8 w-8 items-center justify-center rounded-full bg-secondary active:bg-accent"
+                  >
+                    <Icon as={Copy} size={16} className="text-primary" />
                   </TouchableOpacity>
                 </View>
                 <View className="mt-4 flex-row flex-wrap gap-3">
                   {words.map((word, index) => (
                     <View
                       key={`${index}-${word}`}
-                      className="w-[calc(50%_-_6px)] flex-row items-center gap-2 rounded-xl border border-border bg-background p-3"
+                      className="w-[calc(50%_-_6px)] flex-row items-center gap-2 rounded-xl border border-border bg-secondary p-3"
                     >
-                      <Text className="w-6 text-xs text-muted-foreground">{index + 1}</Text>
-                      <Text className="font-mono text-sm font-semibold">{word}</Text>
+                      <Text className="w-6 text-2xs text-muted-foreground">{index + 1}</Text>
+                      <Text className="font-mono text-sm font-semibold text-foreground">{word}</Text>
                     </View>
                   ))}
                 </View>
@@ -281,7 +293,7 @@ export default function RecoveryPhraseScreen() {
                     setPhrase(null);
                     setWords([]);
                   }}
-                  className="mt-4 flex-row items-center justify-center gap-2 rounded-xl border border-border py-2.5"
+                  className="mt-4 flex-row items-center justify-center gap-2 rounded-xl border border-border py-2.5 active:bg-secondary"
                 >
                   <Icon as={EyeOff} size={16} className="text-muted-foreground" />
                   <Text className="text-sm font-semibold text-muted-foreground">Hide phrase</Text>
@@ -293,30 +305,30 @@ export default function RecoveryPhraseScreen() {
 
         {/* Export private key */}
         <View className="mx-4 mt-6">
-          <Text className="mb-3 text-xs font-semibold uppercase text-muted-foreground">
-            PRIVATE KEY
+          <Text className="mb-3 text-2xs font-semibold uppercase tracking-wider text-muted-foreground">
+            Private Key
           </Text>
 
-          <View className="rounded-2xl bg-card p-4">
+          <View className="rounded-2xl border border-border bg-card p-4 shadow-soft">
             <TouchableOpacity
               onPress={handleExportPrivateKey}
               disabled={exportingKey}
-              className="flex-row items-center justify-center gap-2 rounded-xl border border-border py-3"
+              className="flex-row items-center justify-center gap-2 rounded-xl border border-border py-3.5 active:bg-secondary"
             >
               <Icon as={KeyRound} size={18} className="text-muted-foreground" />
-              <Text className="font-semibold">
+              <Text className="font-semibold text-foreground">
                 {exportingKey ? 'Unlocking...' : 'Export private key'}
               </Text>
             </TouchableOpacity>
 
             {privateKey && (
               <View className="mt-4">
-                <View className="rounded-xl bg-background p-3">
-                  <Text className="font-mono text-xs break-all">{privateKey}</Text>
+                <View className="rounded-xl border border-border bg-secondary p-3">
+                  <Text className="font-mono text-2xs break-all text-foreground">{privateKey}</Text>
                 </View>
                 <TouchableOpacity
                   onPress={() => handleCopy(privateKey, 'Private key')}
-                  className="mt-3 flex-row items-center justify-center gap-2 rounded-xl bg-primary py-3"
+                  className="mt-3 flex-row items-center justify-center gap-2 rounded-xl bg-primary py-3.5 active:bg-primary/90"
                 >
                   <Icon as={Download} size={16} className="text-primary-foreground" />
                   <Text className="font-semibold text-primary-foreground">Copy private key</Text>
@@ -327,7 +339,7 @@ export default function RecoveryPhraseScreen() {
         </View>
 
         <View className="mx-4 mt-6 pb-10">
-          <Text className="text-center text-sm text-muted-foreground">
+          <Text className="text-center text-sm leading-5 text-muted-foreground">
             Pulse never stores your keys. If you lose this device and your backup, no one — including Pulse — can recover your wallet.
           </Text>
         </View>

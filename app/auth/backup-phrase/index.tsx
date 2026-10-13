@@ -71,8 +71,8 @@ export default function BackupPhraseScreen() {
           </View>
         ) : (
           <>
-            <View className="mt-6 rounded-2xl bg-red-50 p-4 dark:bg-red-950/30">
-              <Text className="text-sm text-red-800 dark:text-red-200">
+            <View className="mt-6 rounded-2xl border border-destructive/20 bg-destructive/10 p-4">
+              <Text className="text-sm leading-5 text-destructive">
                 Never share your recovery phrase. Anyone with these words can spend your MON. Do not screenshot it and do not send it over chat.
               </Text>
             </View>
@@ -82,18 +82,18 @@ export default function BackupPhraseScreen() {
                 {words.map((word, index) => (
                   <View
                     key={`${index}-${word}`}
-                    className="w-[calc(50%_-_6px)] flex-row items-center gap-2 rounded-xl border border-border bg-card p-3"
+                    className="w-[calc(50%_-_6px)] flex-row items-center gap-2 rounded-xl border border-border bg-card p-3 shadow-soft"
                   >
                     <Text className="w-6 text-xs text-muted-foreground">{index + 1}</Text>
-                    <Text className="font-mono text-sm font-semibold">{word}</Text>
+                    <Text className="font-mono text-sm font-semibold text-foreground">{word}</Text>
                   </View>
                 ))}
               </View>
             )}
 
             {hasWallet && words.length === 0 && (
-              <View className="mt-6 rounded-2xl bg-card p-4">
-                <Text className="text-sm text-muted-foreground">
+              <View className="mt-6 rounded-2xl border border-border bg-card p-4 shadow-soft">
+                <Text className="text-sm leading-5 text-muted-foreground">
                   Your wallet was imported with a private key, so there is no recovery phrase to show.
                 </Text>
               </View>
@@ -103,10 +103,10 @@ export default function BackupPhraseScreen() {
 
             <Button
               size="lg"
-              className="mb-8 mt-6 w-full"
+              className="mb-8 mt-6 h-14 w-full rounded-2xl bg-primary shadow-soft active:bg-primary/90"
               onPress={handleContinue}
             >
-              <Text>I saved it — continue</Text>
+              <Text className="text-base font-medium text-primary-foreground">I saved it — continue</Text>
             </Button>
           </>
         )}

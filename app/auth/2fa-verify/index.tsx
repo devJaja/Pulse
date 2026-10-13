@@ -10,6 +10,7 @@ import { api } from '@/lib/api';
 import { storage } from '@/lib/storage';
 import { toast } from 'sonner-native';
 import { AuthHeader } from '@/components/auth';
+import { Button } from '@/components/ui/button';
 
 export default function TwoFactorVerifyScreen() {
   const { t } = useTranslation();
@@ -91,14 +92,17 @@ export default function TwoFactorVerifyScreen() {
 
   return (
     <View className="flex-1 bg-background">
-      <View className="px-5 pt-12">
-        <TouchableOpacity onPress={() => router.back()} className="mb-6">
-          <Icon as={ArrowLeft} size={24} className="text-foreground" />
+      <View className="px-6 pt-14">
+        <TouchableOpacity
+          onPress={() => router.back()}
+          className="mb-8 h-11 w-11 items-center justify-center rounded-xl border border-border bg-card active:bg-accent"
+        >
+          <Icon as={ArrowLeft} size={22} className="text-foreground" />
         </TouchableOpacity>
 
         <View className="items-center mb-8">
-          <View className="h-16 w-16 items-center justify-center rounded-full bg-purple-100 dark:bg-purple-900 mb-4">
-            <Icon as={Shield} size={32} className="text-purple-600 dark:text-purple-300" />
+          <View className="mb-4 h-16 w-16 items-center justify-center rounded-full border border-border bg-accent">
+            <Icon as={Shield} size={30} className="text-primary" strokeWidth={1.8} />
           </View>
           <AuthHeader
             title={t('auth.twoFactorAuthentication')}
@@ -125,47 +129,45 @@ export default function TwoFactorVerifyScreen() {
                   onBlur={() => setFocusedIndex(null)}
                   keyboardType="number-pad"
                   maxLength={1}
-                  className={`h-14 w-12 rounded-xl bg-card text-center text-lg font-semibold text-foreground border-2 ${
-                    focusedIndex === index ? 'border-purple-600' : 'border-transparent'
+                  className={`h-14 w-12 rounded-xl border-2 bg-card text-center text-lg font-semibold text-foreground ${
+                    focusedIndex === index ? 'border-primary' : 'border-border'
                   }`}
                   placeholder="0"
-                  placeholderTextColor="#E4DFFF"
+                  placeholderTextColor="#727285"
                   autoFocus={index === 0}
                 />
               ))}
             </View>
           </>
         ) : (
-          <View className="mb-8">
-            <Text className="mb-2 text-sm font-medium">{t('auth.recoveryCode')}</Text>
+          <View className="mb-8 gap-2">
+            <Text className="text-sm font-medium text-foreground">{t('auth.recoveryCode')}</Text>
             <TextInput
               value={recoveryCode}
               onChangeText={setRecoveryCode}
               placeholder="XXXX-XXXX"
               placeholderTextColor="#727285"
-              className="rounded-xl bg-card px-4 py-4 text-center text-lg font-mono text-foreground"
+              className="rounded-xl border-2 border-border bg-card px-4 py-4 text-center font-mono text-lg text-foreground"
               autoCapitalize="characters"
               maxLength={9}
             />
           </View>
         )}
 
-        <TouchableOpacity
+        <Button
           onPress={handleVerify}
           disabled={isVerifying}
-          className={`mb-4 h-14 items-center justify-center rounded-2xl ${
-            isVerifying ? 'bg-gray-300' : 'bg-primary'
-          }`}
+          className="mb-5 h-14 rounded-2xl bg-primary shadow-soft active:bg-primary/90"
         >
           {isVerifying ? (
-            <ActivityIndicator color="white" />
+            <ActivityIndicator color="#6e54ff" />
           ) : (
             <Text className="text-base font-medium text-primary-foreground">{t('auth.verify')}</Text>
           )}
-        </TouchableOpacity>
+        </Button>
 
-        <Pressable onPress={() => setUseRecoveryCode(!useRecoveryCode)}>
-          <Text className="text-center text-sm font-medium text-purple-600">
+        <Pressable onPress={() => setUseRecoveryCode(!useRecoveryCode)} className="h-11 items-center justify-center">
+          <Text className="text-center text-sm font-medium text-primary">
             {useRecoveryCode ? t('auth.useAuthenticatorCode') : t('auth.useRecoveryCodeInstead')}
           </Text>
         </Pressable>

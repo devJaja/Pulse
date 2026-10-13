@@ -177,6 +177,17 @@ module.exports = {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
+      boxShadow: {
+        xs: '0 1px 2px 0 rgba(16, 17, 20, 0.05)',
+        soft: '0 1px 2px rgba(16, 17, 20, 0.04), 0 4px 16px rgba(16, 17, 20, 0.06)',
+        card: '0 1px 3px rgba(16, 17, 20, 0.06), 0 10px 30px -12px rgba(16, 17, 20, 0.14)',
+        elevated: '0 16px 48px -16px rgba(16, 17, 20, 0.28)',
+        glow: '0 12px 32px -12px rgba(110, 84, 255, 0.5)',
+      },
+      fontSize: {
+        '2xs': ['0.6875rem', { lineHeight: '1rem' }],
+        '3xs': ['0.625rem', { lineHeight: '0.875rem' }],
+      },
       borderWidth: {
         hairline: hairlineWidth(),
       },

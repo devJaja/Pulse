@@ -23,12 +23,20 @@ export default function SwapHistoryScreen() {
   return (
     <View className="flex-1 bg-background">
       {/* Header */}
-      <View className="bg-[#0e100f] px-4 pb-6 pt-12">
-        <View className="flex-row items-center gap-4">
-          <TouchableOpacity onPress={() => router.back()}>
-            <Icon as={ArrowLeft} size={24} className="text-white" />
+      <View className="border-b border-border bg-card px-4 pb-5 pt-12">
+        <View className="flex-row items-center gap-3">
+          <TouchableOpacity
+            onPress={() => router.back()}
+            className="h-10 w-10 items-center justify-center rounded-full bg-secondary active:opacity-70"
+          >
+            <Icon as={ArrowLeft} size={20} className="text-foreground" />
           </TouchableOpacity>
-          <Text className="text-2xl font-bold text-white">Swap History</Text>
+          <View className="flex-1">
+            <Text className="text-2xl font-bold">Swap History</Text>
+            <Text className="mt-0.5 text-sm text-muted-foreground">
+              All your past swaps
+            </Text>
+          </View>
         </View>
       </View>
 
@@ -44,64 +52,71 @@ export default function SwapHistoryScreen() {
         }}
         scrollEventThrottle={400}
       >
-        <View className="mt-6 pb-6">
+        <View className="mt-5 pb-6">
           {isLoading ? (
             <View className="items-center py-10">
               <ActivityIndicator size="large" color="#6e54ff" />
             </View>
           ) : swaps.length === 0 ? (
-            <View className="items-center py-10">
-              <Text className="text-muted-foreground">No swap history yet</Text>
+            <View className="items-center py-16">
+              <View className="h-16 w-16 items-center justify-center rounded-2xl bg-secondary">
+                <Icon as={ArrowRightLeft} size={28} className="text-muted-foreground" />
+              </View>
+              <Text className="mt-4 font-semibold">No swap history yet</Text>
+              <Text className="mt-1 text-sm text-muted-foreground">
+                Your completed swaps will show up here
+              </Text>
             </View>
           ) : (
             <>
               {swaps.map((swap) => (
                 <View
                   key={swap.id}
-                  className="mb-3 rounded-2xl bg-card p-4"
+                  className="mb-3 rounded-2xl border border-border bg-card p-4 shadow-soft"
                 >
-                  <View className="flex-row items-center justify-between">
-                    <View className="flex-row items-center gap-3">
-                      <View className="h-12 w-12 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900">
-                        <Icon as={ArrowRightLeft} size={20} className="text-blue-600" />
-                      </View>
-                      <View>
-                        <View className="flex-row items-center gap-2">
-                          <View className={`h-6 w-6 items-center justify-center rounded-full ${getTokenColor(swap.fromToken)}`}>
-                            <Text className="text-xs text-white font-semibold">{getTokenIcon(swap.fromToken)}</Text>
-                          </View>
-                          <Text className="font-semibold">
-                            {swap.fromAmount.toFixed(4)} {swap.fromToken}
-                          </Text>
-                          <Text className="text-muted-foreground">→</Text>
-                          <View className={`h-6 w-6 items-center justify-center rounded-full ${getTokenColor(swap.toToken)}`}>
-                            <Text className="text-xs text-white font-semibold">{getTokenIcon(swap.toToken)}</Text>
-                          </View>
-                          <Text className="font-semibold">
-                            {swap.toAmount.toFixed(4)} {swap.toToken}
-                          </Text>
+                  <View className="flex-row items-center gap-3">
+                    <View className="h-11 w-11 items-center justify-center rounded-xl bg-blue-100 dark:bg-blue-500/15">
+                      <Icon as={ArrowRightLeft} size={20} className="text-blue-600 dark:text-blue-300" />
+                    </View>
+                    <View className="flex-1">
+                      <View className="flex-row flex-wrap items-center gap-2">
+                        <View className={`h-6 w-6 items-center justify-center rounded-full ${getTokenColor(swap.fromToken)}`}>
+                          <Text className="text-2xs font-semibold text-white">{getTokenIcon(swap.fromToken)}</Text>
                         </View>
-                        <Text className="mt-1 text-sm text-muted-foreground">
-                          {formatTime(swap.createdAt)}
+                        <Text className="font-semibold">
+                          {swap.fromAmount.toFixed(4)} {swap.fromToken}
+                        </Text>
+                        <Text className="text-muted-foreground">→</Text>
+                        <View className={`h-6 w-6 items-center justify-center rounded-full ${getTokenColor(swap.toToken)}`}>
+                          <Text className="text-2xs font-semibold text-white">{getTokenIcon(swap.toToken)}</Text>
+                        </View>
+                        <Text className="font-semibold">
+                          {swap.toAmount.toFixed(4)} {swap.toToken}
                         </Text>
                       </View>
+                      <Text className="mt-1 text-sm text-muted-foreground">
+                        {formatTime(swap.createdAt)}
+                      </Text>
                     </View>
                   </View>
-                  
-                  <View className="mt-3 flex-row items-center justify-between rounded-lg bg-blue-50 dark:bg-blue-950 p-2">
+
+                  <View className="mt-3 flex-row items-center justify-between rounded-xl border border-blue-200 bg-blue-50 px-3 py-2 dark:border-blue-500/30 dark:bg-blue-500/10">
                     <Text className="text-xs text-blue-700 dark:text-blue-300">
                       Rate: 1 {swap.fromToken} = {swap.rate.toFixed(6)} {swap.toToken}
                     </Text>
                     {swap.priceImpact > 0 && (
-                      <Text className="text-xs text-blue-600 dark:text-blue-400">
+                      <Text className="text-xs text-blue-600 dark:text-blue-300/80">
                         Impact: {swap.priceImpact.toFixed(2)}%
                       </Text>
                     )}
                   </View>
-                  
-                  <Text className="mt-2 text-xs text-muted-foreground capitalize">
-                    Status: {swap.status}
-                  </Text>
+
+                  <View className="mt-3 flex-row items-center justify-between">
+                    <Text className="text-xs text-muted-foreground">Status</Text>
+                    <View className="rounded-full bg-success/10 px-2.5 py-1">
+                      <Text className="text-xs font-medium capitalize text-success">{swap.status}</Text>
+                    </View>
+                  </View>
                 </View>
               ))}
               {isFetchingNextPage && (

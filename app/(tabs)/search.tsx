@@ -44,6 +44,12 @@ interface SearchToken {
 
 type TabType = 'users' | 'posts' | 'tokens';
 
+const TABS: { key: TabType; label: string }[] = [
+  { key: 'users', label: 'Users' },
+  { key: 'posts', label: 'Posts' },
+  { key: 'tokens', label: 'Tokens' },
+];
+
 export default function SearchScreen() {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState<TabType>('users');
@@ -199,14 +205,20 @@ export default function SearchScreen() {
     ));
   };
 
+  const counts: Record<TabType, number> = {
+    users: users.length,
+    posts: posts.length,
+    tokens: tokens.length,
+  };
+
   return (
     <View className="flex-1 bg-background">
       {/* Header */}
-      <View className="px-4 pt-12 pb-4">
-        <Text className="text-3xl font-bold mb-4">Search</Text>
+      <View className="px-4 pb-4 pt-12">
+        <Text className="mb-4 text-3xl font-bold text-foreground">Search</Text>
         
         {/* Search Input */}
-        <View className="flex-row items-center gap-3 rounded-2xl border-2 border-border bg-background px-4 py-3">
+        <View className="flex-row items-center gap-3 rounded-2xl border border-border bg-card px-4 py-3 shadow-soft">
           <Icon as={SearchIcon} size={20} className="text-muted-foreground" />
           <TextInput
             placeholder="Search users, posts, or tokens..."
@@ -220,35 +232,47 @@ export default function SearchScreen() {
       </View>
 
       {/* Tabs */}
-      <View className="flex-row border-b border-border px-4">
-        <TouchableOpacity
-          onPress={() => setActiveTab('users')}
-          className={`flex-1 items-center py-3 ${activeTab === 'users' ? 'border-b-2 border-purple-600' : ''}`}
-        >
-          <Text className={`font-semibold ${activeTab === 'users' ? 'text-purple-600' : 'text-muted-foreground'}`}>
-            Users {users.length > 0 && `(${users.length})`}
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => setActiveTab('posts')}
-          className={`flex-1 items-center py-3 ${activeTab === 'posts' ? 'border-b-2 border-purple-600' : ''}`}
-        >
-          <Text className={`font-semibold ${activeTab === 'posts' ? 'text-purple-600' : 'text-muted-foreground'}`}>
-            Posts {posts.length > 0 && `(${posts.length})`}
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => setActiveTab('tokens')}
-          className={`flex-1 items-center py-3 ${activeTab === 'tokens' ? 'border-b-2 border-purple-600' : ''}`}
-        >
-          <Text className={`font-semibold ${activeTab === 'tokens' ? 'text-purple-600' : 'text-muted-foreground'}`}>
-            Tokens {tokens.length > 0 && `(${tokens.length})`}
-          </Text>
-        </TouchableOpacity>
+      <View className="px-4 pb-3">
+        <View className="flex-row rounded-full border border-border bg-card p-1 shadow-soft">
+          {TABS.map((tab) => {
+            const isActive = activeTab === tab.key;
+            return (
+              <TouchableOpacity
+                key={tab.key}
+                onPress={() => setActiveTab(tab.key)}
+                activeOpacity={0.85}
+                className={`flex-1 flex-row items-center justify-center gap-1 rounded-full py-2 ${
+                  isActive ? 'bg-primary' : ''
+                }`}
+              >
+                <Text
+                  className={`text-sm font-semibold ${
+                    isActive ? 'text-primary-foreground' : 'text-muted-foreground'
+                  }`}
+                >
+                  {tab.label}
+                </Text>
+                {counts[tab.key] > 0 && (
+                  <Text
+                    className={`text-2xs font-semibold ${
+                      isActive ? 'text-primary-foreground/80' : 'text-muted-foreground'
+                    }`}
+                  >
+                    {counts[tab.key]}
+                  </Text>
+                )}
+              </TouchableOpacity>
+            );
+          })}
+        </View>
       </View>
 
       {/* Results */}
-      <ScrollView className="flex-1 px-4" showsVerticalScrollIndicator={false}>
+      <ScrollView
+        className="flex-1 px-4"
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 32 }}
+      >
         {searchQuery.length < 2 ? (
           <EmptyState
             icon={SearchIcon}

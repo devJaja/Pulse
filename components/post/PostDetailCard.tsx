@@ -9,7 +9,7 @@ interface PostDetailCardProps {
 
 export function PostDetailCard({ post }: PostDetailCardProps) {
   return (
-    <View className="bg-card p-4">
+    <View className="mx-4 mt-4 rounded-2xl border border-border bg-card p-4 shadow-soft">
       <FeedHeader
         author={{
           avatar: post.author?.avatar,
@@ -20,21 +20,20 @@ export function PostDetailCard({ post }: PostDetailCardProps) {
       />
       <FeedContent content={post.content} />
       <FeedImages images={post.images || []} />
-      
-      {/* Stats */}
-      <View className="mt-4 flex-row gap-6 border-t border-border pt-4">
+
+      <View className="mt-4 flex-row items-center gap-6 border-t border-border pt-4">
         <View>
-          <Text className="text-2xl font-bold">{post.likesCount || 0}</Text>
-          <Text className="text-sm text-muted-foreground">Likes</Text>
+          <Text className="text-2xl font-bold text-foreground">{post.likesCount || 0}</Text>
+          <Text className="text-[12.5px] text-muted-foreground">Likes</Text>
         </View>
         <View>
-          <Text className="text-2xl font-bold">{post.commentsCount || 0}</Text>
-          <Text className="text-sm text-muted-foreground">Comments</Text>
+          <Text className="text-2xl font-bold text-foreground">{post.commentsCount || 0}</Text>
+          <Text className="text-[12.5px] text-muted-foreground">Comments</Text>
         </View>
         {post.isTokenized && (
           <View>
-            <Text className="text-2xl font-bold">{post.tokenSupply}</Text>
-            <Text className="text-sm text-muted-foreground">Tokens</Text>
+            <Text className="text-2xl font-bold text-foreground">{post.tokenSupply}</Text>
+            <Text className="text-[12.5px] text-muted-foreground">Tokens</Text>
           </View>
         )}
       </View>

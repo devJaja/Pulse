@@ -27,49 +27,72 @@ export function PostActions({
   onBuyToken,
 }: PostActionsProps) {
   return (
-    <View className="border-t border-border bg-card p-4">
-      <View className="flex-row items-center justify-around">
-        <TouchableOpacity
-          onPress={onLike}
-          className="flex-row items-center gap-2"
+    <View className="mx-4 mt-3 flex-row items-center justify-around rounded-2xl border border-border bg-card px-2 py-2 shadow-soft">
+      <TouchableOpacity
+        onPress={onLike}
+        accessibilityRole="button"
+        accessibilityLabel={isLiked ? 'Unlike post' : 'Like post'}
+        className={`min-h-[40px] flex-row items-center gap-1.5 rounded-full px-3 active:bg-secondary ${
+          isLiked ? 'bg-secondary' : ''
+        }`}
+      >
+        <Icon
+          as={Heart}
+          size={22}
+          className={isLiked ? 'text-red-500' : 'text-muted-foreground'}
+          fill={isLiked ? '#FF3F00' : 'none'}
+        />
+        <Text
+          className={`text-[13px] font-semibold ${
+            isLiked ? 'text-red-500' : 'text-muted-foreground'
+          }`}
         >
-          <Icon
-            as={Heart}
-            size={24}
-            className={isLiked ? 'text-red-500' : 'text-muted-foreground'}
-            fill={isLiked ? '#FF3F00' : 'none'}
-          />
-          <Text className={isLiked ? 'text-red-500 font-semibold' : 'text-muted-foreground'}>
-            {likesCount}
-          </Text>
-        </TouchableOpacity>
+          {likesCount}
+        </Text>
+      </TouchableOpacity>
 
+      <TouchableOpacity
+        onPress={onComment}
+        accessibilityRole="button"
+        accessibilityLabel="View comments"
+        className="min-h-[40px] flex-row items-center gap-1.5 rounded-full px-3 active:bg-secondary"
+      >
+        <Icon as={MessageCircle} size={22} className="text-muted-foreground" />
+        <Text className="text-[13px] font-semibold text-muted-foreground">{commentsCount}</Text>
+      </TouchableOpacity>
+
+      {onShare && (
         <TouchableOpacity
-          onPress={onComment}
-          className="flex-row items-center gap-2"
+          onPress={onShare}
+          accessibilityRole="button"
+          accessibilityLabel="Share post"
+          className="min-h-[40px] w-10 items-center justify-center rounded-full active:bg-secondary"
         >
-          <Icon as={MessageCircle} size={24} className="text-muted-foreground" />
-          <Text className="text-muted-foreground">{commentsCount}</Text>
+          <Icon as={Share2} size={22} className="text-muted-foreground" />
         </TouchableOpacity>
+      )}
 
-        {onShare && (
-          <TouchableOpacity onPress={onShare}>
-            <Icon as={Share2} size={24} className="text-muted-foreground" />
-          </TouchableOpacity>
-        )}
+      {onTip && (
+        <TouchableOpacity
+          onPress={onTip}
+          accessibilityRole="button"
+          accessibilityLabel="Tip author"
+          className="min-h-[40px] w-10 items-center justify-center rounded-full bg-success/10 active:bg-success/20"
+        >
+          <Icon as={DollarSign} size={20} className="text-success" />
+        </TouchableOpacity>
+      )}
 
-        {onTip && (
-          <TouchableOpacity onPress={onTip}>
-            <Icon as={DollarSign} size={24} className="text-success" />
-          </TouchableOpacity>
-        )}
-
-        {isTokenized && onBuyToken && (
-          <TouchableOpacity onPress={onBuyToken}>
-            <Icon as={Coins} size={24} className="text-purple-600" />
-          </TouchableOpacity>
-        )}
-      </View>
+      {isTokenized && onBuyToken && (
+        <TouchableOpacity
+          onPress={onBuyToken}
+          accessibilityRole="button"
+          accessibilityLabel="Buy tokens"
+          className="min-h-[40px] w-10 items-center justify-center rounded-full bg-accent active:bg-accent/70"
+        >
+          <Icon as={Coins} size={20} className="text-primary dark:text-brand-300" />
+        </TouchableOpacity>
+      )}
     </View>
   );
 }

@@ -1,12 +1,12 @@
 import { Image, Pressable, View } from 'react-native';
 import { Text } from '@/components/ui/text';
 import { Icon } from '@/components/ui/icon';
+import { Avatar } from '@/components/ui/avatar';
 import {
   Coins,
   Gift,
   Heart,
   MessageCircle,
-  User,
   type LucideIcon,
 } from 'lucide-react-native';
 import { router } from 'expo-router';
@@ -45,7 +45,7 @@ function PostAction({
 
   const body = (
     <View
-      className={`min-h-[36px] flex-row items-center gap-1.5 rounded-full px-2.5 ${
+      className={`min-h-[38px] flex-row items-center gap-1.5 rounded-full px-2.5 ${
         active ? 'bg-secondary' : ''
       }`}
     >
@@ -103,40 +103,44 @@ export function FeedPostCard({
       onPress={() => router.push(`/post/${post.id}`)}
       accessibilityRole="button"
       accessibilityLabel={`Post by ${post.author.name || post.author.username}`}
-      className="mx-4 mb-3 overflow-hidden rounded-3xl border border-border bg-card active:bg-secondary/40"
+      className="mx-4 mb-3 overflow-hidden rounded-2xl border border-border bg-card shadow-soft active:bg-secondary/40 dark:active:bg-secondary/30"
     >
       {/* Author */}
       <View className="flex-row items-center gap-3 px-4 pt-4">
-        <Pressable onPress={goToProfile} hitSlop={6} accessibilityRole="button">
-          {post.author.avatar ? (
-            <Image
-              source={{ uri: post.author.avatar }}
-              className="h-10 w-10 rounded-full bg-secondary"
-            />
-          ) : (
-            <View className="h-10 w-10 items-center justify-center rounded-full bg-[#E4DFFF] dark:bg-[#1D1554]">
-              <Icon
-                as={User}
-                size={19}
-                className="text-[#5A3FE0] dark:text-[#b8b4fe]"
-              />
-            </View>
-          )}
+        <Pressable
+          onPress={goToProfile}
+          hitSlop={6}
+          accessibilityRole="button"
+          accessibilityLabel={`View ${post.author.name || post.author.username}'s profile`}
+          className="active:opacity-70"
+        >
+          <Avatar
+            uri={post.author.avatar}
+            name={post.author.name}
+            username={post.author.username}
+            size="sm"
+            className="h-10 w-10"
+            ring
+          />
         </Pressable>
 
-        <Pressable onPress={goToProfile} className="flex-1" accessibilityRole="button">
+        <Pressable
+          onPress={goToProfile}
+          className="flex-1 active:opacity-80"
+          accessibilityRole="button"
+        >
           <Text numberOfLines={1} className="text-[14.5px] font-semibold text-foreground">
             {post.author.name || post.author.username}
           </Text>
-          <Text numberOfLines={1} className="text-[12.5px] text-muted-foreground">
+          <Text numberOfLines={1} className="mt-0.5 text-[12.5px] text-muted-foreground">
             @{post.author.username} · {formatTime(post.createdAt)}
           </Text>
         </Pressable>
 
         {post.isTokenized && (
-          <View className="flex-row items-center gap-1 rounded-full bg-[#F1EEFF] px-2 py-1 dark:bg-[#1D1554]">
-            <Icon as={Coins} size={11} className="text-[#6E54FF] dark:text-gold" />
-            <Text className="text-[10.5px] font-semibold text-[#6E54FF] dark:text-gold">
+          <View className="flex-row items-center gap-1 rounded-full border border-primary/15 bg-accent px-2.5 py-1">
+            <Icon as={Coins} size={11} className="text-primary dark:text-brand-300" />
+            <Text className="text-2xs font-semibold uppercase tracking-wide text-primary dark:text-brand-300">
               Token
             </Text>
           </View>
@@ -152,7 +156,7 @@ export function FeedPostCard({
 
       {/* Media */}
       {imageCount > 0 && (
-        <View className="mt-3 flex-row flex-wrap gap-0.5 px-4">
+        <View className="mt-3 flex-row flex-wrap gap-1 px-4">
           {post.images!.slice(0, 4).map((img, idx) => (
             <Image
               key={`${img}-${idx}`}
@@ -160,8 +164,8 @@ export function FeedPostCard({
               resizeMode="cover"
               className={
                 imageCount === 1
-                  ? 'h-60 w-full rounded-2xl'
-                  : 'h-[110px] flex-1 rounded-xl'
+                  ? 'h-60 w-full rounded-2xl bg-muted'
+                  : 'h-[110px] flex-1 rounded-xl bg-muted'
               }
             />
           ))}
@@ -180,8 +184,9 @@ export function FeedPostCard({
           <Pressable
             onPress={() => onBuyToken(post)}
             accessibilityRole="button"
+            accessibilityLabel={t('feed.buy')}
             hitSlop={6}
-            className="rounded-full bg-foreground px-3 py-1.5 active:opacity-80"
+            className="rounded-full bg-foreground px-3.5 py-1.5 active:opacity-80"
           >
             <Text className="text-[12px] font-semibold text-background">
               {t('feed.buy')}
@@ -202,20 +207,22 @@ export function FeedPostCard({
 
       {/* Metrics */}
       {(post.likesCount > 0 || post.commentsCount > 0 || post.tipsCount > 0) && (
-        <View className="mt-3 flex-row items-center gap-3 px-4 text-[12.5px] text-muted-foreground">
+        <View className="mt-3 flex-row items-center gap-3 px-4">
           {post.likesCount > 0 && (
             <View className="flex-row items-center gap-1.5">
               <Icon as={Heart} size={12} className="text-red-500" fill="#FF3F00" />
-              <Text className="text-muted-foreground">{post.likesCount}</Text>
+              <Text className="text-[12.5px] text-muted-foreground">
+                {post.likesCount}
+              </Text>
             </View>
           )}
           {post.commentsCount > 0 && (
-            <Text className="text-muted-foreground">
+            <Text className="text-[12.5px] text-muted-foreground">
               {post.commentsCount} {t('feed.comments')}
             </Text>
           )}
           {post.tipsCount > 0 && (
-            <Text className="text-muted-foreground">
+            <Text className="text-[12.5px] text-muted-foreground">
               {post.tipsCount} {t('feed.tips')}
             </Text>
           )}

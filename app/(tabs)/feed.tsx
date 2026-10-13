@@ -159,7 +159,7 @@ export default function FeedScreen() {
       <View className="mt-7 flex-row items-end justify-between px-4">
         <View className="flex-1 pr-3">
           <View className="flex-row items-center gap-2">
-            <View className="h-1.5 w-1.5 rounded-full bg-gold" />
+            <View className="h-1.5 w-1.5 rounded-full bg-primary dark:bg-gold" />
             <Text className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
               {t('common.feed')}
             </Text>
@@ -173,7 +173,7 @@ export default function FeedScreen() {
           onPress={() => router.push('/explore')}
           accessibilityRole="button"
           accessibilityLabel={t('feed.explore')}
-          className="flex-row items-center gap-1.5 rounded-full border border-border bg-card px-3.5 py-2 active:bg-secondary"
+            className="flex-row items-center gap-1.5 rounded-full border border-border bg-card px-3.5 py-2 shadow-soft active:bg-secondary"
         >
           <Icon as={Compass} size={16} className="text-foreground" />
           <Text className="text-[13px] font-semibold text-foreground">
@@ -189,8 +189,8 @@ export default function FeedScreen() {
       {/* App bar */}
       <View className="flex-row items-center justify-between px-4 pb-3 pt-2">
         <View className="flex-row items-center gap-2.5">
-          <View className="h-8 w-8 items-center justify-center rounded-xl bg-[#0e100f]">
-            <Icon as={PenLine} size={15} className="text-gold" strokeWidth={2.4} />
+          <View className="h-8 w-8 items-center justify-center rounded-xl bg-primary shadow-soft dark:bg-[#1D1554]">
+            <Icon as={PenLine} size={15} className="text-primary-foreground dark:text-gold" strokeWidth={2.4} />
           </View>
           <View>
             <Text className="text-[11px] font-medium leading-4 text-muted-foreground">
@@ -207,7 +207,7 @@ export default function FeedScreen() {
             onPress={() => router.push('/(tabs)/search')}
             accessibilityRole="button"
             accessibilityLabel={t('common.search')}
-            className="h-9 w-9 items-center justify-center rounded-full border border-border bg-card active:bg-secondary"
+            className="h-9 w-9 items-center justify-center rounded-full border border-border bg-card shadow-soft active:bg-secondary"
           >
             <Icon as={Search} size={17} className="text-foreground" />
           </Pressable>
@@ -220,8 +220,8 @@ export default function FeedScreen() {
             {user?.avatar ? (
               <Image source={{ uri: user.avatar }} className="h-9 w-9 rounded-full bg-secondary" />
             ) : (
-              <View className="h-9 w-9 items-center justify-center rounded-full bg-[#E4DFFF] dark:bg-[#1D1554]">
-                <Text className="text-[13px] font-bold text-[#5A3FE0] dark:text-[#b8b4fe]">
+              <View className="h-9 w-9 items-center justify-center rounded-full bg-accent shadow-soft dark:bg-[#1D1554]">
+                <Text className="text-[13px] font-bold text-primary dark:text-[#b8b4fe]">
                   {initial}
                 </Text>
               </View>

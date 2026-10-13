@@ -1,5 +1,7 @@
 import { View, TouchableOpacity } from 'react-native';
 import { Text } from '@/components/ui/text';
+import { Icon } from '@/components/ui/icon';
+import { Heart, MessageCircle } from 'lucide-react-native';
 import { Avatar } from '@/components/common/Avatar';
 import { formatDistanceToNow } from 'date-fns';
 
@@ -31,9 +33,10 @@ export function PostSearchCard({ post, onPress }: PostSearchCardProps) {
   return (
     <TouchableOpacity
       onPress={onPress}
-      className="border-b border-border py-4"
+      activeOpacity={0.85}
+      className="mb-2.5 rounded-2xl border border-border bg-card p-4 shadow-soft active:bg-secondary"
     >
-      <View className="flex-row items-start gap-3">
+      <View className="flex-row items-center gap-3">
         <Avatar
           uri={post.author.avatar}
           name={post.author.name}
@@ -41,16 +44,27 @@ export function PostSearchCard({ post, onPress }: PostSearchCardProps) {
           size="sm"
         />
         <View className="flex-1">
-          <View className="flex-row items-center gap-2">
-            <Text className="font-semibold">{post.author.name || post.author.username}</Text>
-            <Text className="text-sm text-muted-foreground">@{post.author.username}</Text>
-            <Text className="text-sm text-muted-foreground">· {formatTime(post.createdAt)}</Text>
-          </View>
-          <Text className="mt-1" numberOfLines={3}>{post.content}</Text>
-          <View className="mt-2 flex-row gap-4">
-            <Text className="text-sm text-muted-foreground">{post.likesCount} likes</Text>
-            <Text className="text-sm text-muted-foreground">{post.commentsCount} comments</Text>
-          </View>
+          <Text numberOfLines={1} className="text-[14px] font-semibold text-foreground">
+            {post.author.name || post.author.username}
+          </Text>
+          <Text numberOfLines={1} className="text-2xs text-muted-foreground">
+            @{post.author.username} · {formatTime(post.createdAt)}
+          </Text>
+        </View>
+      </View>
+
+      <Text className="mt-3 text-[15px] leading-5 text-foreground" numberOfLines={3}>
+        {post.content}
+      </Text>
+
+      <View className="mt-3 flex-row items-center gap-4">
+        <View className="flex-row items-center gap-1.5">
+          <Icon as={Heart} size={14} className="text-red-500" />
+          <Text className="text-sm text-muted-foreground">{post.likesCount}</Text>
+        </View>
+        <View className="flex-row items-center gap-1.5">
+          <Icon as={MessageCircle} size={14} className="text-muted-foreground" />
+          <Text className="text-sm text-muted-foreground">{post.commentsCount}</Text>
         </View>
       </View>
     </TouchableOpacity>

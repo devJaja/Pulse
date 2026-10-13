@@ -1,7 +1,7 @@
-import { View, TouchableOpacity, Platform, Share as RNShare, KeyboardAvoidingView, ScrollView } from 'react-native';
+import { View, TouchableOpacity, Platform, Share as RNShare } from 'react-native';
 import { Text } from '@/components/ui/text';
 import { Icon } from '@/components/ui/icon';
-import { ArrowLeft, Share } from 'lucide-react-native';
+import { ArrowLeft, Gift, MessageCircle, Share } from 'lucide-react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 import { usePost, usePosts, usePostTipRewards, useClaimTip } from '@/hooks/usePosts';
@@ -15,9 +15,7 @@ import {
   CommentInput,
 } from '@/components/post';
 import { TipModal, BuyTokenModal } from '@/components/feed';
-import { LoadingSpinner, ErrorState } from '@/components/common';
-import { api } from '@/lib/api';
-import { useQuery } from '@tanstack/react-query';
+import { LoadingSpinner, ErrorState, EmptyState } from '@/components/common';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 
 export default function PostDetailsScreen() {
@@ -117,8 +115,13 @@ export default function PostDetailsScreen() {
     return (
       <View className="flex-1 bg-background">
         <View className="flex-row items-center border-b border-border bg-card px-4 pb-4 pt-12">
-          <TouchableOpacity onPress={() => router.back()}>
-            <Icon as={ArrowLeft} size={24} className="text-foreground" />
+          <TouchableOpacity
+            onPress={() => router.back()}
+            accessibilityRole="button"
+            accessibilityLabel="Go back"
+            className="h-10 w-10 items-center justify-center rounded-full border border-border bg-background active:bg-secondary"
+          >
+            <Icon as={ArrowLeft} size={20} className="text-foreground" />
           </TouchableOpacity>
         </View>
         <ErrorState message="Post not found" onRetry={() => router.back()} />
@@ -129,13 +132,23 @@ export default function PostDetailsScreen() {
   return (
     <View className="flex-1 bg-background">
       {/* Header */}
-      <View className="flex-row items-center justify-between border-b border-border bg-card px-4 pb-4 pt-12">
-        <TouchableOpacity onPress={() => router.back()}>
-          <Icon as={ArrowLeft} size={24} className="text-foreground" />
+      <View className="flex-row items-center justify-between border-b border-border bg-card px-4 pb-4 pt-12 shadow-soft">
+        <TouchableOpacity
+          onPress={() => router.back()}
+          accessibilityRole="button"
+          accessibilityLabel="Go back"
+          className="h-10 w-10 items-center justify-center rounded-full border border-border bg-background active:bg-secondary"
+        >
+          <Icon as={ArrowLeft} size={20} className="text-foreground" />
         </TouchableOpacity>
-        <Text className="text-lg font-bold">Post</Text>
-        <TouchableOpacity onPress={handleShare}>
-          <Icon as={Share} size={24} className="text-foreground" />
+        <Text className="text-lg font-bold text-foreground">Post</Text>
+        <TouchableOpacity
+          onPress={handleShare}
+          accessibilityRole="button"
+          accessibilityLabel="Share post"
+          className="h-10 w-10 items-center justify-center rounded-full border border-border bg-background active:bg-secondary"
+        >
+          <Icon as={Share} size={20} className="text-foreground" />
         </TouchableOpacity>
       </View>
 
@@ -160,22 +173,25 @@ export default function PostDetailsScreen() {
 
           {/* Claimable early-backer rewards */}
           {pendingMon > 0 && (
-            <View className="mx-4 mt-3 flex-row items-center justify-between rounded-2xl border border-primary/30 bg-primary/10 p-4">
-              <View className="flex-1 pr-3">
-                <Text className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+            <View className="mx-4 mt-3 flex-row items-center gap-3 rounded-2xl border border-success/20 bg-success/5 p-4 shadow-soft">
+              <View className="h-10 w-10 items-center justify-center rounded-full bg-success/15">
+                <Icon as={Gift} size={18} className="text-success" />
+              </View>
+              <View className="flex-1 pr-2">
+                <Text className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
                   Early-backer rewards
                 </Text>
                 <Text className="mt-1 text-xl font-bold text-foreground">
                   {pendingMon.toFixed(4)} MON
                 </Text>
-                <Text className="mt-1 text-xs text-muted-foreground">
+                <Text className="mt-0.5 text-xs text-muted-foreground">
                   Your share of this post&apos;s tip pool
                 </Text>
               </View>
               <TouchableOpacity
                 onPress={() => claimTip()}
                 disabled={isClaiming}
-                className={`rounded-full bg-primary px-5 py-2.5 ${isClaiming ? 'opacity-60' : ''}`}
+                className={`rounded-xl bg-success px-5 py-2.5 shadow-soft active:opacity-90 ${isClaiming ? 'opacity-60' : ''}`}
               >
                 <Text className="font-semibold text-primary-foreground">
                   {isClaiming ? 'Claiming...' : 'Claim'}
@@ -185,19 +201,24 @@ export default function PostDetailsScreen() {
           )}
 
           {/* Comments Section Header */}
-          <View className="mt-2 bg-card">
-            <View className="border-b border-border px-4 py-3">
-              <Text className="font-bold">Comments ({post.commentsCount})</Text>
+          <View className="mt-5 flex-row items-center gap-2 border-b border-border px-4 pb-3">
+            <Icon as={MessageCircle} size={15} className="text-primary dark:text-brand-300" />
+            <Text className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+              Comments
+            </Text>
+            <View className="rounded-full bg-secondary px-2 py-0.5">
+              <Text className="text-2xs font-semibold text-foreground">{post.commentsCount}</Text>
             </View>
           </View>
 
           {/* Loading or Empty State */}
           {isLoadingComments && <LoadingSpinner />}
           {!isLoadingComments && comments.length === 0 && (
-            <View className="items-center py-8">
-              <Text className="text-muted-foreground">No comments yet</Text>
-              <Text className="mt-1 text-sm text-muted-foreground">Be the first to comment!</Text>
-            </View>
+            <EmptyState
+              icon={MessageCircle}
+              message="No comments yet"
+              subtitle="Be the first to comment!"
+            />
           )}
 
           {/* Comments List */}

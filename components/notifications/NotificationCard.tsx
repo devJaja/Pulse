@@ -23,18 +23,18 @@ export function NotificationCard({ notification, onPress }: NotificationCardProp
   const getNotificationIcon = (type: string) => {
     switch (type) {
       case 'like':
-        return <Icon as={Heart} size={20} className="text-red-600" />;
+        return <Icon as={Heart} size={18} className="text-red-500" />;
       case 'comment':
-        return <Icon as={MessageCircle} size={20} className="text-blue-600" />;
+        return <Icon as={MessageCircle} size={18} className="text-blue-500" />;
       case 'follow':
-        return <Icon as={UserPlus} size={20} className="text-success" />;
+        return <Icon as={UserPlus} size={18} className="text-success" />;
       case 'tip':
       case 'payment_received':
-        return <Icon as={DollarSign} size={20} className="text-success" />;
+        return <Icon as={DollarSign} size={18} className="text-success" />;
       case 'token_purchase':
-        return <Icon as={Coins} size={20} className="text-purple-600" />;
+        return <Icon as={Coins} size={18} className="text-primary" />;
       default:
-        return <Icon as={MessageCircle} size={20} className="text-gray-600" />;
+        return <Icon as={MessageCircle} size={18} className="text-muted-foreground" />;
     }
   };
 
@@ -49,38 +49,45 @@ export function NotificationCard({ notification, onPress }: NotificationCardProp
   return (
     <TouchableOpacity
       onPress={onPress}
-      className={`border-b border-border p-4 ${
-        !notification.isRead ? 'bg-purple-50 dark:bg-purple-950/30' : 'bg-card'
+      activeOpacity={0.85}
+      className={`mb-2.5 flex-row gap-3 rounded-2xl border p-4 shadow-soft ${
+        !notification.isRead ? 'border-primary/30 bg-accent' : 'border-border bg-card'
       }`}
     >
-      <View className="flex-row gap-3">
-        <View className="h-10 w-10 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
-          {getNotificationIcon(notification.type)}
-        </View>
-        
-        <View className="flex-1">
-          <View className="flex-row items-start justify-between">
-            <View className="flex-1">
-              <Text className="font-medium">{notification.message}</Text>
-              {notification.amount && (
-                <Text className="mt-1 text-sm font-semibold text-success">
-                  {notification.amount} MON
-                </Text>
-              )}
-              {notification.post && (
-                <Text className="mt-1 text-sm text-muted-foreground" numberOfLines={2}>
+      <View className="h-10 w-10 items-center justify-center rounded-full bg-background">
+        {getNotificationIcon(notification.type)}
+      </View>
+
+      <View className="flex-1">
+        <View className="flex-row items-start justify-between">
+          <View className="flex-1 pr-2">
+            <Text
+              className={`text-[14px] leading-5 ${
+                notification.isRead ? 'text-foreground' : 'font-semibold text-foreground'
+              }`}
+            >
+              {notification.message}
+            </Text>
+            {notification.amount && (
+              <Text className="mt-1 text-sm font-semibold text-success">
+                {notification.amount} MON
+              </Text>
+            )}
+            {notification.post && (
+              <View className="mt-2 rounded-xl border border-border bg-background px-3 py-2">
+                <Text className="text-sm text-muted-foreground" numberOfLines={2}>
                   {`"${notification.post.content}"`}
                 </Text>
-              )}
-            </View>
-            {!notification.isRead && (
-              <View className="ml-2 h-2 w-2 rounded-full bg-[#0e100f]" />
+              </View>
             )}
           </View>
-          <Text className="mt-1 text-xs text-muted-foreground">
-            {formatTime(notification.createdAt)}
-          </Text>
+          {!notification.isRead && (
+            <View className="mt-1 h-2.5 w-2.5 rounded-full bg-primary" />
+          )}
         </View>
+        <Text className="mt-1.5 text-2xs text-muted-foreground">
+          {formatTime(notification.createdAt)}
+        </Text>
       </View>
     </TouchableOpacity>
   );

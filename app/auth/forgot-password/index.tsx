@@ -38,9 +38,12 @@ export default function ForgotPasswordScreen() {
 
   return (
     <AuthLayout>
-      <View className="flex-1 px-5 pt-12">
-        <TouchableOpacity onPress={() => router.back()} className="mb-6">
-          <Icon as={ArrowLeft} size={24} className="text-foreground" />
+      <View className="flex-1 px-6 pt-14">
+        <TouchableOpacity
+          onPress={() => router.back()}
+          className="mb-8 h-11 w-11 items-center justify-center rounded-xl border border-border bg-card active:bg-accent"
+        >
+          <Icon as={ArrowLeft} size={22} className="text-foreground" />
         </TouchableOpacity>
 
         {!emailSent ? (
@@ -79,17 +82,17 @@ export default function ForgotPasswordScreen() {
         ) : (
           <>
             <View className="items-center mb-8">
-              <View className="h-20 w-20 items-center justify-center rounded-full bg-success/10 mb-4">
-                <Icon as={Mail} size={40} className="text-success dark:text-success" />
+              <View className="mb-5 h-20 w-20 items-center justify-center rounded-full border border-success/20 bg-success/10">
+                <Icon as={Mail} size={38} className="text-success" strokeWidth={1.8} />
               </View>
-              <Text className="text-2xl font-bold text-center mb-2">{t('auth.checkYourEmail')}</Text>
-              <Text className="text-center text-muted-foreground">
+              <Text className="mb-2 text-center text-2xl font-bold tracking-tight text-foreground">{t('auth.checkYourEmail')}</Text>
+              <Text className="text-center text-base leading-6 text-muted-foreground">
                 {t('auth.resetLinkSent')} {email}
               </Text>
             </View>
 
-            <View className="rounded-2xl bg-card p-4 mb-6">
-              <Text className="text-sm text-muted-foreground">
+            <View className="mb-6 rounded-2xl border border-border bg-card p-4 shadow-soft">
+              <Text className="text-sm leading-5 text-muted-foreground">
                 {t('auth.didntReceiveEmail')}
               </Text>
             </View>
@@ -104,9 +107,9 @@ export default function ForgotPasswordScreen() {
 
               <TouchableOpacity
                 onPress={() => setEmailSent(false)}
-                className="mt-4"
+                className="mt-4 h-11 items-center justify-center"
               >
-                <Text className="text-center text-sm font-medium text-purple-600">
+                <Text className="text-center text-sm font-medium text-primary">
                   {t('auth.tryDifferentEmail')}
                 </Text>
               </TouchableOpacity>

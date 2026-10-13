@@ -22,7 +22,13 @@ export function FeedCard({ post, onPress, showActions = false }: FeedCardProps) 
   };
 
   return (
-    <TouchableOpacity onPress={handlePress} className="mb-4 rounded-2xl bg-card p-4">
+    <TouchableOpacity
+      onPress={handlePress}
+      accessibilityRole="button"
+      accessibilityLabel={`Post by ${post.author?.name || post.author?.username || ''}`}
+      className="mb-4 overflow-hidden rounded-2xl border border-border bg-card p-4 shadow-soft active:bg-secondary/40 dark:active:bg-secondary/30"
+      activeOpacity={0.98}
+    >
       <FeedHeader
         author={{
           avatar: post.author?.avatar,

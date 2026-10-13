@@ -50,17 +50,17 @@ export default function ResetPasswordScreen() {
   if (resetSuccess) {
     return (
       <AuthLayout>
-        <View className="flex-1 items-center justify-center px-5">
-          <View className="h-20 w-20 items-center justify-center rounded-full bg-success/10 mb-4">
-            <Icon as={CheckCircle} size={40} className="text-success dark:text-success" />
+        <View className="flex-1 items-center justify-center px-6">
+          <View className="mb-5 h-20 w-20 items-center justify-center rounded-full border border-success/20 bg-success/10">
+            <Icon as={CheckCircle} size={38} className="text-success" strokeWidth={1.8} />
           </View>
-          <Text className="text-2xl font-bold text-center mb-2">{t('auth.passwordResetSuccess')}</Text>
-          <Text className="text-center text-muted-foreground mb-8">
+          <Text className="mb-2 text-center text-2xl font-bold tracking-tight text-foreground">{t('auth.passwordResetSuccess')}</Text>
+          <Text className="mb-8 text-center text-base leading-6 text-muted-foreground">
             {t('auth.passwordResetSuccessDesc')}
           </Text>
           <Button
             onPress={() => router.replace('/auth/signin')}
-            className="w-full h-14 rounded-2xl bg-primary"
+            className="h-14 w-full rounded-2xl bg-primary shadow-soft active:bg-primary/90"
           >
             <Text className="text-base font-medium text-primary-foreground">{t('auth.signIn')}</Text>
           </Button>
@@ -71,9 +71,12 @@ export default function ResetPasswordScreen() {
 
   return (
     <AuthLayout>
-      <View className="flex-1 px-5 pt-12">
-        <TouchableOpacity onPress={() => router.back()} className="mb-6">
-          <Icon as={ArrowLeft} size={24} className="text-foreground" />
+      <View className="flex-1 px-6 pt-14">
+        <TouchableOpacity
+          onPress={() => router.back()}
+          className="mb-8 h-11 w-11 items-center justify-center rounded-xl border border-border bg-card active:bg-accent"
+        >
+          <Icon as={ArrowLeft} size={22} className="text-foreground" />
         </TouchableOpacity>
 
         <AuthHeader

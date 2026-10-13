@@ -1,6 +1,8 @@
-import { View, ScrollView, TouchableOpacity, ActivityIndicator, Image, TextInput, FlatList } from 'react-native';
+import { View, TouchableOpacity, ActivityIndicator, TextInput, FlatList } from 'react-native';
 import { Text } from '@/components/ui/text';
 import { Icon } from '@/components/ui/icon';
+import { Button } from '@/components/ui/button';
+import { Avatar } from '@/components/ui/avatar';
 import { ArrowLeft, Search, UserPlus, UserMinus, X } from 'lucide-react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useState, useMemo } from 'react';
@@ -14,30 +16,30 @@ export default function FollowsScreen() {
   const { userId, tab: initialTab } = useLocalSearchParams<{ userId: string; tab?: string }>();
   const { user: currentUser } = useAuth();
   const typedCurrentUser = currentUser as User | undefined;
-  
+
   const [activeTab, setActiveTab] = useState<TabType>((initialTab as TabType) || 'followers');
   const [searchQuery, setSearchQuery] = useState('');
-  
+
   const { data: followersData, isLoading: isLoadingFollowers } = useFollowers(userId);
   const { data: followingData, isLoading: isLoadingFollowing } = useFollowing(userId);
   const { followUser, unfollowUser, isFollowing: isFollowingLoading, isUnfollowing } = useFollows();
-  
+
   const followers = (followersData as any[]) || [];
   const following = (followingData as any[]) || [];
-  
+
   const activeList = activeTab === 'followers' ? followers : following;
-  
+
   // Filter users based on search query
   const filteredUsers = useMemo(() => {
     if (!searchQuery.trim()) return activeList;
-    
+
     const query = searchQuery.toLowerCase();
-    return activeList.filter((user: any) => 
+    return activeList.filter((user: any) =>
       user.username?.toLowerCase().includes(query) ||
       user.name?.toLowerCase().includes(query)
     );
   }, [activeList, searchQuery]);
-  
+
   const handleFollowToggle = (targetUserId: string, isFollowing: boolean) => {
     if (isFollowing) {
       unfollowUser(targetUserId);
@@ -45,7 +47,7 @@ export default function FollowsScreen() {
       followUser(targetUserId);
     }
   };
-  
+
   const navigateToProfile = (username: string) => {
     if (username === typedCurrentUser?.username) {
       router.push('/(tabs)/profile');
@@ -53,133 +55,132 @@ export default function FollowsScreen() {
       router.push(`/(tabs)/profile?username=${username}`);
     }
   };
-  
+
   const renderUserItem = ({ item: user }: { item: any }) => {
     const isCurrentUser = user.id === typedCurrentUser?.id;
     const isFollowingUser = user.isFollowing || false;
-    
+
     return (
       <TouchableOpacity
         onPress={() => navigateToProfile(user.username)}
-        className="flex-row items-center justify-between px-4 py-3 border-b border-border"
+        className="mb-3 flex-row items-center justify-between rounded-2xl border border-border bg-card p-4 shadow-soft active:bg-secondary"
       >
-        <View className="flex-row items-center gap-3 flex-1">
-          {user.avatar ? (
-            <Image 
-              source={{ uri: user.avatar }} 
-              className="h-12 w-12 rounded-full"
-            />
-          ) : (
-            <View className="h-12 w-12 items-center justify-center rounded-full bg-purple-200 dark:bg-purple-900">
-              <Text className="text-lg font-bold text-purple-600 dark:text-purple-300">
-                {user.name?.charAt(0)?.toUpperCase() || user.username?.charAt(0)?.toUpperCase() || '?'}
-              </Text>
-            </View>
-          )}
-          
+        <View className="flex-1 flex-row items-center gap-3">
+          <Avatar
+            uri={user.avatar}
+            name={user.name}
+            username={user.username}
+            size="md"
+            className="border border-border"
+          />
+
           <View className="flex-1">
-            <Text className="font-semibold" numberOfLines={1}>
+            <Text className="text-sm font-semibold text-foreground" numberOfLines={1}>
               {user.name || user.username}
             </Text>
-            <Text className="text-sm text-muted-foreground" numberOfLines={1}>
+            <Text className="text-2xs text-muted-foreground" numberOfLines={1}>
               @{user.username}
             </Text>
             {user.bio && (
-              <Text className="text-sm text-muted-foreground mt-1" numberOfLines={1}>
+              <Text className="mt-1 text-2xs text-muted-foreground" numberOfLines={1}>
                 {user.bio}
               </Text>
             )}
           </View>
         </View>
-        
+
         {!isCurrentUser && (
-          <TouchableOpacity
+          <Button
+            variant={isFollowingUser ? 'secondary' : 'default'}
+            size="sm"
             onPress={() => handleFollowToggle(user.id, isFollowingUser)}
             disabled={isFollowingLoading || isUnfollowing}
-            className={`flex-row items-center gap-2 rounded-full px-4 py-2 ${
-              isFollowingUser ? 'bg-gray-200 dark:bg-gray-700' : 'bg-primary'
-            }`}
+            className="ml-3 rounded-full"
           >
-            <Icon 
-              as={isFollowingUser ? UserMinus : UserPlus} 
-              size={16} 
-              className={isFollowingUser ? "text-foreground" : "text-primary-foreground"}
+            <Icon
+              as={isFollowingUser ? UserMinus : UserPlus}
+              size={15}
+              className={isFollowingUser ? 'text-foreground' : 'text-primary-foreground'}
             />
-            <Text className={`font-semibold text-sm ${isFollowingUser ? 'text-foreground' : 'text-primary-foreground'}`}>
-              {isFollowingUser ? 'Unfollow' : 'Follow'}
-            </Text>
-          </TouchableOpacity>
+            <Text>{isFollowingUser ? 'Unfollow' : 'Follow'}</Text>
+          </Button>
         )}
       </TouchableOpacity>
     );
   };
-  
+
   const isLoading = activeTab === 'followers' ? isLoadingFollowers : isLoadingFollowing;
-  
+
   return (
     <View className="flex-1 bg-background">
       {/* Header */}
       <View className="border-b border-border bg-background">
-        <View className="flex-row items-center justify-between px-4 pt-12 pb-4">
-          <View className="flex-row items-center gap-3">
-            <TouchableOpacity onPress={() => router.back()}>
-              <Icon as={ArrowLeft} size={24} className="text-foreground" />
-            </TouchableOpacity>
-            <Text className="text-xl font-bold">
-              {activeTab === 'followers' ? 'Followers' : 'Following'}
-            </Text>
-          </View>
+        <View className="flex-row items-center gap-3 px-4 pt-14 pb-4">
+          <TouchableOpacity
+            onPress={() => router.back()}
+            hitSlop={12}
+            className="h-10 w-10 items-center justify-center rounded-full border border-border bg-card shadow-soft active:bg-secondary"
+          >
+            <Icon as={ArrowLeft} size={20} className="text-foreground" />
+          </TouchableOpacity>
+          <Text className="text-xl font-bold tracking-tight text-foreground">
+            {activeTab === 'followers' ? 'Followers' : 'Following'}
+          </Text>
         </View>
-        
+
         {/* Tabs */}
-        <View className="flex-row px-4 pb-2">
+        <View className="mx-4 mb-3 flex-row rounded-xl border border-border bg-secondary p-1">
           <TouchableOpacity
             onPress={() => setActiveTab('followers')}
-            className={`flex-1 items-center pb-3 border-b-2 ${
-              activeTab === 'followers' ? 'border-purple-600' : 'border-transparent'
+            className={`flex-1 items-center rounded-lg py-2.5 ${
+              activeTab === 'followers' ? 'border border-border bg-card shadow-soft' : ''
             }`}
           >
-            <Text className={`font-semibold ${
-              activeTab === 'followers' ? 'text-purple-600' : 'text-muted-foreground'
-            }`}>
+            <Text
+              className={`text-sm font-semibold ${
+                activeTab === 'followers' ? 'text-foreground' : 'text-muted-foreground'
+              }`}
+            >
               Followers ({followers.length})
             </Text>
           </TouchableOpacity>
-          
+
           <TouchableOpacity
             onPress={() => setActiveTab('following')}
-            className={`flex-1 items-center pb-3 border-b-2 ${
-              activeTab === 'following' ? 'border-purple-600' : 'border-transparent'
+            className={`flex-1 items-center rounded-lg py-2.5 ${
+              activeTab === 'following' ? 'border border-border bg-card shadow-soft' : ''
             }`}
           >
-            <Text className={`font-semibold ${
-              activeTab === 'following' ? 'text-purple-600' : 'text-muted-foreground'
-            }`}>
+            <Text
+              className={`text-sm font-semibold ${
+                activeTab === 'following' ? 'text-foreground' : 'text-muted-foreground'
+              }`}
+            >
               Following ({following.length})
             </Text>
           </TouchableOpacity>
         </View>
-        
+
         {/* Search Bar */}
-        <View className="px-4 pb-3">
-          <View className="flex-row items-center gap-2 rounded-full bg-gray-100 dark:bg-gray-800 px-4 py-2">
-            <Icon as={Search} size={20} className="text-muted-foreground" />
+        <View className="px-4 pb-4">
+          <View className="flex-row items-center gap-2 rounded-xl border border-border bg-secondary px-4 py-1">
+            <Icon as={Search} size={18} className="text-muted-foreground" />
             <TextInput
               value={searchQuery}
               onChangeText={setSearchQuery}
               placeholder={`Search ${activeTab}...`}
               placeholderTextColor="#727285"
-              className="flex-1 text-foreground"
+              className="flex-1 py-2.5 text-sm text-foreground"
             />
             {searchQuery.length > 0 && (
-              <TouchableOpacity onPress={() => setSearchQuery('')}>
-                <Icon as={X} size={20} className="text-muted-foreground" />
+              <TouchableOpacity onPress={() => setSearchQuery('')} hitSlop={12}>
+                <Icon as={X} size={18} className="text-muted-foreground" />
               </TouchableOpacity>
             )}
           </View>
         </View>
       </View>
-      
+
       {/* Users List */}
       {isLoading ? (
         <View className="flex-1 items-center justify-center">
@@ -187,11 +188,18 @@ export default function FollowsScreen() {
         </View>
       ) : filteredUsers.length === 0 ? (
         <View className="flex-1 items-center justify-center px-8">
-          <Text className="text-center text-lg text-muted-foreground">
-            {searchQuery.trim() 
-              ? `No ${activeTab} found matching "${searchQuery}"`
-              : `No ${activeTab} yet`
-            }
+          <View className="h-16 w-16 items-center justify-center rounded-full bg-accent">
+            <Icon as={Search} size={28} className="text-primary" strokeWidth={1.8} />
+          </View>
+          <Text className="mt-4 text-center text-base font-semibold text-foreground">
+            {searchQuery.trim() ? 'No results found' : `No ${activeTab} yet`}
+          </Text>
+          <Text className="mt-1 max-w-xs text-center text-sm leading-5 text-muted-foreground">
+            {searchQuery.trim()
+              ? `Nothing matched "${searchQuery}"`
+              : activeTab === 'followers'
+              ? 'When people follow you, they will appear here.'
+              : 'When you follow people, they will appear here.'}
           </Text>
         </View>
       ) : (
@@ -200,7 +208,7 @@ export default function FollowsScreen() {
           renderItem={renderUserItem}
           keyExtractor={(item) => item.id}
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 20 }}
+          contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 16, paddingBottom: 24 }}
         />
       )}
     </View>

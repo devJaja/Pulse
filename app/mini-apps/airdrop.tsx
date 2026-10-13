@@ -95,125 +95,123 @@ export default function AirdropScreen() {
     <View className="flex-1 bg-background">
       <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
         {/* Header */}
-        <View className="bg-[#0e100f] px-4 pb-8 pt-12">
+        <View className="border-b border-border bg-card px-4 pb-5 pt-12">
           <View className="flex-row items-center gap-3">
-            <TouchableOpacity onPress={() => router.back()}>
-              <Icon as={ArrowLeft} size={24} className="text-white" />
+            <TouchableOpacity
+              onPress={() => router.back()}
+              className="h-10 w-10 items-center justify-center rounded-full bg-secondary active:opacity-70"
+            >
+              <Icon as={ArrowLeft} size={20} className="text-foreground" />
             </TouchableOpacity>
-            <Text className="text-2xl font-bold text-white">Daily Airdrop</Text>
-          </View>
-
-          <View className="mt-6 items-center">
-            <View className="h-20 w-20 items-center justify-center rounded-full bg-white/20">
-              <Icon as={Gift} size={40} className="text-white" />
+            <View className="flex-1">
+              <Text className="text-2xl font-bold">Daily Airdrop</Text>
+              <Text className="mt-0.5 text-sm text-muted-foreground">
+                Claim free MON every 24 hours
+              </Text>
             </View>
-            <Text className="mt-3 text-center text-sm text-white/90">
-              Claim free MON every 24 hours
-            </Text>
           </View>
         </View>
 
-        {/* Stats */}
-        <View className="mx-4 mt-6 flex-row gap-3">
-          <View className="flex-1 rounded-xl bg-purple-50 dark:bg-purple-950 p-4">
-            <View className="flex-row items-center gap-2">
-              <Icon as={Sparkles} size={16} className="text-purple-600" />
-              <Text className="text-sm text-purple-700 dark:text-purple-300">Total Claimed</Text>
+        {/* Claim Card */}
+        <View className="mx-4 mt-5 overflow-hidden rounded-2xl bg-primary p-6 shadow-glow">
+          <View className="items-center">
+            <View className="h-16 w-16 items-center justify-center rounded-2xl bg-white/15">
+              <Icon as={Gift} size={32} className="text-white" />
             </View>
-            <Text className="mt-1 text-2xl font-bold text-purple-700 dark:text-purple-300">
+            <Text className="mt-4 text-sm text-white/80">Available to Claim</Text>
+            <Text className="mt-1 text-5xl font-bold text-white">
+              {canClaim ? AIRDROP_AMOUNT : '0'} MON
+            </Text>
+
+            {!canClaim && timeUntilNext && (
+              <View className="mt-4 flex-row items-center gap-2 rounded-full bg-white/15 px-4 py-2">
+                <Icon as={Clock} size={16} className="text-white" />
+                <Text className="text-sm text-white">Next claim in {timeUntilNext}</Text>
+              </View>
+            )}
+
+            {canClaim && (
+              <View className="mt-4 flex-row items-center gap-2 rounded-full bg-success px-4 py-2">
+                <Icon as={CheckCircle} size={16} className="text-white" />
+                <Text className="text-sm font-semibold text-white">Ready to Claim!</Text>
+              </View>
+            )}
+          </View>
+
+          <TouchableOpacity
+            onPress={handleClaim}
+            disabled={!canClaim || isClaiming}
+            className={`mt-6 items-center rounded-xl py-4 ${
+              !canClaim || isClaiming ? 'bg-white/15' : 'bg-white'
+            }`}
+          >
+            {isClaiming ? (
+              <ActivityIndicator color="#6e54ff" />
+            ) : (
+              <Text className={`font-semibold ${!canClaim ? 'text-white/60' : 'text-purple-600'}`}>
+                {canClaim ? '🎁 Claim Airdrop' : 'Come Back Later'}
+              </Text>
+            )}
+          </TouchableOpacity>
+        </View>
+
+        {/* Stats */}
+        <View className="mx-4 mt-4 flex-row gap-3">
+          <View className="flex-1 rounded-2xl border border-border bg-card p-4 shadow-soft">
+            <View className="flex-row items-center gap-2">
+              <Icon as={Sparkles} size={16} className="text-purple-600 dark:text-purple-300" />
+              <Text className="text-sm text-muted-foreground">Total Claimed</Text>
+            </View>
+            <Text className="mt-1.5 text-xl font-bold text-purple-600 dark:text-purple-300">
               {totalClaimed.toFixed(2)} MON
             </Text>
           </View>
-          <View className="flex-1 rounded-xl bg-blue-50 dark:bg-blue-950 p-4">
+          <View className="flex-1 rounded-2xl border border-border bg-card p-4 shadow-soft">
             <View className="flex-row items-center gap-2">
-              <Icon as={CheckCircle} size={16} className="text-blue-600" />
-              <Text className="text-sm text-blue-700 dark:text-blue-300">Status</Text>
+              <Icon as={CheckCircle} size={16} className="text-blue-600 dark:text-blue-300" />
+              <Text className="text-sm text-muted-foreground">Status</Text>
             </View>
-            <Text className="mt-1 text-lg font-bold text-blue-700 dark:text-blue-300">
+            <Text className="mt-1.5 text-xl font-bold text-blue-600 dark:text-blue-300">
               {canClaim ? 'Ready' : 'Claimed'}
             </Text>
           </View>
         </View>
 
-        {/* Claim Card */}
-        <View className="mx-4 mt-6">
-          <View className="overflow-hidden rounded-2xl bg-gradient-to-br from-[#6e54ff] to-[#8270ff]">
-            <View className="p-6">
-              <View className="items-center">
-                <Text className="text-sm text-white/80">Available to Claim</Text>
-                <Text className="mt-2 text-5xl font-bold text-white">
-                  {canClaim ? AIRDROP_AMOUNT : '0'} MON
-                </Text>
-                
-                {!canClaim && timeUntilNext && (
-                  <View className="mt-4 flex-row items-center gap-2 rounded-full bg-white/20 px-4 py-2">
-                    <Icon as={Clock} size={16} className="text-white" />
-                    <Text className="text-sm text-white">Next claim in {timeUntilNext}</Text>
-                  </View>
-                )}
-
-                {canClaim && (
-                  <View className="mt-4 flex-row items-center gap-2 rounded-full bg-success/100 px-4 py-2">
-                    <Icon as={CheckCircle} size={16} className="text-white" />
-                    <Text className="text-sm font-semibold text-white">Ready to Claim!</Text>
-                  </View>
-                )}
-              </View>
-
-              <TouchableOpacity
-                onPress={handleClaim}
-                disabled={!canClaim || isClaiming}
-                className={`mt-6 items-center rounded-xl py-4 ${
-                  !canClaim || isClaiming ? 'bg-white/20' : 'bg-white'
-                }`}
-              >
-                {isClaiming ? (
-                  <ActivityIndicator color="#6e54ff" />
-                ) : (
-                  <Text className={`font-semibold ${!canClaim ? 'text-white/60' : 'text-purple-600'}`}>
-                    {canClaim ? '🎁 Claim Airdrop' : 'Come Back Later'}
-                  </Text>
-                )}
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-
         {/* How it Works */}
-        <View className="mx-4 mt-6 rounded-xl bg-card p-4">
+        <View className="mx-4 mt-5 rounded-2xl border border-border bg-card p-5 shadow-soft">
           <Text className="font-bold">How it Works</Text>
-          <View className="mt-3 gap-3">
+          <View className="mt-4 gap-4">
             <View className="flex-row gap-3">
-              <View className="h-8 w-8 items-center justify-center rounded-full bg-purple-100 dark:bg-purple-900">
-                <Text className="font-bold text-purple-600 dark:text-purple-300">1</Text>
+              <View className="h-8 w-8 items-center justify-center rounded-full bg-purple-100 dark:bg-purple-500/15">
+                <Text className="text-sm font-bold text-purple-600 dark:text-purple-300">1</Text>
               </View>
               <View className="flex-1">
                 <Text className="font-semibold">Claim Daily</Text>
-                <Text className="text-sm text-muted-foreground">
+                <Text className="mt-0.5 text-sm text-muted-foreground">
                   Come back every 24 hours to claim your free MON
                 </Text>
               </View>
             </View>
 
             <View className="flex-row gap-3">
-              <View className="h-8 w-8 items-center justify-center rounded-full bg-purple-100 dark:bg-purple-900">
-                <Text className="font-bold text-purple-600 dark:text-purple-300">2</Text>
+              <View className="h-8 w-8 items-center justify-center rounded-full bg-purple-100 dark:bg-purple-500/15">
+                <Text className="text-sm font-bold text-purple-600 dark:text-purple-300">2</Text>
               </View>
               <View className="flex-1">
                 <Text className="font-semibold">Instant Credit</Text>
-                <Text className="text-sm text-muted-foreground">
+                <Text className="mt-0.5 text-sm text-muted-foreground">
                   MON is instantly added to your wallet
                 </Text>
               </View>
             </View>
 
             <View className="flex-row gap-3">
-              <View className="h-8 w-8 items-center justify-center rounded-full bg-purple-100 dark:bg-purple-900">
-                <Text className="font-bold text-purple-600 dark:text-purple-300">3</Text>
+              <View className="h-8 w-8 items-center justify-center rounded-full bg-purple-100 dark:bg-purple-500/15">
+                <Text className="text-sm font-bold text-purple-600 dark:text-purple-300">3</Text>
               </View>
               <View className="flex-1">
                 <Text className="font-semibold">No Limits</Text>
-                <Text className="text-sm text-muted-foreground">
+                <Text className="mt-0.5 text-sm text-muted-foreground">
                   Claim every day and build your balance
                 </Text>
               </View>
@@ -222,12 +220,12 @@ export default function AirdropScreen() {
         </View>
 
         {/* Streak Bonus (Coming Soon) */}
-        <View className="mx-4 mt-6 rounded-xl border-2 border-dashed border-purple-300 bg-purple-50 dark:bg-purple-950 p-4">
+        <View className="mx-4 mt-5 rounded-2xl border border-dashed border-purple-300 bg-purple-50 p-4 dark:border-purple-500/30 dark:bg-purple-500/10">
           <View className="flex-row items-center gap-2">
-            <Icon as={Sparkles} size={20} className="text-purple-600" />
+            <Icon as={Sparkles} size={20} className="text-purple-600 dark:text-purple-300" />
             <Text className="font-bold text-purple-700 dark:text-purple-300">Coming Soon</Text>
           </View>
-          <Text className="mt-2 text-sm text-purple-600 dark:text-purple-400">
+          <Text className="mt-2 text-sm text-purple-600 dark:text-purple-300/80">
             Streak bonuses! Claim daily for 7 days straight to earn bonus rewards 🔥
           </Text>
         </View>

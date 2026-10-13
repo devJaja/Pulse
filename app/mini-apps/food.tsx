@@ -94,61 +94,74 @@ export default function FoodOrderingScreen() {
     <View className="flex-1 bg-background">
       <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
         {/* Header */}
-        <View className="bg-orange-600 px-4 pb-8 pt-12">
-          <View className="flex-row items-center justify-between">
-            <View className="flex-row items-center gap-3">
-              <TouchableOpacity onPress={() => router.back()}>
-                <Icon as={ArrowLeft} size={24} className="text-white" />
-              </TouchableOpacity>
-              <Text className="text-2xl font-bold text-white">Food Delivery</Text>
+        <View className="border-b border-border bg-card px-4 pb-5 pt-12">
+          <View className="flex-row items-center gap-3">
+            <TouchableOpacity
+              onPress={() => router.back()}
+              className="h-10 w-10 items-center justify-center rounded-full bg-secondary active:opacity-70"
+            >
+              <Icon as={ArrowLeft} size={20} className="text-foreground" />
+            </TouchableOpacity>
+            <View className="flex-1">
+              <Text className="text-2xl font-bold">Food Delivery</Text>
+              <Text className="mt-0.5 text-sm text-muted-foreground">
+                Order food and pay with MON
+              </Text>
             </View>
-            <TouchableOpacity onPress={() => setShowCart(true)} className="relative">
-              <Icon as={ShoppingCart} size={24} className="text-white" />
+            <TouchableOpacity
+              onPress={() => setShowCart(true)}
+              className="relative h-10 w-10 items-center justify-center rounded-full bg-secondary active:opacity-70"
+            >
+              <Icon as={ShoppingCart} size={20} className="text-foreground" />
               {totalItems > 0 && (
-                <View className="absolute -right-2 -top-2 h-5 w-5 items-center justify-center rounded-full bg-red-500">
-                  <Text className="text-xs font-bold text-white">{totalItems}</Text>
+                <View className="absolute -right-1 -top-1 h-5 min-w-[20px] items-center justify-center rounded-full bg-orange-500 px-1">
+                  <Text className="text-2xs font-bold text-white">{totalItems}</Text>
                 </View>
               )}
             </TouchableOpacity>
           </View>
+        </View>
 
-          <View className="mt-6 items-center">
-            <View className="h-20 w-20 items-center justify-center rounded-full bg-white/20">
-              <Icon as={UtensilsCrossed} size={40} className="text-white" />
-            </View>
-            <Text className="mt-3 text-center text-sm text-white/90">
-              Order delicious food and pay with MON
+        {/* Hero */}
+        <View className="mx-4 mt-5 flex-row items-center gap-3 rounded-2xl bg-orange-500 p-5 shadow-soft">
+          <View className="h-14 w-14 items-center justify-center rounded-2xl bg-white/20">
+            <Icon as={UtensilsCrossed} size={28} className="text-white" />
+          </View>
+          <View className="flex-1">
+            <Text className="font-bold text-white">Hungry?</Text>
+            <Text className="mt-0.5 text-sm text-white/80">
+              Fresh meals delivered, paid in MON
             </Text>
           </View>
+        </View>
 
-          {/* Search Bar */}
-          <View className="mt-6 flex-row items-center gap-2 rounded-2xl bg-white px-4 py-3">
-            <Icon as={Search} size={20} className="text-gray-400" />
-            <TextInput
-              value={searchQuery}
-              onChangeText={setSearchQuery}
-              placeholder="Search for food..."
-              className="flex-1 text-base text-foreground"
-              placeholderTextColor="#727285"
-            />
-          </View>
+        {/* Search Bar */}
+        <View className="mx-4 mt-4 flex-row items-center gap-2 rounded-xl border border-border bg-card px-4 py-3 shadow-soft">
+          <Icon as={Search} size={20} className="text-muted-foreground" />
+          <TextInput
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+            placeholder="Search for food..."
+            className="flex-1 text-base text-foreground"
+            placeholderTextColor="#727285"
+          />
         </View>
 
         {/* Categories */}
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
-          className="mt-6 px-4"
-          contentContainerStyle={{ gap: 8 }}
+          className="mt-5"
+          contentContainerStyle={{ gap: 8, paddingHorizontal: 16 }}
         >
           {categories.map((category) => (
             <TouchableOpacity
               key={category}
               onPress={() => setSelectedCategory(category)}
-              className={`rounded-full px-6 py-2 ${
+              className={`rounded-full border px-5 py-2 ${
                 selectedCategory === category
-                  ? 'bg-orange-600'
-                  : 'bg-card'
+                  ? 'border-orange-500 bg-orange-500'
+                  : 'border-border bg-card'
               }`}
             >
               <Text
@@ -169,30 +182,30 @@ export default function FoodOrderingScreen() {
           <Text className="text-xl font-bold">Menu</Text>
           <View className="mt-4 gap-3">
             {filteredItems.map((item) => (
-              <View key={item.id} className="overflow-hidden rounded-2xl bg-card">
-                <View className="flex-row gap-4 p-4">
-                  <View className="h-20 w-20 items-center justify-center rounded-xl bg-orange-100">
+              <View key={item.id} className="rounded-2xl border border-border bg-card p-4 shadow-soft">
+                <View className="flex-row gap-4">
+                  <View className="h-20 w-20 items-center justify-center rounded-xl border border-orange-100 bg-orange-50 dark:border-orange-500/20 dark:bg-orange-500/10">
                     <Text className="text-4xl">{item.image}</Text>
                   </View>
                   <View className="flex-1">
                     <Text className="text-lg font-bold">{item.name}</Text>
                     <Text className="mt-1 text-sm text-muted-foreground">{item.description}</Text>
                     <View className="mt-2 flex-row items-center justify-between">
-                      <Text className="text-lg font-bold text-orange-600">
+                      <Text className="text-lg font-bold text-orange-600 dark:text-orange-400">
                         {item.price.toFixed(3)} MON
                       </Text>
                       {cart[item.id] ? (
                         <View className="flex-row items-center gap-2">
                           <TouchableOpacity
                             onPress={() => removeFromCart(item.id)}
-                            className="h-8 w-8 items-center justify-center rounded-full bg-orange-100"
+                            className="h-8 w-8 items-center justify-center rounded-full bg-orange-100 active:opacity-70 dark:bg-orange-500/15"
                           >
-                            <Icon as={Minus} size={16} className="text-orange-600" />
+                            <Icon as={Minus} size={16} className="text-orange-600 dark:text-orange-400" />
                           </TouchableOpacity>
                           <Text className="w-8 text-center font-bold">{cart[item.id]}</Text>
                           <TouchableOpacity
                             onPress={() => addToCart(item.id)}
-                            className="h-8 w-8 items-center justify-center rounded-full bg-orange-600"
+                            className="h-8 w-8 items-center justify-center rounded-full bg-orange-500 active:bg-orange-600"
                           >
                             <Icon as={Plus} size={16} className="text-white" />
                           </TouchableOpacity>
@@ -200,7 +213,7 @@ export default function FoodOrderingScreen() {
                       ) : (
                         <TouchableOpacity
                           onPress={() => addToCart(item.id)}
-                          className="rounded-full bg-orange-600 px-4 py-2"
+                          className="rounded-full bg-orange-500 px-4 py-2 active:bg-orange-600"
                         >
                           <Text className="font-semibold text-white">Add</Text>
                         </TouchableOpacity>
@@ -221,15 +234,15 @@ export default function FoodOrderingScreen() {
         animationType="slide"
         onRequestClose={() => setShowCart(false)}
       >
-        <View className="flex-1 justify-end bg-black/50">
-          <View className="max-h-[80%] rounded-t-3xl bg-background pb-8">
-            <View className="items-center py-4">
-              <View className="h-1 w-12 rounded-full bg-gray-300" />
+        <View className="flex-1 justify-end bg-black/60">
+          <View className="max-h-[80%] rounded-t-3xl border-t border-border bg-card pb-8 pt-4">
+            <View className="items-center">
+              <View className="h-1 w-12 rounded-full bg-border" />
             </View>
-            
-            <View className="px-6">
+
+            <View className="px-6 pt-4">
               <Text className="text-2xl font-bold">Your Order</Text>
-              
+
               {cartItems.length === 0 ? (
                 <View className="items-center py-10">
                   <Text className="text-muted-foreground">Your cart is empty</Text>
@@ -237,10 +250,13 @@ export default function FoodOrderingScreen() {
               ) : (
                 <ScrollView className="mt-4 max-h-64">
                   {cartItems.map((item) => (
-                    <View key={item!.id} className="mb-3 flex-row items-center justify-between">
+                    <View
+                      key={item!.id}
+                      className="mb-3 flex-row items-center justify-between rounded-xl border border-border bg-background p-3"
+                    >
                       <View className="flex-1">
                         <Text className="font-semibold">{item!.name}</Text>
-                        <Text className="text-sm text-muted-foreground">
+                        <Text className="mt-0.5 text-sm text-muted-foreground">
                           {item!.quantity} x {item!.price.toFixed(3)} MON
                         </Text>
                       </View>
@@ -255,8 +271,8 @@ export default function FoodOrderingScreen() {
               {/* Delivery Address */}
               <View className="mt-4">
                 <Text className="mb-2 font-semibold">Delivery Address</Text>
-                <View className="flex-row items-center gap-2 rounded-xl bg-card px-4 py-3">
-                  <Icon as={MapPin} size={20} className="text-orange-600" />
+                <View className="flex-row items-center gap-2 rounded-xl border border-input bg-background px-4 py-3">
+                  <Icon as={MapPin} size={20} className="text-orange-500" />
                   <TextInput
                     value={deliveryAddress}
                     onChangeText={setDeliveryAddress}
@@ -268,18 +284,18 @@ export default function FoodOrderingScreen() {
               </View>
 
               {/* Delivery Time */}
-              <View className="mt-4 flex-row items-center gap-2 rounded-xl bg-orange-50 dark:bg-orange-950 px-4 py-3">
-                <Icon as={Clock} size={20} className="text-orange-600" />
+              <View className="mt-4 flex-row items-center gap-2 rounded-xl border border-orange-200 bg-orange-50 px-4 py-3 dark:border-orange-500/30 dark:bg-orange-500/10">
+                <Icon as={Clock} size={20} className="text-orange-600 dark:text-orange-400" />
                 <Text className="text-sm text-orange-700 dark:text-orange-300">
                   Estimated delivery: 30-45 minutes
                 </Text>
               </View>
 
               {/* Total */}
-              <View className="mt-4 rounded-xl bg-card p-4">
+              <View className="mt-4 rounded-xl border border-border bg-background p-4">
                 <View className="flex-row items-center justify-between">
                   <Text className="text-lg font-semibold">Total</Text>
-                  <Text className="text-2xl font-bold text-orange-600">
+                  <Text className="text-2xl font-bold text-orange-600 dark:text-orange-400">
                     {totalPrice.toFixed(3)} MON
                   </Text>
                 </View>
@@ -292,7 +308,7 @@ export default function FoodOrderingScreen() {
               <View className="mt-4 flex-row gap-3">
                 <TouchableOpacity
                   onPress={() => setShowCart(false)}
-                  className="flex-1 items-center rounded-xl bg-gray-200 dark:bg-gray-800 py-4"
+                  className="flex-1 items-center rounded-xl border border-border bg-secondary py-4 active:opacity-70"
                 >
                   <Text className="font-semibold">Continue Shopping</Text>
                 </TouchableOpacity>
@@ -300,13 +316,15 @@ export default function FoodOrderingScreen() {
                   onPress={handlePlaceOrder}
                   disabled={isOrdering || cartItems.length === 0}
                   className={`flex-1 items-center rounded-xl py-4 ${
-                    isOrdering || cartItems.length === 0 ? 'bg-gray-300' : 'bg-orange-600'
+                    cartItems.length === 0 ? 'bg-muted' : 'bg-orange-500 active:bg-orange-600'
                   }`}
                 >
                   {isOrdering ? (
                     <ActivityIndicator color="#ffffff" />
                   ) : (
-                    <Text className="font-semibold text-white">Place Order</Text>
+                    <Text className={`font-semibold ${cartItems.length === 0 ? 'text-muted-foreground' : 'text-white'}`}>
+                      Place Order
+                    </Text>
                   )}
                 </TouchableOpacity>
               </View>

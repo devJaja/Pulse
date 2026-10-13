@@ -102,63 +102,78 @@ export default function DiceGameScreen() {
     <View className="flex-1 bg-background">
       <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
         {/* Header */}
-        <View className="bg-success px-4 pb-8 pt-12">
+        <View className="border-b border-border bg-card px-4 pb-5 pt-12">
           <View className="flex-row items-center gap-3">
-            <TouchableOpacity onPress={() => router.back()}>
-              <Icon as={ArrowLeft} size={24} className="text-white" />
+            <TouchableOpacity
+              onPress={() => router.back()}
+              className="h-10 w-10 items-center justify-center rounded-full bg-secondary active:opacity-70"
+            >
+              <Icon as={ArrowLeft} size={20} className="text-foreground" />
             </TouchableOpacity>
-            <Text className="text-2xl font-bold text-white">Dice Game</Text>
-          </View>
-
-          <View className="mt-6 items-center">
-            <Animated.View style={{ transform: [{ rotate: spin }] }}>
-              <View className="h-20 w-20 items-center justify-center rounded-2xl bg-white/20">
-                <Icon as={Dices} size={40} className="text-white" />
-              </View>
-            </Animated.View>
-            <Text className="mt-3 text-center text-sm text-white/90">
-              Roll the dice and win MON!
-            </Text>
+            <View className="flex-1">
+              <Text className="text-2xl font-bold">Dice Game</Text>
+              <Text className="mt-0.5 text-sm text-muted-foreground">
+                Roll the dice and win MON
+              </Text>
+            </View>
           </View>
         </View>
 
+        {/* Hero */}
+        <View className="mx-4 mt-5 items-center rounded-2xl bg-success p-6 shadow-soft">
+          <Animated.View style={{ transform: [{ rotate: spin }] }}>
+            <View className="h-20 w-20 items-center justify-center rounded-2xl bg-white/20">
+              <Icon as={Dices} size={40} className="text-white" />
+            </View>
+          </Animated.View>
+          <Text className="mt-3 text-center text-sm text-white/80">
+            Roll the dice and win MON!
+          </Text>
+        </View>
+
         {/* Stats */}
-        <View className="mx-4 mt-6 flex-row gap-3">
-          <View className="flex-1 rounded-xl bg-success/10 p-4">
+        <View className="mx-4 mt-4 flex-row gap-3">
+          <View className="flex-1 rounded-2xl border border-border bg-card p-4 shadow-soft">
             <View className="flex-row items-center gap-2">
               <Icon as={TrendingUp} size={16} className="text-success" />
-              <Text className="text-sm text-success dark:text-success">Wins</Text>
+              <Text className="text-sm text-muted-foreground">Wins</Text>
             </View>
-            <Text className="mt-1 text-2xl font-bold text-success dark:text-success">{totalWins}</Text>
+            <Text className="mt-1.5 text-2xl font-bold text-success">{totalWins}</Text>
           </View>
-          <View className="flex-1 rounded-xl bg-red-50 dark:bg-red-950 p-4">
+          <View className="flex-1 rounded-2xl border border-border bg-card p-4 shadow-soft">
             <View className="flex-row items-center gap-2">
-              <Icon as={TrendingDown} size={16} className="text-red-600" />
-              <Text className="text-sm text-red-700 dark:text-red-300">Losses</Text>
+              <Icon as={TrendingDown} size={16} className="text-red-600 dark:text-red-400" />
+              <Text className="text-sm text-muted-foreground">Losses</Text>
             </View>
-            <Text className="mt-1 text-2xl font-bold text-red-700 dark:text-red-300">{totalLosses}</Text>
+            <Text className="mt-1.5 text-2xl font-bold text-red-600 dark:text-red-400">{totalLosses}</Text>
           </View>
         </View>
 
         {/* Last Roll Result */}
         {lastRoll !== null && (
-          <View className={`mx-4 mt-4 rounded-xl p-4 ${lastResult === 'win' ? 'bg-success/10' : 'bg-red-50 dark:bg-red-950'}`}>
-            <Text className={`text-center text-sm ${lastResult === 'win' ? 'text-success dark:text-success' : 'text-red-700 dark:text-red-300'}`}>
+          <View
+            className={`mx-4 mt-4 rounded-2xl border p-5 ${
+              lastResult === 'win'
+                ? 'border-success/20 bg-success/10'
+                : 'border-red-200 bg-red-50 dark:border-red-900/40 dark:bg-red-950/30'
+            }`}
+          >
+            <Text className={`text-center text-sm ${lastResult === 'win' ? 'text-success' : 'text-red-600 dark:text-red-400'}`}>
               Last Roll
             </Text>
-            <Text className={`text-center text-4xl font-bold ${lastResult === 'win' ? 'text-success dark:text-success' : 'text-red-700 dark:text-red-300'}`}>
+            <Text className={`text-center text-4xl font-bold ${lastResult === 'win' ? 'text-success' : 'text-red-600 dark:text-red-400'}`}>
               {lastRoll}
             </Text>
-            <Text className={`text-center text-sm ${lastResult === 'win' ? 'text-success dark:text-success' : 'text-red-700 dark:text-red-300'}`}>
+            <Text className={`text-center text-sm ${lastResult === 'win' ? 'text-success' : 'text-red-600 dark:text-red-400'}`}>
               {lastResult === 'win' ? '🎉 You Won!' : '😢 You Lost'}
             </Text>
           </View>
         )}
 
         {/* Game Settings */}
-        <View className="mx-4 mt-6">
+        <View className="mx-4 mt-5">
           {/* Bet Amount */}
-          <View className="rounded-2xl bg-card p-4">
+          <View className="rounded-2xl border border-border bg-card p-4 shadow-soft">
             <Text className="text-sm text-muted-foreground">Bet Amount (MON)</Text>
             <TextInput
               value={betAmount}
@@ -179,8 +194,8 @@ export default function DiceGameScreen() {
             <View className="flex-row gap-3">
               <TouchableOpacity
                 onPress={() => setPrediction('over')}
-                className={`flex-1 items-center rounded-xl py-3 ${
-                  prediction === 'over' ? 'bg-success' : 'bg-card'
+                className={`flex-1 items-center rounded-xl border py-3 ${
+                  prediction === 'over' ? 'border-success bg-success' : 'border-border bg-card'
                 }`}
               >
                 <Text className={`font-semibold ${prediction === 'over' ? 'text-white' : 'text-foreground'}`}>
@@ -189,8 +204,8 @@ export default function DiceGameScreen() {
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => setPrediction('under')}
-                className={`flex-1 items-center rounded-xl py-3 ${
-                  prediction === 'under' ? 'bg-red-600' : 'bg-card'
+                className={`flex-1 items-center rounded-xl border py-3 ${
+                  prediction === 'under' ? 'border-red-600 bg-red-600' : 'border-border bg-card'
                 }`}
               >
                 <Text className={`font-semibold ${prediction === 'under' ? 'text-white' : 'text-foreground'}`}>
@@ -201,7 +216,7 @@ export default function DiceGameScreen() {
           </View>
 
           {/* Target Number */}
-          <View className="mt-4 rounded-2xl bg-card p-4">
+          <View className="mt-4 rounded-2xl border border-border bg-card p-4 shadow-soft">
             <Text className="text-sm text-muted-foreground">Target Number (1-99)</Text>
             <TextInput
               value={targetNumber}
@@ -214,14 +229,14 @@ export default function DiceGameScreen() {
           </View>
 
           {/* Multiplier */}
-          <View className="mt-4 rounded-xl bg-purple-50 dark:bg-purple-950 p-4">
+          <View className="mt-4 rounded-2xl border border-purple-200 bg-purple-50 p-4 dark:border-purple-500/30 dark:bg-purple-500/10">
             <Text className="text-center text-sm text-purple-700 dark:text-purple-300">
               Win Multiplier
             </Text>
             <Text className="text-center text-3xl font-bold text-purple-700 dark:text-purple-300">
               {calculateMultiplier()}x
             </Text>
-            <Text className="text-center text-xs text-purple-600 dark:text-purple-400">
+            <Text className="text-center text-xs text-purple-600 dark:text-purple-300/80">
               Potential win: {betAmount ? (parseFloat(betAmount) * parseFloat(calculateMultiplier())).toFixed(4) : '0'} MON
             </Text>
           </View>
@@ -231,13 +246,13 @@ export default function DiceGameScreen() {
             onPress={handleRoll}
             disabled={isRolling || !betAmount}
             className={`mt-6 items-center rounded-xl py-4 ${
-              isRolling || !betAmount ? 'bg-gray-300' : 'bg-success'
+              !betAmount ? 'bg-muted' : 'bg-success active:bg-success/90'
             }`}
           >
             {isRolling ? (
               <ActivityIndicator color="#ffffff" />
             ) : (
-              <Text className="font-semibold text-white">
+              <Text className={`font-semibold ${!betAmount ? 'text-muted-foreground' : 'text-white'}`}>
                 {betAmount ? '🎲 Roll Dice' : 'Enter Bet Amount'}
               </Text>
             )}
@@ -245,9 +260,9 @@ export default function DiceGameScreen() {
         </View>
 
         {/* How to Play */}
-        <View className="mx-4 mt-6 rounded-xl bg-card p-4">
+        <View className="mx-4 mt-5 rounded-2xl border border-border bg-card p-5 shadow-soft">
           <Text className="font-bold">How to Play</Text>
-          <Text className="mt-2 text-sm text-muted-foreground">
+          <Text className="mt-2 text-sm leading-5 text-muted-foreground">
             1. Enter your bet amount{'\n'}
             2. Choose Over or Under{'\n'}
             3. Set your target number{'\n'}

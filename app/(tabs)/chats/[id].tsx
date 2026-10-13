@@ -62,9 +62,13 @@ export default function ChatScreen() {
       keyboardVerticalOffset={0}
     >
       {/* Header */}
-      <View className="flex-row items-center gap-3 border-b border-border px-4 pb-4 pt-12">
-        <TouchableOpacity onPress={() => router.back()}>
-          <Icon as={ArrowLeft} size={24} className="text-foreground" />
+      <View className="flex-row items-center gap-3 border-b border-border bg-card px-4 pb-4 pt-12">
+        <TouchableOpacity
+          onPress={() => router.back()}
+          activeOpacity={0.8}
+          className="h-9 w-9 items-center justify-center rounded-full bg-secondary active:bg-accent"
+        >
+          <Icon as={ArrowLeft} size={20} className="text-foreground" />
         </TouchableOpacity>
         {otherParticipant?.avatar ? (
           <Image 
@@ -72,17 +76,17 @@ export default function ChatScreen() {
             className="h-10 w-10 rounded-full"
           />
         ) : (
-          <View className="h-10 w-10 items-center justify-center rounded-full bg-purple-200 dark:bg-purple-900">
-            <Text className="font-bold text-purple-600 dark:text-purple-300">
+          <View className="h-10 w-10 items-center justify-center rounded-full bg-accent">
+            <Text className="font-bold text-primary">
               {otherParticipant?.name?.charAt(0)?.toUpperCase() || otherParticipant?.username?.charAt(0)?.toUpperCase() || '?'}
             </Text>
           </View>
         )}
         <View className="flex-1">
-          <Text className="font-semibold">
+          <Text className="text-[15px] font-semibold text-foreground" numberOfLines={1}>
             {otherParticipant?.name || otherParticipant?.username || 'Chat'}
           </Text>
-          <Text className="text-sm text-muted-foreground">
+          <Text className="text-2xs text-muted-foreground" numberOfLines={1}>
             @{otherParticipant?.username || 'user'}
           </Text>
         </View>
@@ -95,7 +99,7 @@ export default function ChatScreen() {
         showsVerticalScrollIndicator={false}
         className="flex-1 px-4 py-4"
         refreshControl={
-          <RefreshControl refreshing={isLoading} onRefresh={refetch} />
+          <RefreshControl refreshing={isLoading} onRefresh={refetch} tintColor="#6e54ff" colors={['#6e54ff']} />
         }
       >
         {isLoading && messages.length === 0 ? (
@@ -114,42 +118,46 @@ export default function ChatScreen() {
               className={`mb-4 ${msg.isMine ? 'items-end' : 'items-start'}`}
             >
               {msg.type === 'payment' ? (
-                <View className="flex-row items-center gap-2">
+                <View className="flex-row items-end gap-2">
                   {!msg.isMine && (
                     otherParticipant?.avatar ? (
                       <Image 
                         source={{ uri: otherParticipant.avatar }} 
-                        className="h-10 w-10 rounded-full"
+                        className="h-8 w-8 rounded-full"
                       />
                     ) : (
-                      <View className="h-10 w-10 items-center justify-center rounded-full bg-purple-200 dark:bg-purple-900">
-                        <Text className="text-sm font-bold text-purple-600 dark:text-purple-300">
+                      <View className="h-8 w-8 items-center justify-center rounded-full bg-accent">
+                        <Text className="text-xs font-bold text-primary">
                           {otherParticipant?.name?.charAt(0)?.toUpperCase() || otherParticipant?.username?.charAt(0)?.toUpperCase() || '?'}
                         </Text>
                       </View>
                     )
                   )}
                   {msg.isPrivateTip ? (
-                    <View className="rounded-2xl bg-purple-100 p-4 dark:bg-purple-900/30">
+                    <View className="rounded-2xl rounded-bl-md border border-primary/20 bg-accent p-4 shadow-soft">
                       <View className="flex-row items-center gap-2">
-                        <Icon as={Lock} size={16} className="text-purple-600" />
-                        <Text className="font-semibold text-purple-600">
+                        <View className="h-6 w-6 items-center justify-center rounded-full bg-primary/15">
+                          <Icon as={Lock} size={14} className="text-primary" />
+                        </View>
+                        <Text className="font-semibold text-primary">
                           {msg.isMine ? 'Sent' : 'Received'} a private tip
                         </Text>
                       </View>
-                      <Text className="mt-1 text-xs text-muted-foreground">
+                      <Text className="mt-1.5 text-2xs text-muted-foreground">
                         Amount encrypted via FHE · {formatTime(msg.createdAt)}
                       </Text>
                     </View>
                   ) : (
-                    <View className="rounded-2xl bg-success/10 p-4">
+                    <View className="rounded-2xl rounded-bl-md border border-success/20 bg-success/10 p-4 shadow-soft">
                       <View className="flex-row items-center gap-2">
-                        <Icon as={DollarSign} size={16} className="text-success" />
+                        <View className="h-6 w-6 items-center justify-center rounded-full bg-success/15">
+                          <Icon as={DollarSign} size={14} className="text-success" />
+                        </View>
                         <Text className="font-semibold text-success">
                           {msg.isMine ? 'Sent' : 'Received'} {msg.paymentAmount} MON
                         </Text>
                       </View>
-                      <Text className="mt-1 text-xs text-muted-foreground">{formatTime(msg.createdAt)}</Text>
+                      <Text className="mt-1.5 text-2xs text-muted-foreground">{formatTime(msg.createdAt)}</Text>
                     </View>
                   )}
                 </View>
@@ -159,27 +167,33 @@ export default function ChatScreen() {
                     otherParticipant?.avatar ? (
                       <Image 
                         source={{ uri: otherParticipant.avatar }} 
-                        className="h-10 w-10 rounded-full"
+                        className="h-8 w-8 rounded-full"
                       />
                     ) : (
-                      <View className="h-10 w-10 items-center justify-center rounded-full bg-purple-200 dark:bg-purple-900">
-                        <Text className="text-sm font-bold text-purple-600 dark:text-purple-300">
+                      <View className="h-8 w-8 items-center justify-center rounded-full bg-accent">
+                        <Text className="text-xs font-bold text-primary">
                           {otherParticipant?.name?.charAt(0)?.toUpperCase() || otherParticipant?.username?.charAt(0)?.toUpperCase() || '?'}
                         </Text>
                       </View>
                     )
                   )}
                   <View
-                    className={`max-w-[75%] rounded-2xl px-4 py-3 ${
-                      msg.isMine ? 'bg-primary' : 'bg-card'
+                    className={`max-w-[78%] rounded-2xl px-4 py-2.5 shadow-soft ${
+                      msg.isMine
+                        ? 'rounded-br-md bg-primary'
+                        : 'rounded-bl-md border border-border bg-secondary'
                     }`}
                   >
-                    <Text className={msg.isMine ? 'text-primary-foreground' : 'text-foreground'}>
+                    <Text
+                      className={`text-[15px] leading-5 ${
+                        msg.isMine ? 'text-primary-foreground' : 'text-foreground'
+                      }`}
+                    >
                       {msg.content}
                     </Text>
                     <Text
-                      className={`mt-1 text-xs ${
-                        msg.isMine ? 'text-primary-foreground/60' : 'text-muted-foreground'
+                      className={`mt-1 text-2xs ${
+                        msg.isMine ? 'text-primary-foreground/70' : 'text-muted-foreground'
                       }`}
                     >
                       {formatTime(msg.createdAt)}
@@ -193,29 +207,40 @@ export default function ChatScreen() {
       </ScrollView>
 
       {/* Input */}
-      <View className="flex-row items-center gap-3 border-t border-border p-4">
-        <View className="flex-1 flex-row items-center gap-3 rounded-2xl bg-card px-4 py-3">
+      <View className="flex-row items-end gap-2 border-t border-border bg-background px-4 py-3">
+        <View className="flex-1 flex-row items-center gap-2 rounded-3xl border border-border bg-card px-4 py-2">
           <TextInput
             value={message}
             onChangeText={setMessage}
             placeholder="Type a message..."
             placeholderTextColor="#727285"
-            className="flex-1 text-base text-foreground"
+            className="flex-1 text-[15px] text-foreground"
             onSubmitEditing={handleSendMessage}
           />
-          <TouchableOpacity onPress={() => setShowTipModal(true)}>
-            <Icon as={DollarSign} size={20} className="text-purple-600" />
+          <TouchableOpacity
+            onPress={() => setShowTipModal(true)}
+            activeOpacity={0.8}
+            className="h-7 w-7 items-center justify-center rounded-full bg-success/10"
+          >
+            <Icon as={DollarSign} size={16} className="text-success" />
           </TouchableOpacity>
         </View>
         <TouchableOpacity 
           onPress={handleSendMessage}
           disabled={isSendingMessage || !message.trim()}
-          className="h-14 w-14 items-center justify-center rounded-2xl bg-primary"
+          activeOpacity={0.85}
+          className={`h-12 w-12 items-center justify-center rounded-full ${
+            message.trim() && !isSendingMessage ? 'bg-primary shadow-glow' : 'bg-secondary'
+          }`}
         >
           {isSendingMessage ? (
             <ActivityIndicator size="small" color="#6e54ff" />
           ) : (
-            <Icon as={Send} size={20} className="text-primary-foreground" />
+            <Icon
+              as={Send}
+              size={20}
+              className={message.trim() ? 'text-primary-foreground' : 'text-muted-foreground'}
+            />
           )}
         </TouchableOpacity>
       </View>
@@ -227,23 +252,28 @@ export default function ChatScreen() {
         animationType="slide"
         onRequestClose={() => setShowTipModal(false)}
       >
-        <View className="flex-1 items-center justify-center bg-black/50">
-          <View className="mx-4 w-full max-w-md rounded-3xl bg-background p-6">
+        <View className="flex-1 items-center justify-center bg-black/50 px-4">
+          <View className="w-full max-w-md rounded-3xl border border-border bg-card p-6 shadow-elevated">
             <View className="flex-row items-center justify-between">
-              <Text className="text-2xl font-bold">Send Tip</Text>
-              <TouchableOpacity onPress={() => setShowTipModal(false)}>
-                <Icon as={X} size={24} className="text-foreground" />
+              <Text className="text-2xl font-bold text-foreground">Send Tip</Text>
+              <TouchableOpacity
+                onPress={() => setShowTipModal(false)}
+                activeOpacity={0.8}
+                className="h-9 w-9 items-center justify-center rounded-full bg-secondary active:bg-accent"
+              >
+                <Icon as={X} size={18} className="text-foreground" />
               </TouchableOpacity>
             </View>
 
             {/* Amount */}
             <View className="mt-6">
-              <Text className="mb-2 text-sm text-muted-foreground">Amount (MON)</Text>
-              <View className="rounded-2xl bg-card p-4">
+              <Text className="mb-2 text-2xs font-semibold uppercase tracking-wide text-muted-foreground">Amount (MON)</Text>
+              <View className="rounded-2xl border border-border bg-background p-4">
                 <TextInput
                   value={tipAmount}
                   onChangeText={setTipAmount}
                   placeholder="0.00"
+                  placeholderTextColor="#727285"
                   keyboardType="decimal-pad"
                   className="text-2xl font-semibold text-foreground"
                 />
@@ -251,13 +281,15 @@ export default function ChatScreen() {
             </View>
 
             {/* Private tip toggle */}
-            <View className="mt-4 flex-row items-center justify-between rounded-2xl bg-card p-4">
+            <View className="mt-4 flex-row items-center justify-between rounded-2xl border border-border bg-background p-4">
               <View className="flex-1 pr-4">
                 <View className="flex-row items-center gap-2">
-                  <Icon as={Lock} size={16} className="text-purple-600" />
-                  <Text className="font-semibold">Private Tip</Text>
+                  <View className="h-6 w-6 items-center justify-center rounded-full bg-primary/15">
+                    <Icon as={Lock} size={14} className="text-primary" />
+                  </View>
+                  <Text className="font-semibold text-foreground">Private Tip</Text>
                 </View>
-                <Text className="mt-0.5 text-xs text-muted-foreground">
+                <Text className="mt-1 text-2xs text-muted-foreground">
                   Amount hidden on-chain via Encrypt FHE
                 </Text>
               </View>
@@ -269,9 +301,9 @@ export default function ChatScreen() {
             </View>
 
             {/* Sending to */}
-            <View className="mt-4 rounded-2xl bg-card p-4">
-              <Text className="text-sm text-muted-foreground">Sending to</Text>
-              <Text className="mt-1 text-xl font-bold">
+            <View className="mt-4 rounded-2xl border border-border bg-background p-4">
+              <Text className="text-2xs font-semibold uppercase tracking-wide text-muted-foreground">Sending to</Text>
+              <Text className="mt-1 text-xl font-bold text-foreground">
                 {otherParticipant?.name || otherParticipant?.username || 'User'}
               </Text>
               <Text className="text-sm text-muted-foreground">
@@ -283,21 +315,23 @@ export default function ChatScreen() {
             <View className="mt-6 flex-row gap-3">
               <TouchableOpacity
                 onPress={() => setShowTipModal(false)}
-                className="flex-1 items-center rounded-2xl border-2 border-purple-600 py-4"
+                activeOpacity={0.85}
+                className="flex-1 items-center rounded-xl border border-border bg-secondary py-3.5"
               >
-                <Text className="text-lg font-semibold text-purple-600">Cancel</Text>
+                <Text className="text-lg font-semibold text-foreground">Cancel</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={handleSendTip}
                 disabled={!tipAmount || parseFloat(tipAmount) <= 0 || isSendingTip || isSendingPrivateTip}
-                className={`flex-1 items-center rounded-2xl py-4 ${
-                  tipAmount && parseFloat(tipAmount) > 0 ? 'bg-primary' : 'bg-gray-300'
+                activeOpacity={0.85}
+                className={`flex-1 items-center rounded-xl py-3.5 ${
+                  tipAmount && parseFloat(tipAmount) > 0 ? 'bg-primary shadow-glow' : 'bg-muted'
                 }`}
               >
                 {(isSendingTip || isSendingPrivateTip) ? (
                   <ActivityIndicator size="small" color="#6e54ff" />
                 ) : (
-                  <Text className={`text-lg font-semibold ${tipAmount && parseFloat(tipAmount) > 0 ? 'text-primary-foreground' : 'text-gray-500'}`}>
+                  <Text className={`text-lg font-semibold ${tipAmount && parseFloat(tipAmount) > 0 ? 'text-primary-foreground' : 'text-muted-foreground'}`}>
                     {isPrivateTip ? 'Send Privately' : 'Send'}
                   </Text>
                 )}

@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { Separator } from '@/components/ui/separator';
 
 interface DividerProps {
   orientation?: 'horizontal' | 'vertical';
@@ -6,9 +6,5 @@ interface DividerProps {
 }
 
 export function Divider({ orientation = 'horizontal', className = '' }: DividerProps) {
-  if (orientation === 'vertical') {
-    return <View className={`w-px bg-border ${className}`} />;
-  }
-
-  return <View className={`h-px bg-border ${className}`} />;
+  return <Separator orientation={orientation} className={className} />;
 }

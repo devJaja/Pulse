@@ -158,8 +158,6 @@ export default function SwapScreen() {
         return;
       }
 
-      const swapResult = response.data || response;
-      
       // Show success message
       toast.success(`Swapped ${fromAmount} ${fromToken.symbol} for ${calculatedToAmount.toFixed(6)} ${toToken.symbol}`);
       setFromAmount('');
@@ -203,29 +201,41 @@ export default function SwapScreen() {
     <View className="flex-1 bg-background">
       <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
         {/* Header */}
-        <View className="bg-[#0e100f] px-4 pb-8 pt-12">
+        <View className="border-b border-border bg-card px-4 pb-5 pt-12">
           <View className="flex-row items-center gap-3">
-            <TouchableOpacity onPress={() => router.back()}>
-              <Icon as={ArrowLeft} size={24} className="text-white" />
+            <TouchableOpacity
+              onPress={() => router.back()}
+              className="h-10 w-10 items-center justify-center rounded-full bg-secondary active:opacity-70"
+            >
+              <Icon as={ArrowLeft} size={20} className="text-foreground" />
             </TouchableOpacity>
-            <Text className="text-2xl font-bold text-white">Token Swap</Text>
-          </View>
-
-          <View className="mt-6 items-center">
-            <View className="h-20 w-20 items-center justify-center rounded-full bg-white/20">
-              <Icon as={Coins} size={40} className="text-white" />
+            <View className="flex-1">
+              <Text className="text-2xl font-bold">Token Swap</Text>
+              <Text className="mt-0.5 text-sm text-muted-foreground">
+                Swap tokens instantly on Monad
+              </Text>
             </View>
-            <Text className="mt-3 text-center text-sm text-white/90">
-              Swap tokens instantly on Monad
-            </Text>
+            <TouchableOpacity
+              onPress={() => router.push('/mini-apps/swap-history')}
+              className="h-10 w-10 items-center justify-center rounded-full bg-secondary active:opacity-70"
+            >
+              <Icon as={History} size={20} className="text-foreground" />
+            </TouchableOpacity>
           </View>
         </View>
 
         {/* Swap Card */}
-        <View className="mx-4 mt-6">
+        <View className="mx-4 mt-5">
           {/* From Token */}
-          <View className="rounded-2xl bg-card p-4">
-            <Text className="text-sm text-muted-foreground">From</Text>
+          <View className="rounded-2xl border border-border bg-card p-4 shadow-soft">
+            <View className="flex-row items-center justify-between">
+              <Text className="text-sm text-muted-foreground">From</Text>
+              {fromToken.symbol === 'MON' && (
+                <Text className="text-sm text-muted-foreground">
+                  Balance: {balance.toFixed(4)} MON
+                </Text>
+              )}
+            </View>
             <View className="mt-2 flex-row items-center justify-between">
               <TextInput
                 value={fromAmount}
@@ -237,32 +247,26 @@ export default function SwapScreen() {
               />
               <TouchableOpacity
                 onPress={() => setShowFromModal(true)}
-                className={`ml-3 flex-row items-center gap-2 rounded-xl ${fromToken.color} px-4 py-2`}
+                className={`ml-3 flex-row items-center gap-2 rounded-xl ${fromToken.color} px-3.5 py-2`}
               >
-                <Text className="text-2xl">{fromToken.icon}</Text>
-                <Text className="font-semibold text-white">{fromToken.symbol}</Text>
+                <Text className="text-base font-semibold text-white">{fromToken.symbol}</Text>
                 <Icon as={ChevronDown} size={16} className="text-white" />
               </TouchableOpacity>
             </View>
-            {fromToken.symbol === 'MON' && (
-              <Text className="mt-2 text-sm text-muted-foreground">
-                Balance: {balance.toFixed(4)} MON
-              </Text>
-            )}
           </View>
 
           {/* Switch Button */}
-          <View className="my-4 items-center">
+          <View className="my-3 items-center">
             <TouchableOpacity
               onPress={switchTokens}
-              className="h-12 w-12 items-center justify-center rounded-full bg-primary"
+              className="h-12 w-12 items-center justify-center rounded-full border-4 border-background bg-primary shadow-soft active:bg-primary/90"
             >
-              <Icon as={ArrowDownUp} size={24} className="text-primary-foreground" />
+              <Icon as={ArrowDownUp} size={22} className="text-primary-foreground" />
             </TouchableOpacity>
           </View>
 
           {/* To Token */}
-          <View className="rounded-2xl bg-card p-4">
+          <View className="rounded-2xl border border-border bg-card p-4 shadow-soft">
             <Text className="text-sm text-muted-foreground">To (estimated)</Text>
             <View className="mt-2 flex-row items-center justify-between">
               <View className="flex-1 flex-row items-center gap-2">
@@ -274,47 +278,48 @@ export default function SwapScreen() {
               </View>
               <TouchableOpacity
                 onPress={() => setShowToModal(true)}
-                className={`ml-3 flex-row items-center gap-2 rounded-xl ${toToken.color} px-4 py-2`}
+                className={`ml-3 flex-row items-center gap-2 rounded-xl ${toToken.color} px-3.5 py-2`}
               >
-                <Text className="text-2xl">{toToken.icon}</Text>
-                <Text className="font-semibold text-white">{toToken.symbol}</Text>
+                <Text className="text-base font-semibold text-white">{toToken.symbol}</Text>
                 <Icon as={ChevronDown} size={16} className="text-white" />
               </TouchableOpacity>
             </View>
           </View>
 
           {/* Exchange Rate */}
-          <View className="mt-4 rounded-xl bg-purple-50 dark:bg-purple-950 p-4">
-            <View className="flex-row items-center justify-between">
-              <View className="flex-row items-center gap-2">
-                <Icon as={Info} size={16} className="text-purple-600" />
-                <Text className="text-sm text-purple-700 dark:text-purple-300">
-                  Rate: 1 {fromToken.symbol} ≈ {rate.toFixed(6)} {toToken.symbol}
-                </Text>
-              </View>
-              <TouchableOpacity onPress={() => refetchPrices()}>
-                <Icon as={RefreshCw} size={16} className="text-purple-600" />
-              </TouchableOpacity>
-            </View>
-            {parseFloat(priceImpact) > 0 && (
-              <Text className="mt-2 text-xs text-purple-600 dark:text-purple-400">
-                Price Impact: {parseFloat(priceImpact).toFixed(2)}%
+          <View className="mt-4 flex-row items-center justify-between rounded-xl border border-purple-200 bg-purple-50 px-4 py-3 dark:border-purple-500/30 dark:bg-purple-500/10">
+            <View className="flex-row items-center gap-2">
+              <Icon as={Info} size={16} className="text-purple-600 dark:text-purple-300" />
+              <Text className="text-sm text-purple-700 dark:text-purple-300">
+                Rate: 1 {fromToken.symbol} ≈ {rate.toFixed(6)} {toToken.symbol}
               </Text>
-            )}
+            </View>
+            <TouchableOpacity
+              onPress={() => refetchPrices()}
+              className="h-7 w-7 items-center justify-center rounded-full bg-white/60 active:opacity-70 dark:bg-white/10"
+            >
+              <Icon as={RefreshCw} size={14} className="text-purple-600 dark:text-purple-300" />
+            </TouchableOpacity>
           </View>
+
+          {parseFloat(priceImpact) > 0 && (
+            <Text className="mt-2 text-center text-xs text-muted-foreground">
+              Price Impact: {parseFloat(priceImpact).toFixed(2)}%
+            </Text>
+          )}
 
           {/* Swap Button */}
           <TouchableOpacity
             onPress={handleSwap}
             disabled={isSwapping || !fromAmount}
-            className={`mt-6 items-center rounded-xl py-4 ${
-              isSwapping || !fromAmount ? 'bg-gray-300' : 'bg-primary'
+            className={`mt-5 items-center rounded-xl py-4 ${
+              !fromAmount ? 'bg-muted' : 'bg-primary active:bg-primary/90'
             }`}
           >
             {isSwapping ? (
               <ActivityIndicator color="#ffffff" />
             ) : (
-              <Text className="font-semibold text-primary-foreground">
+              <Text className={`font-semibold ${!fromAmount ? 'text-muted-foreground' : 'text-primary-foreground'}`}>
                 {fromAmount ? 'Swap Tokens' : 'Enter Amount'}
               </Text>
             )}
@@ -329,10 +334,10 @@ export default function SwapScreen() {
           </View>
           <View className="mt-3 gap-2">
             {TOKENS.map((token) => (
-              <View key={token.symbol} className="flex-row items-center justify-between rounded-xl bg-card p-4">
+              <View key={token.symbol} className="flex-row items-center justify-between rounded-2xl border border-border bg-card p-4 shadow-soft">
                 <View className="flex-row items-center gap-3">
                   <View className={`h-10 w-10 items-center justify-center rounded-full ${token.color}`}>
-                    <Text className="text-xl text-white font-semibold">{token.icon}</Text>
+                    <Text className="text-sm font-semibold text-white">{token.icon}</Text>
                   </View>
                   <View>
                     <Text className="font-semibold">{token.symbol}</Text>
@@ -363,14 +368,14 @@ export default function SwapScreen() {
               <Text className="text-lg font-bold">Recent Swaps</Text>
               <TouchableOpacity onPress={() => router.push('/mini-apps/swap-history')}>
                 <View className="flex-row items-center gap-1">
-                  <Icon as={History} size={16} className="text-blue-600" />
-                  <Text className="text-sm font-semibold text-blue-600">View All</Text>
+                  <Text className="text-sm font-semibold text-primary">View All</Text>
+                  <Icon as={History} size={16} className="text-primary" />
                 </View>
               </TouchableOpacity>
             </View>
             <View className="mt-3 gap-2">
               {recentSwaps.map((swap) => (
-                <View key={swap.id} className="rounded-xl bg-card p-4">
+                <View key={swap.id} className="rounded-2xl border border-border bg-card p-4 shadow-soft">
                   <View className="flex-row items-center justify-between">
                     <View className="flex-1">
                       <View className="flex-row items-center gap-2">
@@ -386,7 +391,9 @@ export default function SwapScreen() {
                         {formatDistanceToNow(new Date(swap.createdAt), { addSuffix: true })}
                       </Text>
                     </View>
-                    <Text className="text-xs capitalize text-success">{swap.status}</Text>
+                    <View className="rounded-full bg-success/10 px-2.5 py-1">
+                      <Text className="text-xs font-medium capitalize text-success">{swap.status}</Text>
+                    </View>
                   </View>
                 </View>
               ))}
@@ -407,31 +414,33 @@ export default function SwapScreen() {
         <TouchableOpacity
           activeOpacity={1}
           onPress={() => setShowFromModal(false)}
-          className="flex-1 justify-end bg-black/50"
+          className="flex-1 justify-end bg-black/60"
         >
-          <View className="rounded-t-3xl bg-background pb-8">
-            <View className="items-center py-4">
-              <View className="h-1 w-12 rounded-full bg-gray-300" />
+          <View className="rounded-t-3xl border-t border-border bg-card pb-8 pt-4">
+            <View className="items-center">
+              <View className="h-1 w-12 rounded-full bg-border" />
             </View>
-            <Text className="px-6 text-xl font-bold">Select Token</Text>
+            <Text className="px-6 pt-4 text-xl font-bold">Select Token</Text>
             <View className="mt-4 gap-2 px-6">
               {TOKENS.map((token) => (
                 <TouchableOpacity
                   key={token.symbol}
                   onPress={() => selectFromToken(token)}
-                  className={`flex-row items-center gap-3 rounded-xl p-4 ${
-                    token.symbol === fromToken.symbol ? 'bg-purple-100 dark:bg-purple-900' : 'bg-card'
+                  className={`flex-row items-center gap-3 rounded-xl border p-4 ${
+                    token.symbol === fromToken.symbol
+                      ? 'border-purple-200 bg-purple-50 dark:border-purple-500/30 dark:bg-purple-500/10'
+                      : 'border-border bg-background'
                   }`}
                 >
                   <View className={`h-12 w-12 items-center justify-center rounded-full ${token.color}`}>
-                    <Text className="text-2xl text-white font-semibold">{token.icon}</Text>
+                    <Text className="text-sm font-semibold text-white">{token.icon}</Text>
                   </View>
                   <View className="flex-1">
                     <Text className="font-semibold">{token.symbol}</Text>
                     <Text className="text-sm text-muted-foreground">{token.name}</Text>
                   </View>
                   {token.symbol === fromToken.symbol && (
-                    <Icon as={Coins} size={20} className="text-purple-600" />
+                    <Icon as={Coins} size={20} className="text-purple-600 dark:text-purple-300" />
                   )}
                 </TouchableOpacity>
               ))}
@@ -450,31 +459,33 @@ export default function SwapScreen() {
         <TouchableOpacity
           activeOpacity={1}
           onPress={() => setShowToModal(false)}
-          className="flex-1 justify-end bg-black/50"
+          className="flex-1 justify-end bg-black/60"
         >
-          <View className="rounded-t-3xl bg-background pb-8">
-            <View className="items-center py-4">
-              <View className="h-1 w-12 rounded-full bg-gray-300" />
+          <View className="rounded-t-3xl border-t border-border bg-card pb-8 pt-4">
+            <View className="items-center">
+              <View className="h-1 w-12 rounded-full bg-border" />
             </View>
-            <Text className="px-6 text-xl font-bold">Select Token</Text>
+            <Text className="px-6 pt-4 text-xl font-bold">Select Token</Text>
             <View className="mt-4 gap-2 px-6">
               {TOKENS.map((token) => (
                 <TouchableOpacity
                   key={token.symbol}
                   onPress={() => selectToToken(token)}
-                  className={`flex-row items-center gap-3 rounded-xl p-4 ${
-                    token.symbol === toToken.symbol ? 'bg-purple-100 dark:bg-purple-900' : 'bg-card'
+                  className={`flex-row items-center gap-3 rounded-xl border p-4 ${
+                    token.symbol === toToken.symbol
+                      ? 'border-purple-200 bg-purple-50 dark:border-purple-500/30 dark:bg-purple-500/10'
+                      : 'border-border bg-background'
                   }`}
                 >
                   <View className={`h-12 w-12 items-center justify-center rounded-full ${token.color}`}>
-                    <Text className="text-2xl text-white font-semibold">{token.icon}</Text>
+                    <Text className="text-sm font-semibold text-white">{token.icon}</Text>
                   </View>
                   <View className="flex-1">
                     <Text className="font-semibold">{token.symbol}</Text>
                     <Text className="text-sm text-muted-foreground">{token.name}</Text>
                   </View>
                   {token.symbol === toToken.symbol && (
-                    <Icon as={Coins} size={20} className="text-purple-600" />
+                    <Icon as={Coins} size={20} className="text-purple-600 dark:text-purple-300" />
                   )}
                 </TouchableOpacity>
               ))}

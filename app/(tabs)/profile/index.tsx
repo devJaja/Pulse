@@ -1,4 +1,4 @@
-import { View, ScrollView, ActivityIndicator, RefreshControl } from 'react-native';
+import { View, ScrollView, RefreshControl } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 import * as Clipboard from 'expo-clipboard';
@@ -20,6 +20,7 @@ import { PortfolioTab } from '@/components/profile/PortfolioTab';
 import { RepliesTab } from '@/components/profile/RepliesTab';
 import { LikesTab } from '@/components/profile/LikesTab';
 import { ProfileMenu } from '@/components/profile/ProfileMenu';
+import { LoadingSpinner } from '@/components/common';
 
 export default function ProfileScreen() {
   const { t } = useTranslation();
@@ -113,11 +114,7 @@ export default function ProfileScreen() {
   };
 
   if (isLoadingUser || isLoadingProfile) {
-    return (
-      <View className="flex-1 items-center justify-center bg-background">
-        <ActivityIndicator size="large" color="#6e54ff" />
-      </View>
-    );
+    return <LoadingSpinner fullScreen />;
   }
 
   if (!displayUser) {
