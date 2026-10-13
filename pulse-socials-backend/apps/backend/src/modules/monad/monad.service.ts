@@ -375,6 +375,15 @@ export class MonadService {
   }
 
   /**
+   * Decrypt a server-held private key. Used only for the one-time migration
+   * where a legacy custodial account exports its key to the user's device,
+   * after which the encrypted copy is deleted.
+   */
+  decryptPrivateKey(encrypted: string): string {
+    return this.decrypt(encrypted);
+  }
+
+  /**
    * Get the native MON balance plus configured ERC-20 balances.
    */
   async getBalance(address: string) {

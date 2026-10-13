@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { api } from '@/lib/api';
 import { storage } from '@/lib/storage';
+import { useWalletStore } from '@/store/useWalletStore';
 import { router } from 'expo-router';
 import { toast } from 'sonner-native';
 
@@ -82,7 +83,10 @@ export function useAuth() {
   // Signup mutation
   const signupMutation = useMutation({
     mutationFn: async (data: SignupData) => {
-      const response = await api.signup(data.email, data.password, data.username);
+      // Create (or reuse) the self-custody wallet on this device BEFORE the
+      // account exists, then bind it to the account via walletAddress.
+      const wallet = await useWalletStore.getState().createWallet();
+      const response = await api.signup(data.email, data.password, data.username, wallet.address);
       if (response.error) throw new Error(response.error);
       return response.data as AuthResponse;
     },
@@ -139,8 +143,8 @@ export function useAuth() {
     },
     onSuccess: async (data) => {
       queryClient.setQueryData(['user'], data.user);
-      toast.success('Email verified successfully!');
-      router.replace('/auth/signup');
+      toast.success('Email verified! Let us show you your recovery phrase');
+      router.replace('/auth/backup-phrase');
     },
     onError: (error: Error) => {
       toast.error(error.message);

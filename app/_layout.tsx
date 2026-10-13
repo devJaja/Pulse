@@ -1,5 +1,6 @@
-import '@/global.css';
+import 'react-native-get-random-values';
 import 'react-native-gesture-handler';
+import '@/global.css';
 import '@/lib/i18n'; // Initialize i18n
 
 import { NAV_THEME } from '@/lib/theme';
@@ -25,6 +26,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
 import { useThemeStore, useThemeSync } from '@/store/useThemeStore';
+import { useWalletStore } from '@/store/useWalletStore';
 import { usePathname } from 'expo-router';
 import * as Notifications from 'expo-notifications';
 import * as Linking from 'expo-linking';
@@ -65,10 +67,11 @@ export {
 function RootLayoutContent() {
   const { theme } = useThemeSync();
   const { loadTheme } = useThemeStore();
+  const { bootstrap: bootstrapWallet } = useWalletStore();
   const pathname = usePathname();
   const notificationListener = useRef<Notifications.EventSubscription | null>(null);
   const responseListener = useRef<Notifications.EventSubscription | null>(null);
-  
+
   // Initialize language preference
   useLanguage();
 
@@ -76,6 +79,11 @@ function RootLayoutContent() {
   useEffect(() => {
     loadTheme();
   }, [loadTheme]);
+
+  // Restore the on-device wallet state on mount
+  useEffect(() => {
+    bootstrapWallet();
+  }, [bootstrapWallet]);
 
   // Handle notification interactions (deep linking)
   useEffect(() => {

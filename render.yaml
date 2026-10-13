@@ -12,7 +12,7 @@ services:
       - key: NODE_ENV
         value: production
       - key: API_URL
-        value: https://pulse-socials.onrender.com
+        value: https://pulse-jzjb.onrender.com
       - key: PORT
         value: 3000
       - key: NODE_VERSION

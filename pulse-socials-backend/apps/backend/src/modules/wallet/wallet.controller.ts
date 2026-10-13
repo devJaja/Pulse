@@ -57,6 +57,11 @@ export class WalletController {
     );
   }
 
+  @Post('export-key')
+  async exportKey(@Request() req) {
+    return this.walletService.exportKey(req.user.userId);
+  }
+
   @Get('transactions/:signature')
   async getTransactionDetails(
     @Request() req,

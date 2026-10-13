@@ -36,10 +36,14 @@ export class AuthService {
   ) {}
 
   /**
-   * User signup with automatic wallet creation
+   * User signup.
+   *
+   * Self-custody clients generate the wallet on-device and pass their
+   * `walletAddress`; no private key is stored server-side. Clients that omit
+   * it fall back to the legacy custodial path (server-generated key).
    */
   async signup(signupDto: SignupDto) {
-    const { email, username, password } = signupDto;
+    const { email, username, password, walletAddress } = signupDto;
 
     // Check if user already exists
     const existingUser = await this.userModel.findOne({
@@ -56,9 +60,21 @@ export class AuthService {
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Generate Monad wallet
-    const { publicKey, encryptedPrivateKey } =
-      this.monadService.generateWallet();
+    // Wallet binding: self-custody clients supply their own address, which
+    // means the private key never exists on a Pulse server. Legacy clients
+    // get a server-generated, encrypted key.
+    let walletPublicKey: string;
+    let encryptedPrivateKey: string | undefined;
+    if (walletAddress) {
+      if (!this.monadService.isPublicAddress(walletAddress)) {
+        throw new BadRequestException('walletAddress is not a valid address');
+      }
+      walletPublicKey = walletAddress;
+    } else {
+      const generated = this.monadService.generateWallet();
+      walletPublicKey = generated.publicKey;
+      encryptedPrivateKey = generated.encryptedPrivateKey;
+    }
 
     // Generate verification code
     const verificationCode = this.generateVerificationCode();
@@ -69,8 +85,8 @@ export class AuthService {
       email,
       username,
       password: hashedPassword,
-      walletAddress: publicKey,
-      encryptedPrivateKey,
+      walletAddress: walletPublicKey,
+      ...(encryptedPrivateKey ? { encryptedPrivateKey } : {}),
       verificationCode,
       verificationCodeExpires,
       emailVerified: false,
@@ -78,10 +94,10 @@ export class AuthService {
 
     // Request airdrop for new users (testnet only)
     try {
-      await this.monadService.requestAirdrop(publicKey);
-      this.logger.log(`Airdrop sent to new user: ${publicKey}`);
+      await this.monadService.requestAirdrop(walletPublicKey);
+      this.logger.log(`Airdrop sent to new user: ${walletPublicKey}`);
     } catch (error) {
-      this.logger.warn(`Airdrop failed for ${publicKey}: ${error.message}`);
+      this.logger.warn(`Airdrop failed for ${walletPublicKey}: ${error.message}`);
     }
 
     // Generate JWT token

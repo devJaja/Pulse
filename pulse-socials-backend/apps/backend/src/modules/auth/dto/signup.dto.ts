@@ -1,6 +1,7 @@
 import {
   IsEmail,
   IsNotEmpty,
+  IsOptional,
   IsString,
   MinLength,
   Matches,
@@ -23,4 +24,13 @@ export class SignupDto {
   @IsNotEmpty()
   @MinLength(8, { message: 'Password must be at least 8 characters long' })
   password: string;
+
+  /** Self-custody wallets pass their on-device address here so no
+   *  server-held key is ever generated. */
+  @IsOptional()
+  @IsString()
+  @Matches(/^0x[a-fA-F0-9]{40}$/, {
+    message: 'walletAddress must be a valid 0x-prefixed EVM address',
+  })
+  walletAddress?: string;
 }

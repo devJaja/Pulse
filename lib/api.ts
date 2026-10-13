@@ -1,4 +1,4 @@
-const API_URL = process.env.EXPO_PUBLIC_API_URL || 'https://pulse-socials.onrender.com/api';
+const API_URL = process.env.EXPO_PUBLIC_API_URL || 'https://pulse-jzjb.onrender.com/api';
 
 interface ApiResponse<T = any> {
   data?: T;
@@ -59,10 +59,10 @@ class ApiClient {
   }
 
   // ==================== Auth ====================
-  async signup(email: string, password: string, username: string) {
+  async signup(email: string, password: string, username: string, walletAddress?: string) {
     return this.request('/auth/signup', {
       method: 'POST',
-      body: JSON.stringify({ email, password, username }),
+      body: JSON.stringify({ email, password, username, walletAddress }),
     });
   }
 
@@ -246,6 +246,12 @@ class ApiClient {
     return this.request('/wallet/send', {
       method: 'POST',
       body: JSON.stringify({ toAddress, amount, memo }),
+    });
+  }
+
+  async exportLegacyKey() {
+    return this.request('/wallet/export-key', {
+      method: 'POST',
     });
   }
 

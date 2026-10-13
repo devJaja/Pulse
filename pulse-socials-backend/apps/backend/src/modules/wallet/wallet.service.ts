@@ -71,6 +71,12 @@ export class WalletService {
     const user = await this.userModel.findById(userId);
     if (!user) throw new BadRequestException('User not found');
 
+    if (!user.encryptedPrivateKey) {
+      throw new BadRequestException(
+        'This wallet is self-custodial — sign transactions in the app',
+      );
+    }
+
     try {
       if (!this.monadService.isPublicAddress(sendFundsDto.toAddress)) {
         throw new BadRequestException('Invalid recipient address');
@@ -194,5 +200,34 @@ export class WalletService {
       this.logger.error(`Failed to get transaction details: ${error.message}`);
       throw new BadRequestException('Failed to get transaction details');
     }
+  }
+
+  /**
+   * One-time migration: return the private key of a legacy custodial account
+   * and delete the server-held copy so the user becomes fully self-custodial.
+   */
+  async exportKey(userId: string) {
+    const user = await this.userModel.findById(userId);
+    if (!user) {
+      throw new BadRequestException('User not found');
+    }
+
+    if (!user.encryptedPrivateKey) {
+      throw new BadRequestException(
+        'This account is already self-custodial — there is no server-held key to export',
+      );
+    }
+
+    const privateKey = this.monadService.decryptPrivateKey(
+      user.encryptedPrivateKey,
+    );
+    user.encryptedPrivateKey = undefined;
+    await user.save();
+
+    this.logger.log(
+      `Exported and deleted server-held key for user ${userId} (self-custody migration)`,
+    );
+
+    return { privateKey, walletAddress: user.walletAddress };
   }
 }

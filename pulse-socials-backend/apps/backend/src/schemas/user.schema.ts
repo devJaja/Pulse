@@ -26,7 +26,10 @@ export class User {
   @Prop({ required: true, unique: true })
   walletAddress: string;
 
-  @Prop({ required: true })
+  /** Encrypted private key for legacy custodial accounts. Self-custodial
+   *  accounts (keys held on-device) have no server-held key; this is absent
+   *  after users export it to their device. */
+  @Prop()
   encryptedPrivateKey: string;
 
   /** Ika dWallet account address — set after DKG at signup. When present,

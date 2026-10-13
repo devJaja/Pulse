@@ -12,7 +12,7 @@ export class KeepaliveService {
     // Get the API URL from environment or construct it
     this.apiUrl =
       this.configService.get<string>('API_URL') ||
-      'https://pulse-socials.onrender.com';
+      'https://pulse-jzjb.onrender.com';
     this.logger.log(
       `🔄 Keepalive service initialized - will ping ${this.apiUrl}/api/health`,
     );

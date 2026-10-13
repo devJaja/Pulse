@@ -3,7 +3,7 @@
  * Run with: npx tsx scripts/test-api-connection.ts
  */
 
-const API_URL = process.env.EXPO_PUBLIC_API_URL || 'https://pulse-socials.onrender.com/api';
+const API_URL = process.env.EXPO_PUBLIC_API_URL || 'https://pulse-jzjb.onrender.com/api';
 
 async function testConnection() {
   console.log('🔍 Testing API Connection...');

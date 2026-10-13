@@ -1,10 +1,16 @@
 import { useQuery, useMutation, useQueryClient, useInfiniteQuery } from '@tanstack/react-query';
 import { api } from '@/lib/api';
+import { parseEther, toHex } from 'viem';
+import type { Hex } from 'viem';
+import { getPublicClient, getWalletClient } from '@/lib/wallet/chain';
+import { isValidAddress } from '@/lib/wallet/account';
+import { useWalletStore } from '@/store/useWalletStore';
 import { toast } from 'sonner-native';
 import type { WalletBalance, Transaction } from '@/types';
 
 export function useWallet() {
   const queryClient = useQueryClient();
+  const deviceAddress = useWalletStore((state) => state.address);
 
   // Get balance
   const { data: balance, isLoading: isLoadingBalance, refetch: refetchBalance } = useQuery<WalletBalance>({
@@ -38,12 +44,31 @@ export function useWallet() {
     initialPageParam: 1 as number,
   });
 
-  // Send MON
+  // Send MON — signed locally with the self-custody key on this device.
   const sendMonMutation = useMutation({
     mutationFn: async ({ toAddress, amount, memo }: { toAddress: string; amount: number; memo?: string }) => {
-      const response = await api.sendMon(toAddress, amount, memo);
-      if (response.error) throw new Error(response.error);
-      return response.data;
+      if (!isValidAddress(toAddress)) {
+        throw new Error('Invalid recipient address');
+      }
+
+      const account = await useWalletStore.getState().getSigner();
+
+      const publicClient = getPublicClient();
+      const balance = await publicClient.getBalance({ address: account.address });
+      const value = parseEther(String(amount));
+      if (balance < value) {
+        throw new Error('Insufficient balance');
+      }
+
+      const walletClient = getWalletClient(account);
+      const hash = await walletClient.sendTransaction({
+        account,
+        to: toAddress as Hex,
+        value,
+        data: memo ? toHex(memo) : undefined,
+      });
+
+      return { signature: hash, walletAddress: account.address };
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['wallet'] });
@@ -58,7 +83,7 @@ export function useWallet() {
 
   return {
     balance: balance?.balance ?? 0,
-    walletAddress: balance?.walletAddress ?? '',
+    walletAddress: deviceAddress || balance?.walletAddress || '',
     isLoadingBalance,
     refetchBalance,
     transactions,
